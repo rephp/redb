@@ -1,5 +1,5 @@
 <?php
-namespace database\mysql\traits;
+namespace rephp\database\mysql\traits;
 
 trait transTrait
 {

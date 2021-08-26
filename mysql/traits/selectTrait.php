@@ -1,7 +1,7 @@
 <?php
-namespace database\mysql\traits;
+namespace rephp\database\mysql\traits;
 
-use database\mysql\mysql;
+use rephp\database\mysql\mysql;
 
 trait selectTrait
 {

@@ -1,7 +1,7 @@
 <?php
-namespace database\mysql\traits;
+namespace rephp\database\mysql\traits;
 
-use database\mysql\console\coreModel;
+use rephp\database\mysql\console\coreModel;
 
 trait commonTrait
 {
@@ -34,17 +34,7 @@ trait commonTrait
         return new self();
     }
 
-    /**
-     * 获取内核model实例对象
-     * @return Model
-     */
-    public function getCoreModel()
-    {
-        if(!is_object($this->coreModel)){
-            $this->coreModel = new coreModel();
-        }
-        return $this->coreModel;
-    }
+
 
 
     public function close(){

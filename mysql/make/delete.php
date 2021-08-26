@@ -1,6 +1,6 @@
 <?php
-namespace database\mysql\make;
-use database\mysql\lib\lib;
+namespace rephp\database\mysql\make;
+use rephp\database\mysql\lib\lib;
 
 class delete
 {

@@ -11,7 +11,7 @@ trait deleteTrait
     public function delete()
     {
         //生成sql并执行动作
-        $this->getCoreModel()->setAction('delete');
+        $this->getCoreModel()->action = 'delete';
 
         return $this->run();
     }

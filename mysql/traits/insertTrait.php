@@ -7,7 +7,7 @@ trait insertTrait
     public function insert()
     {
         //生成sql并执行动作
-        $this->getCoreModel()->setAction('insert');
+        $this->getCoreModel()->action = 'insert';
 
         return $this->run();
     }
@@ -15,7 +15,7 @@ trait insertTrait
     public function insertReplace()
     {
         //生成sql并执行动作
-        $this->getCoreModel()->setAction('insert replace');
+        $this->getCoreModel()->action = 'insert replace';
 
         return $this->run();
     }
@@ -23,7 +23,7 @@ trait insertTrait
     public function insertIgnore()
     {
         //生成sql并执行动作
-        $this->getCoreModel()->setAction('insert ignore');
+        $this->getCoreModel()->action = 'insert ignore';
 
         return $this->run();
     }

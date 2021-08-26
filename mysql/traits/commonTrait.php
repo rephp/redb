@@ -25,38 +25,26 @@ trait commonTrait
         return self::$table;
     }
 
-    /**
-     * 实例化自身对象
-     * @return \database\mysql\mysql
-     */
-    public static function db()
-    {
-        return new self();
-    }
-
-
-
-
     public function close(){
-        return $this->getCoreModel()->close();
+        return $this->getCmd()->close();
     }
 
     public function run()
     {
-        return $this->getCoreModel()->run();
+        return $this->getCmd()->setModel($this->getCoreModel())->run();
     }
 
 
     //update|select|delete
     public function where($where)
     {
-        $this->getCoreModel()->where($where);
+        $this->getCoreModel()->where[] = $where;
         return $this;
     }
 
     public function orWhere($where)
     {
-        $this->getCoreModel()->orWhere($where);
+        $this->getCoreModel()->where[] = ['or'=>$where];
         return $this;
     }
 
@@ -65,7 +53,7 @@ trait commonTrait
      */
     public function leftBracket()
     {
-        $this->getCoreModel()->leftBracket();
+        $this->getCoreModel()->where[] = ['('];
         return $this;
     }
 
@@ -74,25 +62,25 @@ trait commonTrait
      */
     public function rightBracket()
     {
-        $this->getCoreModel()->rightBracket();
+        $this->getCoreModel()->where[] = [')'];
         return $this;
     }
 
     //insert|update
-    public function data()
+    public function data(array $data)
     {
-        $this->getCoreModel()->data(data);
+        $this->getCoreModel()->data = $data;
         return $this;
     }
 
     public function getSql()
     {
-        return $this->getCoreModel()->getSql();
+        return $this->getCmd()->setModel($this->getCoreModel())->getSql();
     }
 
     protected function log()
     {
-        return $this->getCoreModel()->log();
+        return $this->getCmd()->setModel($this->getCoreModel())->log();
     }
 
 }

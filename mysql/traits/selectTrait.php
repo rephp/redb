@@ -19,13 +19,14 @@ trait selectTrait
 
     public function one()
     {
-        $this->getCoreModel()->page(1)->limit(1)->setAction('select');
+        $this->getCoreModel()->action = 'select';
+        $this->getCoreModel()->page(1)->limit(1);
         return $this->run();
     }
 
     public function all()
     {
-        $this->getCoreModel()->setAction('select');
+        $this->getCoreModel()->action = 'select';
         return $this->run();
     }
 
@@ -80,6 +81,7 @@ trait selectTrait
 
     public function orderBY($orderBy='')
     {
+
         $this->getCoreModel()->orderBY($orderBy);
         return $this;
     }

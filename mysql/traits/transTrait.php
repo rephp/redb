@@ -5,17 +5,17 @@ trait transTrait
 {
     public function startTrans()
     {
-        $this->getCoreModel()->startTrans();
+        $this->getCmd()->startTrans();
     }
 
     public function rollBack()
     {
-        $this->getCoreModel()->rollBack();
+        $this->getCmd()->rollBack();
     }
 
     public function commit()
     {
-        $this->getCoreModel()->commit();
+        $this->getCmd()->commit();
     }
 
 

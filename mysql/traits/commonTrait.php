@@ -60,12 +60,14 @@ trait commonTrait
     //update|select|delete
     public function where($where)
     {
-
+        $this->getCoreModel()->where($where);
+        return $this;
     }
 
     public function orWhere($where)
     {
-
+        $this->getCoreModel()->orWhere($where);
+        return $this;
     }
 
     /**
@@ -73,7 +75,8 @@ trait commonTrait
      */
     public function leftBracket()
     {
-
+        $this->getCoreModel()->leftBracket();
+        return $this;
     }
 
     /**
@@ -81,13 +84,15 @@ trait commonTrait
      */
     public function rightBracket()
     {
-
+        $this->getCoreModel()->rightBracket();
+        return $this;
     }
 
     //insert|update
     public function data()
     {
-
+        $this->getCoreModel()->data(data);
+        return $this;
     }
 
     public function getSql()
@@ -97,7 +102,7 @@ trait commonTrait
 
     protected function log()
     {
-
+        return $this->getCoreModel()->log();
     }
 
 }

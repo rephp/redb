@@ -1,6 +1,8 @@
 <?php
 namespace database\mysql\traits;
 
+use database\mysql\mysql;
+
 trait selectTrait
 {
     public function page($page=0)
@@ -18,7 +20,7 @@ trait selectTrait
     public function one()
     {
         $this->getCoreModel()->page(1)->limit(1)->setAction('select');
-        return $this;
+        return $this->run();
     }
 
     public function all()
@@ -42,23 +44,32 @@ trait selectTrait
 
     public function alias($alias='')
     {
-        $this->alias($alias);
+        $this->getCoreModel()->alias($alias);
         return $this;
     }
 
-    public function leftJoin()
+    public function leftJoin($tableName, $on)
     {
-
+        $this->getCoreModel()->leftJoin($tableName, $on);
+        return $this;
     }
 
-    public function rightJoin()
+    public function rightJoin($tableName, $on)
     {
-
+        $this->getCoreModel()->rightJoin($tableName, $on);
+        return $this;
     }
 
-    public function innerJoin()
+    public function innerJoin($tableName, $on)
     {
+        $this->getCoreModel()->innerJoin($tableName, $on);
+        return $this;
+    }
 
+    public function union(Mysql $model)
+    {
+        $this->getCoreModel()->union($model->getCoreModel());
+        return $this;
     }
 
     public function lock()

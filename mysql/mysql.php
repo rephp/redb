@@ -3,7 +3,6 @@ namespace redb\mysql;
 
 use redb\mysql\traits\commonTrait;
 use redb\mysql\traits\selectTrait;
-use redb\mysql\console\coreModel;
 use redb\mysql\console\cmd;
 use redb\mysql\traits\insertTrait;
 use redb\mysql\traits\deleteTrait;

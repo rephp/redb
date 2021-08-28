@@ -1,8 +1,6 @@
 <?php
 namespace redb\mysql\traits;
 
-use redb\mysql\console\coreModel;
-
 trait commonTrait
 {
     protected $client = [];

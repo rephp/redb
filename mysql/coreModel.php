@@ -1,7 +1,6 @@
 <?php
-namespace redb\mysql\console;
+namespace redb\mysql;
 
-use redb\mysql\mysql;
 
 class coreModel
 {

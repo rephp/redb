@@ -1,7 +1,7 @@
 <?php
 namespace redb\mysql\make\component;
 
-use redb\mysql\console\coreModel;
+use redb\mysql\coreModel;
 
 class insert
 {

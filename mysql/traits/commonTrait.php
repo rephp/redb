@@ -1,7 +1,7 @@
 <?php
-namespace rephp\database\mysql\traits;
+namespace redb\mysql\traits;
 
-use rephp\database\mysql\console\coreModel;
+use redb\mysql\console\coreModel;
 
 trait commonTrait
 {
@@ -38,25 +38,25 @@ trait commonTrait
     //update|select|delete
     public function where($where)
     {
-        $this->getCoreModel()->where[] = $where;
+        $this->getCoreModel()->where($where);
         return $this;
     }
 
     public function orWhere($where)
     {
-        $this->getCoreModel()->where[] = ['OR'=>$where];
+        $this->getCoreModel()->orWhere($where);
         return $this;
     }
 
     public function whereIn($column, array $values)
     {
-        $this->getCoreModel()->where[] = [$column, 'IN', $values];
+        $this->getCoreModel()->whereIn($column, $values);
         return $this;
     }
 
     public function whereNotIn($column, array $values)
     {
-        $this->getCoreModel()->where[] = [$column, 'NOT IN', $values];
+        $this->getCoreModel()->whereNotIn($column, $values);
         return $this;
     }
 
@@ -65,7 +65,7 @@ trait commonTrait
      */
     public function leftBracket()
     {
-        $this->getCoreModel()->where[] = ['('];
+        $this->getCoreModel()->leftBracket();
         return $this;
     }
 
@@ -74,14 +74,20 @@ trait commonTrait
      */
     public function rightBracket()
     {
-        $this->getCoreModel()->where[] = [')'];
+        $this->getCoreModel()->rightBracket();
         return $this;
     }
 
     //insert|update
     public function data(array $data)
     {
-        $this->getCoreModel()->data = $data;
+        $this->getCoreModel()->data($data);
+        return $this;
+    }
+
+    public function setAction($action)
+    {
+        $this->getCoreModel()->setAction($action);
         return $this;
     }
 

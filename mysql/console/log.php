@@ -1,8 +1,8 @@
 <?php
 
-namespace rephp\database\mysql\console;
+namespace  redb\mysql\console;
 
-final class log
+class log
 {
     public static $history = [];
 

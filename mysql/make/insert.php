@@ -1,7 +1,7 @@
 <?php
-namespace rephp\database\mysql\make;
+namespace redb\mysql\make;
 
-use rephp\database\mysql\console\coreModel;
+use redb\mysql\console\coreModel;
 
 class insert
 {

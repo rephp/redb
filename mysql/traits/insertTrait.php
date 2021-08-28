@@ -1,31 +1,22 @@
 <?php
-namespace rephp\database\mysql\traits;
+namespace redb\mysql\traits;
 
 trait insertTrait
 {
 
     public function insert()
     {
-        //生成sql并执行动作
-        $this->getCoreModel()->action = 'insert';
-
-        return $this->run();
+        return $this->setAction('insert')->run();
     }
 
     public function insertReplace()
     {
-        //生成sql并执行动作
-        $this->getCoreModel()->action = 'insert replace';
-
-        return $this->run();
+        return $this->setAction('insert replace')->run();
     }
 
     public function insertIgnore()
     {
-        //生成sql并执行动作
-        $this->getCoreModel()->action = 'insert ignore';
-
-        return $this->run();
+        return $this->setAction('insert ignore')->run();
     }
 
 }

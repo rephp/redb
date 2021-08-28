@@ -1,10 +1,13 @@
 <?php
-namespace rephp\database\mysql;
+namespace redb\mysql;
 
-use rephp\database\mysql\traits\commonTrait;
-use rephp\database\mysql\traits\selectTrait;
-use rephp\database\mysql\console\coreModel;
-use rephp\database\mysql\console\cmd;
+use redb\mysql\traits\commonTrait;
+use redb\mysql\traits\selectTrait;
+use redb\mysql\console\coreModel;
+use redb\mysql\console\cmd;
+use redb\mysql\traits\insertTrait;
+use redb\mysql\traits\deleteTrait;
+use redb\mysql\traits\updateTrait;
 
 class mysql
 {
@@ -15,6 +18,9 @@ class mysql
     protected $coreModel;
 
     use commonTrait;
+    use insertTrait;
+    use deleteTrait;
+    use updateTrait;
     use selectTrait;
 
     /**
@@ -37,7 +43,7 @@ class mysql
 
     /**
      * 获取内核model实例对象
-     * @return Model
+     * @return coreModel
      */
     final private function getCoreModel()
     {

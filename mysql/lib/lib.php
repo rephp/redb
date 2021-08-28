@@ -1,5 +1,5 @@
 <?php
-namespace rephp\database\mysql\lib;
+namespace redb\mysql\lib;
 /**
  * mysql lib
  * @package database\mysql\lib

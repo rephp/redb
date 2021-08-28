@@ -1,36 +1,30 @@
 <?php
-namespace rephp\database\mysql\traits;
+namespace redb\mysql\traits;
 
-use rephp\database\mysql\mysql;
+use redb\mysql\mysql;
 
 trait selectTrait
 {
     public function page($page=0)
     {
-        $page = (int)$page;
-        ($page<1) && $page = 0;
-        $this->getCoreModel()->page = $page;
+        $this->getCoreModel()->page($page);
         return $this;
     }
 
     public function limit($pageSize=0)
     {
-        $pageSize = (int)$pageSize;
-        ($pageSize<1) && $pageSize = 0;
-        $this->getCoreModel()->limit = $pageSize;
+        $this->getCoreModel()->limit($pageSize);
         return $this;
     }
 
     public function one()
     {
-        $this->getCoreModel()->action = 'select';
-        return $this->page(1)->limit(1)->run();
+        return $this->page(1)->limit(1)->setAction('select')->run();
     }
 
     public function all()
     {
-        $this->getCoreModel()->action = 'select';
-        return $this->run();
+        return $this->setAction('select')->run();
     }
 
     /**
@@ -46,31 +40,31 @@ trait selectTrait
 
     public function alias($alias='')
     {
-        $this->getCoreModel()->alias = $alias;
+        $this->getCoreModel()->alias($alias);
         return $this;
     }
 
     public function leftJoin($tableName, $on)
     {
-        $this->getCoreModel()->leftJoin[] = [$tableName, $on];
+        $this->getCoreModel()->leftJoin($tableName, $on);
         return $this;
     }
 
     public function rightJoin($tableName, $on)
     {
-        $this->getCoreModel()->rightJoin[] = [$tableName, $on];
+        $this->getCoreModel()->rightJoin($tableName, $on);
         return $this;
     }
 
     public function innerJoin($tableName, $on)
     {
-        $this->getCoreModel()->innerJoin[] = [$tableName, $on];
+        $this->getCoreModel()->innerJoin($tableName, $on);
         return $this;
     }
 
-    public function union(Mysql $model)
+    public function union(Mysql $client)
     {
-        $this->getCoreModel()->union[] = $model->getCoreModel();
+        $this->getCoreModel()->union($client->getCoreModel());
         return $this;
     }
 
@@ -82,8 +76,7 @@ trait selectTrait
 
     public function orderBY($orderBy='')
     {
-
-        $this->getCoreModel()->orderBY = $orderBy;
+        $this->getCoreModel()->orderBY($orderBy);
         return $this;
     }
 

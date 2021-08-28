@@ -1,5 +1,5 @@
 <?php
-namespace rephp\database\mysql\make;
+namespace redb\mysql\make;
 
 
 class update

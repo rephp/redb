@@ -1,5 +1,5 @@
 <?php
-namespace rephp\database\mysql\console;
+namespace redb\mysql\console;
 
 class cmd
 {

@@ -1,5 +1,5 @@
 <?php
-namespace rephp\database;
+namespace redb;
 
 /**
  * 数据操作类

@@ -1,5 +1,6 @@
 <?php
-namespace rephp\database\mysql\traits;
+
+namespace redb\mysql\traits;
 
 trait deleteTrait
 {
@@ -10,9 +11,6 @@ trait deleteTrait
      */
     public function delete()
     {
-        //生成sql并执行动作
-        $this->getCoreModel()->action = 'delete';
-
-        return $this->run();
+        return $this->setAction('delete')->run();
     }
 }

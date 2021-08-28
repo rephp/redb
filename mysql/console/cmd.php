@@ -36,4 +36,40 @@ class cmd
         }
     }
 
+
+    public function setModel($model)
+    {
+        $this->model = $model;
+        return $this;
+    }
+
+    public function getModel()
+    {
+        return $this->model;
+    }
+
+    public function getSql()
+    {
+        return maker::getSql($this->getModel());
+    }
+
+    /**
+     * 获取历史以来执行的sql
+     */
+    public function getLog()
+    {
+        return log::getLog();
+    }
+
+    public function setLog($sql, $time=0)
+    {
+        return log::setLog($sql, $time);
+    }
+
+    public function run()
+    {
+        $sql = $this->getSql();
+        return $this->query($sql);
+    }
+
 }

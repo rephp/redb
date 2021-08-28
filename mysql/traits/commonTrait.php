@@ -44,7 +44,19 @@ trait commonTrait
 
     public function orWhere($where)
     {
-        $this->getCoreModel()->where[] = ['or'=>$where];
+        $this->getCoreModel()->where[] = ['OR'=>$where];
+        return $this;
+    }
+
+    public function whereIn($column, array $values)
+    {
+        $this->getCoreModel()->where[] = [$column, 'IN', $values];
+        return $this;
+    }
+
+    public function whereNotIn($column, array $values)
+    {
+        $this->getCoreModel()->where[] = [$column, 'NOT IN', $values];
         return $this;
     }
 
@@ -80,7 +92,7 @@ trait commonTrait
 
     protected function log()
     {
-        return $this->getCmd()->setModel($this->getCoreModel())->log();
+        return $this->getCmd()->log();
     }
 
 }

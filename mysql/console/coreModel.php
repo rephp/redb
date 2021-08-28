@@ -7,8 +7,4 @@ final class coreModel
     public $pageSize = 0;
     public $data = [];
 
-
-
-
-
 }

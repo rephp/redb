@@ -1,5 +1,5 @@
 <?php
-namespace redb\mysql\make;
+namespace redb\mysql\make\component;
 
 use redb\mysql\console\coreModel;
 

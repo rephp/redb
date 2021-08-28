@@ -9,7 +9,7 @@ class log
     /**
      * 获取历史以来执行的sql
      */
-    public function getLog()
+    public static function getLog()
     {
         return self::$history;
     }
@@ -20,7 +20,7 @@ class log
      * @param int    $time
      * @return array
      */
-    public function setLog($sql, $time = 0)
+    public static function setLog($sql, $time = 0)
     {
         return self::$history[] = [$time => $sql];
     }

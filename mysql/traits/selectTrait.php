@@ -19,12 +19,17 @@ trait selectTrait
 
     public function one()
     {
-        return $this->page(1)->limit(1)->setAction('select')->run();
+        return $this->setAction('one')->run();
     }
 
     public function all()
     {
-        return $this->setAction('select')->run();
+        return $this->setAction('all')->run();
+    }
+
+    public function count()
+    {
+        return $this->setAction('count')->run();
     }
 
     /**
@@ -74,13 +79,22 @@ trait selectTrait
         return $this;
     }
 
-    public function orderBY($orderBy='')
+    public function orderBy($orderBy='')
     {
-        $this->getCoreModel()->orderBY($orderBy);
+        $this->getCoreModel()->orderBy($orderBy);
         return $this;
     }
 
+    public function groupBy($groupBy='')
+    {
+        $this->getCoreModel()->groupBy($groupBy);
+        return $this;
+    }
 
-
+    public function having($having='')
+    {
+        $this->getCoreModel()->having($having);
+        return $this;
+    }
 
 }

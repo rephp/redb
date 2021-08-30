@@ -1,6 +1,6 @@
 <?php
 
-namespace  redb\mysql\console;
+namespace  redb\mysql\query;
 
 class log
 {

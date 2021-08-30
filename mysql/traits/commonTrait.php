@@ -1,7 +1,7 @@
 <?php
 namespace redb\mysql\traits;
 
-use redb\mysql\console\log;
+use redb\mysql\query\log;
 
 trait commonTrait
 {
@@ -17,7 +17,7 @@ trait commonTrait
 
     public function run()
     {
-        return $this->getCmd()->setModel($this->getCoreModel())->run();
+        return $this->getCmd()->run($this->getCoreModel());
     }
 
 

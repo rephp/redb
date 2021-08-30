@@ -11,12 +11,12 @@ trait insertTrait
 
     public function insertReplace()
     {
-        return $this->setAction('insert replace')->run();
+        return $this->setAction('insertReplace')->run();
     }
 
     public function insertIgnore()
     {
-        return $this->setAction('insert ignore')->run();
+        return $this->setAction('insertIgnore')->run();
     }
 
 }

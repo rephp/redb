@@ -3,7 +3,7 @@ namespace redb\mysql;
 
 
 use redb\mysql\make\maker;
-use redb\mysql\console\log;
+use redb\mysql\query\log;
 
 class coreModel
 {
@@ -15,7 +15,9 @@ class coreModel
     protected $alias;
     protected $join = [];
     protected $union = [];
-    protected $orderBY;
+    protected $orderBy;
+    protected $groupBy;
+    protected $having;
 
     public function where($where)
     {
@@ -72,6 +74,11 @@ class coreModel
         return $this;
     }
 
+    public function getAction()
+    {
+        return $this->action;
+    }
+
     public function page($page=0)
     {
         $page = (int)$page;
@@ -118,11 +125,24 @@ class coreModel
         return $this;
     }
 
-    public function orderBY($orderBy='')
+    public function orderBy($orderBy='')
     {
-        $this->orderBY = $orderBy;
+        $this->orderBy = $orderBy;
         return $this;
     }
+
+    public function groupBy($groupBy='')
+    {
+        $this->groupBy = $groupBy;
+        return $this;
+    }
+
+    public function having($having='')
+    {
+        $this->having($having);
+        return $this;
+    }
+
 
     public function getSql()
     {

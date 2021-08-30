@@ -1,30 +1,18 @@
 <?php
 namespace redb\mysql\traits;
 
+use redb\mysql\console\log;
+
 trait commonTrait
 {
     protected $client = [];
 
-    /**
-     * 获取当前数据库
-     * @return Db
-     */
-    public static function getDb()
-    {
-        return self::$db;
-    }
-
-    /**
-     * 获取当前table
-     * @return Db
-     */
-    public static function getTable()
-    {
-        return self::$table;
-    }
-
     public function close(){
         return $this->getCmd()->close();
+    }
+
+    public function reConnection(){
+        return $this->getCmd()->close()->connection();
     }
 
     public function run()
@@ -91,12 +79,16 @@ trait commonTrait
 
     public function getSql()
     {
-        return $this->getCmd()->setModel($this->getCoreModel())->getSql();
+        return $this->getCoreModel()->getSql();
     }
 
-    protected function log()
+    /**
+     * 获取历史以来执行的sql
+     */
+    public function getLog()
     {
-        return $this->getCmd()->log();
+        return log::getLog();
     }
+
 
 }

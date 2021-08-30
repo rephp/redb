@@ -2,6 +2,9 @@
 namespace redb\mysql;
 
 
+use redb\mysql\make\maker;
+use redb\mysql\console\log;
+
 class coreModel
 {
     protected $page = 0;
@@ -120,6 +123,13 @@ class coreModel
         $this->orderBY = $orderBy;
         return $this;
     }
+
+    public function getSql()
+    {
+        return maker::getSql($this);
+    }
+
+
 
 
 

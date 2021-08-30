@@ -8,6 +8,7 @@ class cmd
     {
         $this->pdo   =  null;
         $this->stmt  = null;
+        return $this;
     }
 
     public function connection()
@@ -34,6 +35,8 @@ class cmd
                 $app->db->open();
             }
         }
+
+        return $this;
     }
 
 
@@ -48,27 +51,9 @@ class cmd
         return $this->model;
     }
 
-    public function getSql()
-    {
-        return maker::getSql($this->getModel());
-    }
-
-    /**
-     * 获取历史以来执行的sql
-     */
-    public function getLog()
-    {
-        return log::getLog();
-    }
-
-    public function setLog($sql, $time=0)
-    {
-        return log::setLog($sql, $time);
-    }
-
     public function run()
     {
-        $sql = $this->getSql();
+        $sql = $this->getModel()->getSql();
         return $this->query($sql);
     }
 

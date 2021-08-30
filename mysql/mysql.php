@@ -52,5 +52,23 @@ class mysql
         return $this->coreModel;
     }
 
+    /**
+     * 获取当前数据库
+     * @return Db
+     */
+    public static function getDb()
+    {
+        return self::$db;
+    }
+
+    /**
+     * 获取当前table
+     * @return Db
+     */
+    public static function getTable()
+    {
+        return self::$table;
+    }
+
 
 }

@@ -3,17 +3,24 @@ namespace redb\mysql\traits;
 
 use redb\mysql\mysql;
 
+/**
+ * Trait selectTrait
+ * @package redb\mysql\traits
+ * @method  \redb\mysql\ormModel getOrmModel()
+ * @method \redb\mysql\query\cmd getCmd()
+ * @method \redb\mysql\mysql setAction()
+ */
 trait selectTrait
 {
     public function page($page=0)
     {
-        $this->getCoreModel()->page($page);
+        $this->getOrmModel()->page($page);
         return $this;
     }
 
     public function limit($pageSize=0)
     {
-        $this->getCoreModel()->limit($pageSize);
+        $this->getOrmModel()->limit($pageSize);
         return $this;
     }
 
@@ -45,31 +52,37 @@ trait selectTrait
 
     public function alias($alias='')
     {
-        $this->getCoreModel()->alias($alias);
+        $this->getOrmModel()->alias($alias);
         return $this;
     }
 
     public function leftJoin($tableName, $on)
     {
-        $this->getCoreModel()->leftJoin($tableName, $on);
+        $this->getOrmModel()->leftJoin($tableName, $on);
         return $this;
     }
 
     public function rightJoin($tableName, $on)
     {
-        $this->getCoreModel()->rightJoin($tableName, $on);
+        $this->getOrmModel()->rightJoin($tableName, $on);
         return $this;
     }
 
     public function innerJoin($tableName, $on)
     {
-        $this->getCoreModel()->innerJoin($tableName, $on);
+        $this->getOrmModel()->innerJoin($tableName, $on);
         return $this;
     }
 
     public function union(Mysql $client)
     {
-        $this->getCoreModel()->union($client->getCoreModel());
+        $this->getOrmModel()->union($client->getOrmModel());
+        return $this;
+    }
+
+    public function unionAll(Mysql $client)
+    {
+        $this->getOrmModel()->unionAll($client->getOrmModel());
         return $this;
     }
 
@@ -81,19 +94,19 @@ trait selectTrait
 
     public function orderBy($orderBy='')
     {
-        $this->getCoreModel()->orderBy($orderBy);
+        $this->getOrmModel()->orderBy($orderBy);
         return $this;
     }
 
     public function groupBy($groupBy='')
     {
-        $this->getCoreModel()->groupBy($groupBy);
+        $this->getOrmModel()->groupBy($groupBy);
         return $this;
     }
 
     public function having($having='')
     {
-        $this->getCoreModel()->having($having);
+        $this->getOrmModel()->having($having);
         return $this;
     }
 

@@ -1,6 +1,10 @@
 <?php
 namespace redb\mysql\traits;
-
+/**
+ * Trait insertTrait
+ * @package redb\mysql\traits
+ * @method \redb\mysql\mysql setAction()
+ */
 trait insertTrait
 {
 

@@ -1,48 +1,58 @@
 <?php
+
 namespace redb\mysql\traits;
 
 use redb\mysql\query\log;
+
+/**
+ * Trait commonTrait
+ * @package redb\mysql\traits
+ * @method  \redb\mysql\ormModel getOrmModel()
+ * @method \redb\mysql\query\cmd getCmd()
+ */
 
 trait commonTrait
 {
     protected $client = [];
 
-    public function close(){
+    public function close()
+    {
         return $this->getCmd()->close();
     }
 
-    public function reConnection(){
+    public function reConnection()
+    {
         return $this->getCmd()->close()->connection();
     }
 
     public function run()
     {
-        return $this->getCmd()->run($this->getCoreModel());
+        return $this->getCmd()->run($this->getOrmModel());
     }
 
 
     //update|select|delete
     public function where($where)
     {
-        $this->getCoreModel()->where($where);
+        $this->getOrmModel()->where($where);
         return $this;
     }
 
     public function orWhere($where)
     {
-        $this->getCoreModel()->orWhere($where);
+        $this->getOrmModel()->orWhere($where);
         return $this;
     }
 
     public function whereIn($column, array $values)
     {
-        $this->getCoreModel()->whereIn($column, $values);
+        $this->getOrmModel()->whereIn($column, $values);
         return $this;
     }
 
     public function whereNotIn($column, array $values)
     {
-        $this->getCoreModel()->whereNotIn($column, $values);
+        $this->getOrmModel()->whereNotIn($column, $values);
         return $this;
     }
 
@@ -51,7 +61,7 @@ trait commonTrait
      */
     public function leftBracket()
     {
-        $this->getCoreModel()->leftBracket();
+        $this->getOrmModel()->leftBracket();
         return $this;
     }
 
@@ -60,26 +70,26 @@ trait commonTrait
      */
     public function rightBracket()
     {
-        $this->getCoreModel()->rightBracket();
+        $this->getOrmModel()->rightBracket();
         return $this;
     }
 
     //insert|update
     public function data(array $data)
     {
-        $this->getCoreModel()->data($data);
+        $this->getOrmModel()->data($data);
         return $this;
     }
 
     public function setAction($action)
     {
-        $this->getCoreModel()->setAction($action);
+        $this->getOrmModel()->setAction($action);
         return $this;
     }
 
     public function getSql()
     {
-        return $this->getCoreModel()->getSql();
+        return $this->getOrmModel()->getSql();
     }
 
     /**

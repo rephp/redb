@@ -5,7 +5,7 @@ namespace redb\mysql;
 use redb\mysql\make\maker;
 use redb\mysql\query\log;
 
-class coreModel
+class ormModel
 {
     protected $page = 0;
     protected $limit = 0;
@@ -15,6 +15,7 @@ class coreModel
     protected $alias;
     protected $join = [];
     protected $union = [];
+    protected $unionAll = [];
     protected $orderBy;
     protected $groupBy;
     protected $having;
@@ -125,6 +126,12 @@ class coreModel
         return $this;
     }
 
+    public function unionAll(coreModel $model)
+    {
+        $this->unionAll[] = $model;
+        return $this;
+    }
+
     public function orderBy($orderBy='')
     {
         $this->orderBy = $orderBy;
@@ -146,7 +153,8 @@ class coreModel
 
     public function getSql()
     {
-        return maker::getSql($this);
+        return '';
+        //return maker::getSql($this);
     }
 
 

@@ -1,10 +1,11 @@
 <?php
 
-namespace  redb\mysql\query;
+namespace redb\mysql\query;
 
 class log
 {
     public static $history = [];
+    public static $error   = [];
 
     /**
      * 获取历史以来执行的sql
@@ -22,7 +23,12 @@ class log
      */
     public static function setLog($sql, $time = 0)
     {
-        return self::$history[] = [$time => $sql];
+        return self::$history[] = ['time' => $time, 'sql' => $sql];
+    }
+
+    public static function setErrorLog($sql, $time = 0, $extErrorInfo)
+    {
+        return self::$error[] = ['time' => $time, 'sql' => $sql, 'error' => $extErrorInfo];
     }
 
 }

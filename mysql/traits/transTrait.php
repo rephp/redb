@@ -1,6 +1,10 @@
 <?php
 namespace redb\mysql\traits;
-
+/**
+ * Trait transTrait
+ * @package redb\mysql\traits
+ * @method \redb\mysql\query\cmd getCmd()
+ */
 trait transTrait
 {
     public function startTrans()

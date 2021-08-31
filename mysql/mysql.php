@@ -8,13 +8,17 @@ use redb\mysql\traits\insertTrait;
 use redb\mysql\traits\deleteTrait;
 use redb\mysql\traits\updateTrait;
 
+/**
+ * Class mysql
+ * @package redb\mysql
+ */
 class mysql
 {
-    /*
+    /**
      * model内核
-     * @var object
+     * @var \redb\mysql\ormModel $ormModel
      */
-    protected $coreModel;
+    protected $ormModel;
 
     use commonTrait;
     use insertTrait;
@@ -31,6 +35,9 @@ class mysql
         return new self();
     }
 
+    /**
+     * @return cmd
+     */
     public function getCmd()
     {
         if(!is_object($this->cmd)){
@@ -42,14 +49,14 @@ class mysql
 
     /**
      * 获取内核model实例对象
-     * @return coreModel
+     * @return \redb\mysql\ormModel $this->ormModel
      */
-    final private function getCoreModel()
+    final private function getOrmModel()
     {
-        if(!is_object($this->coreModel)){
-            $this->coreModel = new coreModel();
+        if(!is_object($this->ormModel)){
+            $this->ormModel = new ormModel();
         }
-        return $this->coreModel;
+        return $this->ormModel;
     }
 
     /**

@@ -1,37 +1,25 @@
 <?php
 namespace redb\mysql\query\traits;
 
-use redb\mysql\query\log;
-
 trait insertTrait
 {
 
-    public function insert()
+    public function insert($preSql, $bindParams=[])
     {
-        $startTime = microtime(true);
-        //todo:something
-        //...
-        log::setLog($sql, round(microtime(true) - $startTime, 6) . 'S');
+
 
         return $result;
     }
 
-    public function insertReplace()
+    public function insertReplace($preSql, $bindParams=[])
     {
-        $startTime = microtime(true);
-        //todo:something
-        //...
-        log::setLog($sql, round(microtime(true) - $startTime, 6) . 'S');
 
         return $result;
     }
 
-    public function insertIgnore()
+    public function insertIgnore($preSql, $bindParams=[])
     {
-        $startTime = microtime(true);
-        //todo:something
-        //...
-        log::setLog($sql, round(microtime(true) - $startTime, 6) . 'S');
+
 
         return $result;
     }

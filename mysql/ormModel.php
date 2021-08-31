@@ -157,6 +157,16 @@ class ormModel
         //return maker::getSql($this);
     }
 
+    public function getPreSql()
+    {
+
+    }
+
+    public function getBindParams()
+    {
+
+    }
+
 
 
 

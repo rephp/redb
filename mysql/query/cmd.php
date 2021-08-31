@@ -2,7 +2,7 @@
 
 namespace redb\mysql\query;
 
-use redb\mysql\coreModel;
+use redb\mysql\ormModel;
 use redb\mysql\query\traits\selectTrait;
 use redb\mysql\query\traits\insertTrait;
 use redb\mysql\query\traits\updateTrait;
@@ -22,12 +22,17 @@ class cmd
     public function close()
     {
         $this->pdo  = null;
-        $this->stmt = null;
         return $this;
     }
 
-    public function connection()
+    public function connect()
     {
+        if(!$this->pdo){
+            $options = array(
+                \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES ' . $this->charset,
+            );
+            $this->pdo = new \PDO($this->dsn, $this->user, $this->password, $options);
+        }
         return $this;
     }
 
@@ -36,13 +41,51 @@ class cmd
         return $this->close()->connection();
     }
 
+    /**
+     * @return \PDO pdo链接
+     */
     public function getDb()
     {
         return $this->pdo;
     }
 
+    /**
+     * @param   string    $sql
+     * @param array $params
+     * @return \PDOStatement
+     */
+    public function execute($sql, $params=[])
+    {
+        $startTime = microtime(true);
+        try{
+            //创建pdo预处理对象
+            $stmt = $this->getDb()->prepare($sql);
+            //绑定参数到预处理对象
+            foreach($params as $fileld => $value){
+                $stmt->bindValue(':'.$fileld,$value);
+            }
+            //执行命令
+            $res = $stmt->execute();
+            log::setLog($sql, round(microtime(true) - $startTime, 6));
 
-    public function run(coreModel $model)
+            return $res;
+
+        }catch (\Exception $e) {
+            //其他情况记录mysql错误日志
+            $extErrorInfo = [
+                'code' => $e->getCode(),
+                'msg'  => $e->getMessage(),
+                'line' => $e->getLine(),
+                'file' => $e->getFile(),
+            ];
+            log::setErrorLog($sql, round(microtime(true) - $startTime, 6), $extErrorInfo);
+        }
+
+
+    }
+
+
+    public function run(ormModel $model)
     {
         //1.获取要生成要执行的query类名字
         $action = $model->getAction();
@@ -51,8 +94,9 @@ class cmd
         }
         //2.执行并返回结果
         try {
-            $sql = $model->getSql();
-            return $this->$action($sql);
+            $sql        = $model->getPreSql();
+            $bindParams = $model->getBindParams();
+            return $this->$action($sql, $bindParams);
         } catch (\Exception $e) {
             if (($e instanceof \yii\db\Exception) == true) {
                 $offset_1         = stripos($e->getMessage(), 'MySQL server has gone away');
@@ -76,14 +120,7 @@ class cmd
                     return $this->$action($sql);
                 }
             }
-            //其他情况记录mysql错误日志
-            $extErrorInfo = [
-                'code' => $e->getCode(),
-                'msg'  => $e->getMessage(),
-                'line' => $e->getLine(),
-                'file' => $e->getFile(),
-            ];
-            log::setErrorLog($sql, 0, $extErrorInfo);
+
         }
 
         return false;

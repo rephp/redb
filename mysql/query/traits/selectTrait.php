@@ -1,37 +1,26 @@
 <?php
 namespace redb\mysql\query\traits;
 
-use redb\mysql\query\log;
-
 trait selectTrait
 {
 
-    public function one()
+    public function one($preSql, $bindParams=[])
     {
-        $startTime = microtime(true);
-        //todo:something
-        //...
-        log::setLog($sql, round(microtime(true) - $startTime, 6) . 'S');
+
 
         return $result;
     }
 
-    public function all()
+    public function all($preSql, $bindParams=[])
     {
-        $startTime = microtime(true);
-        //todo:something
-        //...
-        log::setLog($sql, round(microtime(true) - $startTime, 6) . 'S');
+
 
         return $result;
     }
 
-    public function count()
+    public function count($preSql, $bindParams=[])
     {
-        $startTime = microtime(true);
-        //todo:something
-        //...
-        log::setLog($sql, round(microtime(true) - $startTime, 6) . 'S');
+
 
         return $result;
     }

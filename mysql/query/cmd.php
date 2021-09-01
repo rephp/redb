@@ -18,6 +18,14 @@ class cmd
      */
     protected $pdo;
 
+    public function __construct($host='127.0.0.1', $port=3389, $username='', $password='')
+    {
+        $this->host     = $host;
+        $this->port     = $port;
+        $this->username = $username;
+        $this->password = $password;
+    }
+
 
     public function close()
     {
@@ -30,8 +38,9 @@ class cmd
         if(!$this->pdo){
             $options = array(
                 \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES ' . $this->charset,
+                \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
             );
-            $this->pdo = new \PDO($this->dsn, $this->user, $this->password, $options);
+            $this->pdo = new \PDO($this->dsn, $this->username, $this->password, $options);
         }
         return $this;
     }
@@ -50,24 +59,24 @@ class cmd
     }
 
     /**
-     * @param   string    $sql
+     * @param   string    $preSql
      * @param array $params
      * @return \PDOStatement
      */
-    public function execute($sql, $params=[])
+    public function execute($preSql, $params=[])
     {
         $startTime = microtime(true);
         try{
             //创建pdo预处理对象
-            $stmt = $this->getDb()->prepare($sql);
+            $stmt = $this->getDb()->prepare($preSql);
             //绑定参数到预处理对象
             foreach($params as $fileld => $value){
                 $stmt->bindValue(':'.$fileld,$value);
             }
             //执行命令
             $res = $stmt->execute();
-            log::setLog($sql, round(microtime(true) - $startTime, 6));
-
+            log::setLog($preSql, round(microtime(true) - $startTime, 6));
+            $stmt = null;
             return $res;
 
         }catch (\Exception $e) {
@@ -78,10 +87,10 @@ class cmd
                 'line' => $e->getLine(),
                 'file' => $e->getFile(),
             ];
-            log::setErrorLog($sql, round(microtime(true) - $startTime, 6), $extErrorInfo);
+            log::setErrorLog($preSql, round(microtime(true) - $startTime, 6), $extErrorInfo);
         }
 
-
+        return false;
     }
 
 

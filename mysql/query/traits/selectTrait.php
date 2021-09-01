@@ -1,27 +1,44 @@
 <?php
 namespace redb\mysql\query\traits;
-
+/**
+ * Trait selectTrait
+ * @package redb\mysql\query\traits
+ * @method \PDOStatement  execute($preSql, $bindParams)
+ */
 trait selectTrait
 {
 
     public function one($preSql, $bindParams=[])
     {
+        $stmt = $this->execute($preSql, $bindParams);
+        if(!$stmt){
+            $stmt = null;
+            return false;
+        }
 
+        $result = $stmt->fetch();
+        $stmt = null;
 
         return $result;
     }
 
     public function all($preSql, $bindParams=[])
     {
+        $stmt = $this->execute($preSql, $bindParams);
+        if(!$stmt){
+            $stmt = null;
+            return false;
+        }
 
+        $result = $stmt->fetchAll();
+        $stmt = null;
 
         return $result;
     }
 
     public function count($preSql, $bindParams=[])
     {
-
-
-        return $result;
+        $res = $this->one($preSql, $bindParams);
+        return $res['num'];
     }
 }

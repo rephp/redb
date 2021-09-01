@@ -2,7 +2,7 @@
 
 namespace redb\mysql\query;
 
-use redb\mysql\ormModel;
+use redb\mysql\orm\ormModel;
 use redb\mysql\query\traits\selectTrait;
 use redb\mysql\query\traits\insertTrait;
 use redb\mysql\query\traits\updateTrait;

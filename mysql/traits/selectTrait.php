@@ -6,7 +6,7 @@ use redb\mysql\mysql;
 /**
  * Trait selectTrait
  * @package redb\mysql\traits
- * @method  \redb\mysql\ormModel getOrmModel()
+ * @method  \redb\mysql\orm\ormModel getOrmModel()
  * @method \redb\mysql\query\cmd getCmd()
  * @method \redb\mysql\mysql setAction()
  */

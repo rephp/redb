@@ -1,20 +1,18 @@
 <?php
-namespace redb\mysql;
 
+namespace redb\mysql\orm;
 
-use redb\mysql\make\maker;
-use redb\mysql\query\log;
 
 class ormModel
 {
-    protected $page = 0;
-    protected $limit = 0;
-    protected $data = [];
-    protected $where = [];
+    protected $page     = 0;
+    protected $limit    = 0;
+    protected $data     = [];
+    protected $where    = [];
     protected $action;
     protected $alias;
-    protected $join = [];
-    protected $union = [];
+    protected $join     = [];
+    protected $union    = [];
     protected $unionAll = [];
     protected $orderBy;
     protected $groupBy;
@@ -28,7 +26,7 @@ class ormModel
 
     public function orWhere($where)
     {
-        $this->where[] = ['OR'=>$where];
+        $this->where[] = ['OR' => $where];
         return $this;
     }
 
@@ -80,23 +78,23 @@ class ormModel
         return $this->action;
     }
 
-    public function page($page=0)
+    public function page($page = 0)
     {
         $page = (int)$page;
-        ($page<1) && $page = 0;
+        ($page < 1) && $page = 0;
         $this->page = $page;
         return $this;
     }
 
-    public function limit($pageSize=0)
+    public function limit($pageSize = 0)
     {
         $pageSize = (int)$pageSize;
-        ($pageSize<1) && $pageSize = 0;
+        ($pageSize < 1) && $pageSize = 0;
         $this->limit = $pageSize;
         return $this;
     }
 
-    public function alias($alias='')
+    public function alias($alias = '')
     {
         $this->alias = $alias;
         return $this;
@@ -132,19 +130,19 @@ class ormModel
         return $this;
     }
 
-    public function orderBy($orderBy='')
+    public function orderBy($orderBy = '')
     {
         $this->orderBy = $orderBy;
         return $this;
     }
 
-    public function groupBy($groupBy='')
+    public function groupBy($groupBy = '')
     {
         $this->groupBy = $groupBy;
         return $this;
     }
 
-    public function having($having='')
+    public function having($having = '')
     {
         $this->having($having);
         return $this;
@@ -153,8 +151,9 @@ class ormModel
 
     public function getSql()
     {
-        return '';
-        //return maker::getSql($this);
+        $preSql     = $this->getPreSql();
+        $bindParams = $this->getBindParams();
+        return vsprintf($preSql, $bindParams);
     }
 
     public function getPreSql()
@@ -166,10 +165,6 @@ class ormModel
     {
 
     }
-
-
-
-
 
 
 }

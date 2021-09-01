@@ -7,6 +7,7 @@ use redb\mysql\query\cmd;
 use redb\mysql\traits\insertTrait;
 use redb\mysql\traits\deleteTrait;
 use redb\mysql\traits\updateTrait;
+use redb\mysql\orm\ormModel;
 
 /**
  * Class mysql
@@ -49,7 +50,7 @@ class mysql
 
     /**
      * 获取内核model实例对象
-     * @return \redb\mysql\ormModel $this->ormModel
+     * @return \redb\mysql\orm\ormModel $this->ormModel
      */
     final private function getOrmModel()
     {

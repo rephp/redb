@@ -50,11 +50,11 @@ trait commonTrait
             $stmt = $this->getDb()->prepare($preSql);
             //绑定参数到预处理对象
             foreach($params as $fileld => $value){
-                $stmt->bindValue(':'.$fileld,$value);
+                $stmt->bindValue($fileld, $value);
             }
             //执行命令
             $res = $stmt->execute();
-            log::setLog($preSql, round(microtime(true) - $startTime, 6));
+            log::setLog(vsprintf($preSql, $params), round(microtime(true) - $startTime, 6));
             $stmt = null;
             return $res;
 
@@ -66,7 +66,7 @@ trait commonTrait
                 'line' => $e->getLine(),
                 'file' => $e->getFile(),
             ];
-            log::setErrorLog($preSql, round(microtime(true) - $startTime, 6), $extErrorInfo);
+            log::setErrorLog(vsprintf($preSql, $params), round(microtime(true) - $startTime, 6), $extErrorInfo);
         }
 
         return false;

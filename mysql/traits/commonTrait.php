@@ -7,7 +7,7 @@ use redb\mysql\query\log;
 /**
  * Trait commonTrait
  * @package redb\mysql\traits
- * @method  \redb\mysql\ormModel getOrmModel()
+ * @method  \redb\mysql\orm\ormModel getOrmModel()
  * @method \redb\mysql\query\cmd getCmd()
  */
 

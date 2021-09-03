@@ -50,12 +50,14 @@ trait commonTrait
             //创建pdo预处理对象
             $stmt = $this->getDb()->prepare($preSql);
             //绑定参数到预处理对象
+            $index = 1;
             foreach($params as $fileld => $value){
-                $stmt->bindValue($fileld, $value);
+                $stmt->bindValue($index, $value);
+                $index++;
             }
             //执行命令
             $res = $stmt->execute();
-            log::setLog(vsprintf($preSql, $params), round(microtime(true) - $startTime, 6));
+            log::setLog(vsprintf(str_replace('?', '%s', $preSql), $params), round(microtime(true) - $startTime, 6));
             $stmt = null;
             return $res;
 

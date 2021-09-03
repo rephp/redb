@@ -43,6 +43,11 @@ class ormModel
         return $this;
     }
 
+    public function getWhere()
+    {
+        return $this->where;
+    }
+
     /**
      * 左括号
      */
@@ -89,6 +94,17 @@ class ormModel
     public function getAction()
     {
         return $this->action;
+    }
+
+    public function setTable($table)
+    {
+        $this->table = $table;
+        return $this;
+    }
+
+    public function getTable()
+    {
+        return $this->table;
     }
 
     public function page($page = 0)

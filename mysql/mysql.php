@@ -56,6 +56,7 @@ class mysql
     {
         if(!is_object($this->ormModel)){
             $this->ormModel = new ormModel();
+            $this->ormModel->setTable(self::getTable());
         }
         return $this->ormModel;
     }

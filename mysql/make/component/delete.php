@@ -1,6 +1,6 @@
 <?php
 namespace redb\mysql\make\component;
-use redb\mysql\lib\lib;
+use redb\mysql\make\lib\lib;
 
 class delete
 {
@@ -9,6 +9,33 @@ class delete
     {
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * 生成删除presql语句

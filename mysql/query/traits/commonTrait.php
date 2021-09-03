@@ -16,6 +16,7 @@ trait commonTrait
     {
         if(!$this->pdo){
             $options = array(
+                \PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                 \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES ' . $this->charset,
                 \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
             );

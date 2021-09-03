@@ -24,13 +24,21 @@ class cmd
      * @var pdo链接
      */
     protected $pdo;
+    protected $host;
+    protected $port;
+    protected $username;
+    protected $password;
+    protected $database;
+    protected $charset;
 
-    public function __construct($host='127.0.0.1', $port=3389, $username='', $password='')
+    public function __construct($host='127.0.0.1', $port=3389, $username='', $password='', $database='', $charset='utf8')
     {
         $this->host     = $host;
         $this->port     = $port;
         $this->username = $username;
         $this->password = $password;
+        $this->database = $database;
+        $this->charset  = $charset;
     }
 
     public function run(ormModel $model)

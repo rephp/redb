@@ -9,6 +9,7 @@ class ormModel
     protected $limit    = 0;
     protected $data     = [];
     protected $where    = [];
+    protected $incList  = [];
     protected $action;
     protected $alias;
     protected $join     = [];
@@ -64,6 +65,18 @@ class ormModel
     public function data(array $data)
     {
         $this->data = $data;
+        return $this;
+    }
+
+    public function inc($column, $step=1)
+    {
+        $this->incList = ['type'=>'inc', 'column'=>$column, 'step'=>$step];
+        return $this;
+    }
+
+    public function dec($column, $step=1)
+    {
+        $this->incList = ['type'=>'dec', 'column'=>$column, 'step'=>$step];
         return $this;
     }
 

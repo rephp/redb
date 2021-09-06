@@ -21,6 +21,7 @@ class ormModel
     protected $orderBy;
     protected $groupBy;
     protected $having;
+    protected $select;
 
     protected function maker()
     {
@@ -170,22 +171,32 @@ class ormModel
         return $this;
     }
 
+    public function getAlias()
+    {
+        return $this->alias;
+    }
+
     public function leftJoin($tableName, $on)
     {
-        $this->join[] = [$tableName, $on, 'leftJoin'];
+        $this->join[] = ['LEFT JOIN', $tableName, $on];
         return $this;
     }
 
     public function rightJoin($tableName, $on)
     {
-        $this->join[] = [$tableName, $on, 'rightJoin'];
+        $this->join[] = ['RIGHT JOIN', $tableName, $on];
         return $this;
     }
 
     public function innerJoin($tableName, $on)
     {
-        $this->join[] = [$tableName, $on, 'innerJoin'];
+        $this->join[] = ['INNER JOIN', $tableName, $on];
         return $this;
+    }
+
+    public function getJoin()
+    {
+        return $this->join;
     }
 
     public function union(coreModel $model)
@@ -215,6 +226,12 @@ class ormModel
     public function having($having = '')
     {
         $this->having($having);
+        return $this;
+    }
+
+    public function select($select)
+    {
+        $this->select = $select;
         return $this;
     }
 

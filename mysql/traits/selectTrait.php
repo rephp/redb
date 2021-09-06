@@ -50,29 +50,6 @@ trait selectTrait
         return $this->limit($pageSize);
     }
 
-    public function alias($alias='')
-    {
-        $this->getOrmModel()->alias($alias);
-        return $this;
-    }
-
-    public function leftJoin($tableName, $on)
-    {
-        $this->getOrmModel()->leftJoin($tableName, $on);
-        return $this;
-    }
-
-    public function rightJoin($tableName, $on)
-    {
-        $this->getOrmModel()->rightJoin($tableName, $on);
-        return $this;
-    }
-
-    public function innerJoin($tableName, $on)
-    {
-        $this->getOrmModel()->innerJoin($tableName, $on);
-        return $this;
-    }
 
     public function union(Mysql $client)
     {
@@ -107,6 +84,12 @@ trait selectTrait
     public function having($having='')
     {
         $this->getOrmModel()->having($having);
+        return $this;
+    }
+
+    public function select($select)
+    {
+        $this->getOrmModel()->select($select);
         return $this;
     }
 

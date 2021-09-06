@@ -30,7 +30,6 @@ trait commonTrait
         return $this->getCmd()->run($this->getOrmModel());
     }
 
-
     //update|select|delete
     public function where($where)
     {
@@ -81,6 +80,29 @@ trait commonTrait
     }
 
 
+    public function alias($alias='')
+    {
+        $this->getOrmModel()->alias($alias);
+        return $this;
+    }
+
+    public function leftJoin($tableName, $on)
+    {
+        $this->getOrmModel()->leftJoin($tableName, $on);
+        return $this;
+    }
+
+    public function rightJoin($tableName, $on)
+    {
+        $this->getOrmModel()->rightJoin($tableName, $on);
+        return $this;
+    }
+
+    public function innerJoin($tableName, $on)
+    {
+        $this->getOrmModel()->innerJoin($tableName, $on);
+        return $this;
+    }
 
 
     /**

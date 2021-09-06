@@ -12,6 +12,9 @@ trait commonTrait
 {
     protected function parseWhere($where)
     {
+        if(empty($where)){
+            return $this;
+        }
         $currentOperate = '';
         $preSql = '';
         $firstItemFlag = true;
@@ -43,7 +46,7 @@ trait commonTrait
         }
         $this->wherePreSql = $preSql;
 
-        return $preSql;
+        return $this;
     }
 
     protected function parseWhereItem($item)
@@ -89,4 +92,7 @@ trait commonTrait
 
         return $result;
     }
+
+
+
 }

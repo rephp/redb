@@ -1,48 +1,17 @@
 <?php
-namespace redb\mysql\make\component;
-use redb\mysql\make\lib\lib;
+namespace redb\mysql\make\traits;
 use redb\mysql\orm\ormModel;
 
-class delete
+/**
+ * Trait commonTrait
+ * @package redb\mysql\make\traits
+ * @property array $bindParams
+ */
+
+trait commonTrait
 {
-    protected $preSql;
-    protected $wherePreSql;
-    protected $bodyPreSql;
-    protected $joinPreSql;
-    protected $bindParams = [];
-
-    public function parseModelInfo(ormModel $model)
+    protected function parseWhere($where)
     {
-        $where = $model->getWhere();
-        foreach($where as $item){
-            $this->bindParams[] = $item['value'];
-        }
-
-        return $this;
-    }
-
-    public function deal(ormModel $model)
-    {
-        $table = $model->getTable();
-        $preSql      = 'DELETE FROM `' . $table . '` ';
-        $wherePreSql = lib::formatWherePreSql($where);
-        empty($wherePreSql) || $preSql .= ' WHERE ' . $wherePreSql;
-
-        return $preSql;
-    }
-    public static function getWherePreSql($where)
-    {
-            //            //1.and, or, ()    //2.(not)in,(not)like,(not)isnull,（=><）,(not)BETWEEN
-//            ['and', ['column', '=', '333']],
-//            ['('],
-//                ['and', ['column', '=', '333']],
-//                ['or', ['column', 'in', ['333']]],
-//                ['and', ['column', 'in', '333,33']],
-//                ['and', ['column', 'like', '333,33']],
-//                 ['and', ['column', 'BETWEEN', '333,33']],
-//                 ['and', ['column', 'isnull']],
-//            [')'],
-
         $currentOperate = '';
         $preSql = '';
         $firstItemFlag = true;
@@ -66,23 +35,21 @@ class delete
                     break;
                 default:
                     $firstItemFlag && $currentOperate = '';
-                    $preSql .= $currentOperate.self::getColumnPreSql($item);
+                    $preSql .= $currentOperate.$this->getColumnPreSql($item);
                     $firstItemFlag = false;
                     $currentOperate = ' and ';
                     break;
             }
         }
+        $this->wherePreSql = $preSql;
 
         return $preSql;
     }
 
-    public static function getColumnPreSql($item)
+    protected function parseWhereItem($item)
     {
         //兼容跨库
         $item[0] = '`'.str_replace('.', '`.`', $item[0]).'` ';
-        if(!isset($item[2])){
-            return $item[0].$item[1];
-        }
         $result = '';
         $case = str_replace(' ', '', strtolower($item[1]));
         $case = str_replace('\t', '', $case);
@@ -90,11 +57,13 @@ class delete
             case 'in':
             case 'notin':
                 is_array($item[2]) || $item[2]  = explode(',', $item[2]);
-                $result = $item[0].$item[1] . ' (\''.implode('\',\'', $item[2]).'\')';
+                $result = $item[0].$item[1] . ' ('.implode(',', $item[2]).')';
+                $this->bindParams = array_merge($this->bindParams, $item[2]);
                 break;
             case 'like':
             case 'notlike':
-                $result = $item[0].$item[1] .' \'%'.$item[2].'%\'';
+                $result = $item[0].$item[1] .' \'%?%\'';
+                $this->bindParams[] = $item[2];
                 break;
             case 'between':
             case 'notbetween':
@@ -103,7 +72,9 @@ class delete
                 $endValue = end($item[2]);
                 is_numeric($startValue) || $startValue = '\''.$startValue.'\'';
                 is_numeric($endValue) || $endValue = '\''.$endValue.'\'';
-                $result = '('.$item[0].$item[1] .' '.$startValue.' AND '.$endValue.')';
+                $result = '('.$item[0].$item[1] .' ? AND ?)';
+                $this->bindParams[] = $startValue;
+                $this->bindParams[] = $endValue;
                 break;
             case 'isnull':
             case 'isnotnull':
@@ -111,11 +82,11 @@ class delete
                 break;
             default://运算符
                 is_numeric($item[2]) || $item[2] = '\''.$item[2].'\'';
-                $result = $item[0].$item[1].' '.$item[2];
+                $result = $item[0].$item[1].' ?';
+                $this->bindParams[] = $item[2];
                 break;
         }
 
         return $result;
     }
-
 }

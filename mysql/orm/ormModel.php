@@ -3,8 +3,11 @@
 namespace redb\mysql\orm;
 
 
+use redb\mysql\make\maker;
+
 class ormModel
 {
+    protected $maker;
     protected $page     = 0;
     protected $limit    = 0;
     protected $data     = [];
@@ -19,15 +22,34 @@ class ormModel
     protected $groupBy;
     protected $having;
 
+    protected function maker()
+    {
+        if(!is_object($this->maker)){
+            $this->maker = new maker($this);
+        }
+        return $this->maker;
+    }
+
+    public function getWhere()
+    {
+        return $this->where;
+    }
+
     public function where($where)
     {
         $this->where[] = $where;
         return $this;
     }
 
+    public function orQuery()
+    {
+        $this->where[] = ['OR'];
+        return $this;
+    }
+
     public function orWhere($where)
     {
-        $this->where[] = ['OR' => $where];
+        $this->orQuery()->where($where);
         return $this;
     }
 
@@ -43,9 +65,28 @@ class ormModel
         return $this;
     }
 
-    public function getWhere()
+    public function like($column, $value)
     {
-        return $this->where;
+        $this->where[] = [$column, 'LIKE', $value];
+        return $this;
+    }
+
+    public function notLike($column, $value)
+    {
+        $this->where[] = [$column, 'NOT LIKE', $value];
+        return $this;
+    }
+
+    public function between($column, $min, $max)
+    {
+        $this->where[] = [$column, 'BETWEEN', [$min, $max]];
+        return $this;
+    }
+
+    public function notBetween($column, $min, $max)
+    {
+        $this->where[] = [$column, 'NOT BETWEEN', [$min, $max]];
+        return $this;
     }
 
     /**
@@ -180,20 +221,22 @@ class ormModel
 
     public function getSql()
     {
-        $preSql     = $this->getPreSql();
-        $bindParams = $this->getBindParams();
+        $preSql     = $this->maker()->getPreSql();
+        $bindParams = $this->maker()->getBindParams();
         return vsprintf($preSql, $bindParams);
     }
 
     public function getPreSql()
     {
-
+        return $this->maker()->getPreSql();
     }
 
     public function getBindParams()
     {
-
+        return $this->maker()->getBindParams();
     }
+
+
 
 
 }

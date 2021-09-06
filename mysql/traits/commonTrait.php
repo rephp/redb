@@ -56,6 +56,33 @@ trait commonTrait
         return $this;
     }
 
+    public function like($column, $value)
+    {
+        $this->getOrmModel()->like($column, $value);
+        return $this;
+    }
+
+    public function notLike($column, $value)
+    {
+        $this->getOrmModel()->notLike($column, $value);
+        return $this;
+    }
+
+    public function between($column, $min, $max)
+    {
+        $this->getOrmModel()->between($column, $min, $max);
+        return $this;
+    }
+
+    public function notBetween($column, $min, $max)
+    {
+        $this->getOrmModel()->notBetween($column, $min, $max);
+        return $this;
+    }
+
+
+
+
     /**
      * 左括号
      */

@@ -1,25 +1,33 @@
 <?php
 namespace redb\mysql\make;
 
+use redb\mysql\orm\ormModel;
+
 class maker
 {
+   protected $preSql;
+   protected $bindParams=[];
+   protected $com;
 
-    public static function getPreSql(coreModel $model)
+   public function getComponent(ormModel $model)
+   {
+       if(!is_object($this->com)){
+           $action    =  $model->getAction();
+           $actionArr = explode(' ', $action);
+           $action    = current($actionArr);
+           $this->com = (new $action())->parseModelInfo($model);
+       }
+       return $this->com;
+   }
+
+    public function getPreSql(coreModel $model)
     {
-        $action    =  $model->getAction();
-        $actionArr = explode(' ', $action);
-        $action    = current($actionArr);
-        //todo:利用反射引入命名空间类，并调用方法
-        return $instance->getPreSql($model);
+        return $this->getComponent($model)->getPreSql();
     }
 
-    public static function getBindArr(coreModel $model)
+    public function getBindParams(coreModel $model)
     {
-        $action    =  $model->getAction();
-        $actionArr = explode(' ', $action);
-        $action    = current($actionArr);
-        //todo:利用反射引入命名空间类，并调用方法
-        return $instance->getBindArr($model);
+        return $this->getComponent($model)->getBindParams();
     }
 
 }

@@ -115,6 +115,11 @@ class ormModel
         return $this;
     }
 
+    public function getData()
+    {
+        return $this->data;
+    }
+
     public function inc($column, $step=1)
     {
         $this->incList = ['type'=>'inc', 'column'=>$column, 'step'=>$step];

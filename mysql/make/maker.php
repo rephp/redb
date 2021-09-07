@@ -20,12 +20,12 @@ class maker
        return $this->com;
    }
 
-    public function getPreSql(coreModel $model)
+    public function getPreSql(ormModel $model)
     {
         return $this->getComponent($model)->getPreSql();
     }
 
-    public function getBindParams(coreModel $model)
+    public function getBindParams(ormModel $model)
     {
         return $this->getComponent($model)->getBindParams();
     }

@@ -34,4 +34,19 @@ trait insertTrait
         return $this->insert($preSql, $bindParams);
     }
 
+    public function batchInsert($preSql, $bindParams=[])
+    {
+        return $this->insert($preSql, $bindParams);
+    }
+
+    public function batchInsertReplace($preSql, $bindParams=[])
+    {
+        return $this->insert($preSql, $bindParams);
+    }
+
+    public function batchInsertIgnore($preSql, $bindParams=[])
+    {
+        return $this->insert($preSql, $bindParams);
+    }
+
 }

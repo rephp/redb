@@ -23,4 +23,20 @@ trait insertTrait
         return $this->setAction('insertIgnore')->run();
     }
 
+    public function batchInsert()
+    {
+        return $this->setAction('batchInsert')->run();
+    }
+
+    public function batchInsertReplace()
+    {
+        return $this->setAction('batchInsertReplace')->run();
+    }
+
+    public function batchInsertIgnore()
+    {
+        return $this->setAction('batchInsertIgnore')->run();
+    }
+
+
 }

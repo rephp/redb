@@ -1,7 +1,6 @@
 <?php
 namespace redb\mysql\make\component;
 
-
 use redb\mysql\make\traits\returnTrait;
 use redb\mysql\make\traits\joinTrait;
 use redb\mysql\make\traits\commonTrait;
@@ -37,7 +36,8 @@ class update
         $data = (array)$data;
         $preSqlArr = [];
         foreach($data as $key=>$value){
-            $preSql[] = $key.'='.$value;
+            $this->bindParams[] = $value;
+            $preSql[] = $key.'=?';
         }
         $this->dataPreSql = implode(',', $preSqlArr);
 

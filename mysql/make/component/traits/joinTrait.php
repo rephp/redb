@@ -1,12 +1,8 @@
 <?php
-namespace redb\mysql\make\traits;
-use redb\mysql\orm\ormModel;
+namespace redb\mysql\make\component\traits;
 
 trait joinTrait
 {
-//DELETE  alias FROM test AS alias LEFT JOIN test_copy ON test.`ttile`=test_copy.`ttile` WHERE test_copy.id=1;
-//DELETE test FROM test WHERE ttile='test';
-
     protected function parseJoin($joinArr)
     {
         if(empty($joinArr)){

@@ -1,8 +1,8 @@
 <?php
 namespace redb\mysql\make\component;
 
-use redb\mysql\make\traits\returnTrait;
-use redb\mysql\make\traits\commonTrait;
+use redb\mysql\make\component\traits\returnTrait;
+use redb\mysql\make\component\traits\commonTrait;
 use redb\mysql\orm\ormModel;
 
 class batchInsert

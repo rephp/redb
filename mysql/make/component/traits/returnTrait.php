@@ -1,6 +1,5 @@
 <?php
-namespace redb\mysql\make\traits;
-use redb\mysql\orm\ormModel;
+namespace redb\mysql\make\component\traits;
 
 trait returnTrait
 {

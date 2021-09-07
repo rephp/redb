@@ -1,9 +1,10 @@
 <?php
+
 namespace redb\mysql\make\component;
 
-use redb\mysql\make\traits\returnTrait;
-use redb\mysql\make\traits\joinTrait;
-use redb\mysql\make\traits\commonTrait;
+use redb\mysql\make\component\traits\returnTrait;
+use redb\mysql\make\component\traits\joinTrait;
+use redb\mysql\make\component\traits\commonTrait;
 use redb\mysql\orm\ormModel;
 
 class update
@@ -14,6 +15,7 @@ class update
     protected $joinPreSql;
     protected $bindParams = [];
     protected $dataPreSql;
+    protected $incPreSql;
 
     use returnTrait, joinTrait, commonTrait;
 
@@ -24,30 +26,50 @@ class update
         $table   = $model->getTable();
         $alias   = $model->getAlias();
         $data    = $model->getData();
+        $incList = $model->getIncList();
 
-        return $this->parseBody($table, $alias)->parseData($data)->parseWhere($where)->parseJoin($joinArr)->makePreSql();
+        return $this->parseBody($table, $alias)->parseData($data)->parseIncList($incList)->parseJoin($joinArr)->parseWhere($where)->makePreSql();
     }
 
-    protected function parseData($data=[])
+    protected function parseData($data = [])
     {
-        if(empty($data)){
+        if (empty($data)) {
             return false;
         }
-        $data = (array)$data;
+        $data      = (array)$data;
         $preSqlArr = [];
-        foreach($data as $key=>$value){
+        foreach ($data as $key => $value) {
             $this->bindParams[] = $value;
-            $preSql[] = $key.'=?';
+            $preSql[]           = $key . '=?';
         }
         $this->dataPreSql = implode(',', $preSqlArr);
 
         return true;
     }
 
-    protected function parseBody($table, $alias='')
+    protected function parseIncList($incList)
     {
-        $preSql      = 'UPDATE `' . $table . '` ';
-        empty($alias) || $preSql .= 'ALIAS '.$alias;
+        if (empty($incList)) {
+            return true;
+        }
+        $incList   = (array)$incList;
+        $preSqlArr = [];
+        foreach ($incList as $item) {
+            if ($item['type'] == 'inc') {
+                $preSqlArr[] = '`' . $item['column'] . '`=`' . $item['column'] . '` + ' . $item['step'];
+            } else {//dec
+                $preSqlArr[] = '`' . $item['column'] . '`=`' . $item['column'] . '` - ' . $item['step'];
+            }
+        }
+        $this->incPreSql = implode(',', $preSqlArr);
+
+        return $this;
+    }
+
+    protected function parseBody($table, $alias = '')
+    {
+        $preSql = 'UPDATE `' . $table . '` ';
+        empty($alias) || $preSql .= 'ALIAS ' . $alias;
         $this->bodyPreSql = $preSql;
 
         return $this;
@@ -56,9 +78,15 @@ class update
     protected function makePreSql()
     {
         $preSql = $this->bodyPreSql;
-        empty($this->joinPreSql) || $preSql .= ' '.$this->joinPreSql;
-        $preSql .= ' SET '.$this->dataPreSql;
-        empty($this->wherePreSql) || $preSql .= ' WHERE '.$this->wherePreSql;
+        empty($this->joinPreSql) || $preSql .= ' ' . $this->joinPreSql;
+        if (empty($this->dataPreSql) || empty($this->incPreSql)) {
+            empty($this->dataPreSql) || $preSql .= ' SET ' . $this->dataPreSql;
+            empty($this->incPreSql)  || $preSql .= ' SET ' . $this->incPreSql;
+        } else {
+            $preSql .= ' SET ' . $this->dataPreSql . ',' . $this->incPreSql;
+        }
+
+        empty($this->wherePreSql) || $preSql .= ' WHERE ' . $this->wherePreSql;
         $this->preSql = $preSql;
 
         return $this;

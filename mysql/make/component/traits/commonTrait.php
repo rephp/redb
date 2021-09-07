@@ -1,6 +1,5 @@
 <?php
-namespace redb\mysql\make\traits;
-use redb\mysql\orm\ormModel;
+namespace redb\mysql\make\component\traits;
 
 /**
  * Trait commonTrait
@@ -10,6 +9,21 @@ use redb\mysql\orm\ormModel;
 
 trait commonTrait
 {
+
+    /**
+     * 过滤字段名，防止sql注入
+     * @param string $column 列名
+     * @return string
+     */
+    protected function filterColumn($column)
+    {
+        $replaceArr = [
+            ' ', '%', '*', '\t', '\\', '/', '\'', '"', '#', ';', '$', '@', '!', '(', ')', '+', '-', '=',
+        ];
+        $column     = str_replace($replaceArr, '', $column);
+        return $column;
+    }
+
     protected function parseWhere($where)
     {
         if(empty($where)){

@@ -2,9 +2,9 @@
 namespace redb\mysql\make\component;
 
 use redb\mysql\orm\ormModel;
-use redb\mysql\make\traits\returnTrait;
-use redb\mysql\make\traits\joinTrait;
-use redb\mysql\make\traits\commonTrait;
+use redb\mysql\make\component\traits\returnTrait;
+use redb\mysql\make\component\traits\joinTrait;
+use redb\mysql\make\component\traits\commonTrait;
 
 class delete
 {
@@ -23,7 +23,7 @@ class delete
         $table   = $model->getTable();
         $alias   = $model->getAlias();
 
-        return $this->parseBody($table, $alias)->parseWhere($where)->parseJoin($joinArr)->makePreSql();
+        return $this->parseBody($table, $alias)->parseJoin($joinArr)->parseWhere($where)->makePreSql();
     }
 
     protected function parseBody($table, $alias='')

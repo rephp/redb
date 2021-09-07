@@ -87,10 +87,11 @@ trait selectTrait
         return $this;
     }
 
-    public function select($select)
+    public function select($selectRawString)
     {
-        $this->getOrmModel()->select($select);
+        $this->getOrmModel()->select($selectRawString);
         return $this;
     }
+
 
 }

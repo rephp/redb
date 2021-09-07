@@ -132,6 +132,11 @@ class ormModel
         return $this;
     }
 
+    public function getIncList()
+    {
+        return $this->incList;
+    }
+
     public function setAction($action)
     {
         $this->action = $action;
@@ -240,6 +245,10 @@ class ormModel
         return $this;
     }
 
+    public function getSelect()
+    {
+        return $this->select;
+    }
 
     public function getSql()
     {

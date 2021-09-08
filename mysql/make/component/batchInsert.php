@@ -8,15 +8,13 @@ use redb\mysql\orm\ormModel;
 class batchInsert
 {
     protected $preSql;
-    protected $bodyPreSql;
+    protected $partPresqlArr = [];
     protected $bindParams = [];
-    protected $dataPreSql;
 
     use returnTrait, commonTrait;
 
     public function parseModelInfo(ormModel $model)
     {
-        $where   = $model->getWhere();
         $table   = $model->getTable();
         $data    = $model->getData();
 
@@ -26,7 +24,7 @@ class batchInsert
     protected function parseData($batchData=[])
     {
         if(empty($batchData)){
-            return false;
+            return $this;
         }
         $batchData = (array)$batchData;
         $data = current($batchData);
@@ -44,26 +42,18 @@ class batchInsert
             $preSql .= $splitStr.'('.implode(',', $tempArr).')';
             $splitStr = ',';
         }
-        $this->dataPreSql = $preSql;
+        $this->partPresqlArr[] = $preSql;
 
         return $this;
     }
 
     protected function parseBody($table)
     {
-        $this->bodyPreSql = 'INSERT INTO `' . $table . '` ';
+        $this->partPresqlArr[] = 'INSERT INTO `' . $table . '` ';
 
         return $this;
     }
 
-    protected function makePreSql()
-    {
-        $preSql = $this->bodyPreSql;
-        $preSql .= ' SET '.$this->dataPreSql;
-        $this->preSql = $preSql;
-
-        return $this;
-    }
 
 
 }

@@ -65,7 +65,7 @@ trait selectTrait
 
     public function lock()
     {
-        $this->getCmd()->lock();
+        $this->getOrmModel()->lock();
         return $this;
     }
 

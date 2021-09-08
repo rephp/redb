@@ -6,7 +6,7 @@ class batchInsertIgnore extends batchInsert
 
     protected function parseBody($table)
     {
-        $this->bodyPreSql = 'INSERT IGNORE INTO `' . $table . '` ';
+        $this->partPresqlArr[] = 'INSERT IGNORE INTO `' . $table . '` ';
 
         return $this;
     }

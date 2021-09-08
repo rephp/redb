@@ -15,7 +15,7 @@ trait joinTrait
             }
             $preSql .= $item[0].' '.$item[1] .' ON '.$item[2];
         }
-        $this->joinPreSql = $preSql;
+        $this->partPresqlArr[] = $preSql;
 
         return $this;
     }

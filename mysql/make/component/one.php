@@ -6,16 +6,15 @@ use redb\mysql\orm\ormModel;
 use redb\mysql\make\component\traits\returnTrait;
 use redb\mysql\make\component\traits\joinTrait;
 use redb\mysql\make\component\traits\commonTrait;
+use redb\mysql\make\component\traits\selectTrait;
 
 class one
 {
     protected $preSql;
-    protected $wherePreSql;
-    protected $bodyPreSql;
-    protected $joinPreSql;
+    protected $partPresqlArr = [];
     protected $bindParams = [];
 
-    use returnTrait, joinTrait, commonTrait;
+    use returnTrait, joinTrait, commonTrait, selectTrait;
 
     public function parseModelInfo(ormModel $model)
     {
@@ -28,13 +27,12 @@ class one
         return $this->parseBody($table, $select, $alias)
                     ->parseJoin($joinArr)
                     ->parseWhere($where)
-                    ->parseGroupBy()
-                    ->parseLimit()
-                    ->parseHaving()
-                    ->parseOrderBy()
-                    ->parseLock()
-                    ->parseUnion()
-                    ->parseUnionAll()
+                    ->parseGroupBy($model->getGroupBy())
+                    ->parseLimit(1, 1)
+                    ->parseHaving($model->getHaving())
+                    ->parseOrderBy($model->getOrderBy())
+                    ->parseLock($model->getLock())
+                    ->parseUnion($model->getUnion())
                     ->makePreSql();
     }
 
@@ -43,25 +41,23 @@ class one
         $deleteObject = empty($alias) ? $table : $alias;
         $preSql       = 'SELECT ' . $select . ' FROM `' . $table . '` ';
         empty($alias) || $preSql .= 'ALIAS ' . $alias;
-        $this->bodyPreSql = $preSql;
+        $this->partPresqlArr[] = $preSql;
 
         return $this;
     }
 
-    protected function parseLock()
+    protected function parseLock($lockStatus=false)
     {
-
-    }
-
-
-    protected function makePreSql()
-    {
-        $preSql = $this->bodyPreSql;
-        empty($this->joinPreSql) || $preSql .= ' ' . $this->joinPreSql;
-        empty($this->wherePreSql) || $preSql .= ' WHERE ' . $this->wherePreSql;
-        $this->preSql = $preSql;
+        if(!$lockStatus){
+            return $this;
+        }
+        $lockStatus && $preSql = 'FOR UPDATE';
+        $this->partPresqlArr[] = $preSql;
 
         return $this;
     }
+
+
+
 
 }

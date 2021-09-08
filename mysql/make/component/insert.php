@@ -8,15 +8,13 @@ use redb\mysql\orm\ormModel;
 class insert
 {
     protected $preSql;
-    protected $bodyPreSql;
+    protected $partPresqlArr = [];
     protected $bindParams = [];
-    protected $dataPreSql;
 
     use returnTrait, commonTrait;
 
     public function parseModelInfo(ormModel $model)
     {
-        $where   = $model->getWhere();
         $table   = $model->getTable();
         $data    = $model->getData();
 
@@ -36,26 +34,16 @@ class insert
             $tempArr[] = '?';
             $tempKeyArr[] = $index;
         }
-        $this->dataPreSql = '('.implode(',', $tempKeyArr).') VALUES ('.implode(',', $tempArr).')';
+        $this->partPresqlArr[] = '('.implode(',', $tempKeyArr).') VALUES ('.implode(',', $tempArr).')';
 
         return $this;
     }
 
     protected function parseBody($table)
     {
-        $this->bodyPreSql = 'INSERT INTO `' . $table . '` ';
+        $this->partPresqlArr[] = 'INSERT INTO `' . $table . '` ';
 
         return $this;
     }
-
-    protected function makePreSql()
-    {
-        $preSql = $this->bodyPreSql;
-        $preSql .= ' SET '.$this->dataPreSql;
-        $this->preSql = $preSql;
-
-        return $this;
-    }
-
 
 }

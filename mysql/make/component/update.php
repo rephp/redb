@@ -10,12 +10,8 @@ use redb\mysql\orm\ormModel;
 class update
 {
     protected $preSql;
-    protected $wherePreSql;
-    protected $bodyPreSql;
-    protected $joinPreSql;
+    protected $partPresqlArr = [];
     protected $bindParams = [];
-    protected $dataPreSql;
-    protected $incPreSql;
 
     use returnTrait, joinTrait, commonTrait;
 
@@ -28,13 +24,17 @@ class update
         $data    = $model->getData();
         $incList = $model->getIncList();
 
-        return $this->parseBody($table, $alias)->parseData($data)->parseIncList($incList)->parseJoin($joinArr)->parseWhere($where)->makePreSql();
+        return $this->parseBody($table, $alias)
+                    ->parseData($data, $incList)
+                    ->parseJoin($joinArr)
+                    ->parseWhere($where)
+                    ->makePreSql();
     }
 
-    protected function parseData($data = [])
+    protected function parseData($data = [], $incList=[])
     {
         if (empty($data)) {
-            return false;
+            return $this;
         }
         $data      = (array)$data;
         $preSqlArr = [];
@@ -42,26 +42,17 @@ class update
             $this->bindParams[] = $value;
             $preSql[]           = $key . '=?';
         }
-        $this->dataPreSql = implode(',', $preSqlArr);
-
-        return true;
-    }
-
-    protected function parseIncList($incList)
-    {
-        if (empty($incList)) {
-            return true;
-        }
-        $incList   = (array)$incList;
-        $preSqlArr = [];
+        //自增
+        $incList = (array)$incList;
         foreach ($incList as $item) {
             if ($item['type'] == 'inc') {
-                $preSqlArr[] = '`' . $item['column'] . '`=`' . $item['column'] . '` + ' . $item['step'];
+                $preSql[] = '`' . $item['column'] . '`=`' . $item['column'] . '` + ' . $item['step'];
             } else {//dec
-                $preSqlArr[] = '`' . $item['column'] . '`=`' . $item['column'] . '` - ' . $item['step'];
+                $preSql[] = '`' . $item['column'] . '`=`' . $item['column'] . '` - ' . $item['step'];
             }
         }
-        $this->incPreSql = implode(',', $preSqlArr);
+
+        $this->partPresqlArr = 'SET '.implode(',', $preSqlArr);
 
         return $this;
     }
@@ -70,24 +61,7 @@ class update
     {
         $preSql = 'UPDATE `' . $table . '` ';
         empty($alias) || $preSql .= 'ALIAS ' . $alias;
-        $this->bodyPreSql = $preSql;
-
-        return $this;
-    }
-
-    protected function makePreSql()
-    {
-        $preSql = $this->bodyPreSql;
-        empty($this->joinPreSql) || $preSql .= ' ' . $this->joinPreSql;
-        if (empty($this->dataPreSql) || empty($this->incPreSql)) {
-            empty($this->dataPreSql) || $preSql .= ' SET ' . $this->dataPreSql;
-            empty($this->incPreSql)  || $preSql .= ' SET ' . $this->incPreSql;
-        } else {
-            $preSql .= ' SET ' . $this->dataPreSql . ',' . $this->incPreSql;
-        }
-
-        empty($this->wherePreSql) || $preSql .= ' WHERE ' . $this->wherePreSql;
-        $this->preSql = $preSql;
+        $this->partPresqlArr[] = $preSql;
 
         return $this;
     }

@@ -8,24 +8,24 @@ use redb\mysql\make\maker;
 class ormModel
 {
     protected $maker;
-    protected $page     = 0;
-    protected $limit    = 0;
-    protected $data     = [];
-    protected $where    = [];
-    protected $incList  = [];
+    protected $page    = 0;
+    protected $limit   = 0;
+    protected $data    = [];
+    protected $where   = [];
+    protected $incList = [];
     protected $action;
     protected $alias;
-    protected $join     = [];
-    protected $union    = [];
-    protected $unionAll = [];
+    protected $join    = [];
+    protected $union   = [];
     protected $orderBy;
     protected $groupBy;
     protected $having;
     protected $select;
+    protected $lock    = false;
 
     protected function maker()
     {
-        if(!is_object($this->maker)){
+        if (!is_object($this->maker)) {
             $this->maker = new maker($this);
         }
         return $this->maker;
@@ -90,6 +90,17 @@ class ormModel
         return $this;
     }
 
+    public function lock()
+    {
+        $this->lock = true;
+        return $this;
+    }
+
+    public function getLock()
+    {
+        return $this->lock;
+    }
+
     /**
      * 左括号
      */
@@ -120,15 +131,15 @@ class ormModel
         return $this->data;
     }
 
-    public function inc($column, $step=1)
+    public function inc($column, $step = 1)
     {
-        $this->incList = ['type'=>'inc', 'column'=>$column, 'step'=>$step];
+        $this->incList = ['type' => 'inc', 'column' => $column, 'step' => $step];
         return $this;
     }
 
-    public function dec($column, $step=1)
+    public function dec($column, $step = 1)
     {
-        $this->incList = ['type'=>'dec', 'column'=>$column, 'step'=>$step];
+        $this->incList = ['type' => 'dec', 'column' => $column, 'step' => $step];
         return $this;
     }
 
@@ -167,12 +178,22 @@ class ormModel
         return $this;
     }
 
+    public function getPage()
+    {
+        return $this->page;
+    }
+
     public function limit($pageSize = 0)
     {
         $pageSize = (int)$pageSize;
         ($pageSize < 1) && $pageSize = 0;
         $this->limit = $pageSize;
         return $this;
+    }
+
+    public function getLimit()
+    {
+        return $this->limit;
     }
 
     public function alias($alias = '')
@@ -211,14 +232,19 @@ class ormModel
 
     public function union(coreModel $model)
     {
-        $this->union[] = $model;
+        $this->union[] = ['type' => 'UNION', 'model' => $model];
         return $this;
     }
 
     public function unionAll(coreModel $model)
     {
-        $this->unionAll[] = $model;
+        $this->union[] = ['type' => 'UNION ALL', 'model' => $model];
         return $this;
+    }
+
+    public function getUnion()
+    {
+        return $this->union;
     }
 
     public function orderBy($orderBy = '')
@@ -227,16 +253,31 @@ class ormModel
         return $this;
     }
 
+    public function getOrderBy()
+    {
+        return $this->orderBy;
+    }
+
     public function groupBy($groupBy = '')
     {
         $this->groupBy = $groupBy;
         return $this;
     }
 
+    public function getGroupBy()
+    {
+        return $this->groupBy;
+    }
+
     public function having($having = '')
     {
-        $this->having($having);
+        $this->having = $having;
         return $this;
+    }
+
+    public function getHaving()
+    {
+        return $this->having;
     }
 
     public function select($select)
@@ -266,8 +307,6 @@ class ormModel
     {
         return $this->maker()->getBindParams();
     }
-
-
 
 
 }

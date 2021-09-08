@@ -58,7 +58,7 @@ trait commonTrait
                     break;
             }
         }
-        $this->wherePreSql = $preSql;
+       empty($preSql) || $this->partPresqlArr[] = 'WHERE '.$preSql;
 
         return $this;
     }
@@ -107,6 +107,15 @@ trait commonTrait
         return $result;
     }
 
+    protected function makePreSql()
+    {
+        $preSql = '';
+        foreach($this->partPresqlArr as $item){
+            $preSql .= ' '.$item;
+        }
+        $this->preSql = $preSql;
 
+        return $this;
+    }
 
 }

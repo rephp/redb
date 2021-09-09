@@ -1,4 +1,5 @@
 <?php
+
 namespace rephp\redb;
 
 use rephp\redb\traits\commonTrait;
@@ -17,8 +18,9 @@ class redb
      * @var \rephp\redb\orm\ormModel $ormModel
      */
     protected $ormModel;
-    protected  $db;
-    protected  $table;
+    protected $db;
+    protected $table;
+    protected $config = [];
 
     use commonTrait;
     use insertTrait;
@@ -36,13 +38,29 @@ class redb
         return new $class();
     }
 
+    public function setConnect($type = 'master', $host = '127.0.0.1', $port = 3389, $username = '', $password = '', $database = '', $charset = 'utf8', $presistent = false)
+    {
+        $type = strtolower($type);
+        $type=='master' || $type = 'slave';
+        $this->config[$type][] = [
+            'host'       => $host,
+            'port'       => $port,
+            'username'   => $username,
+            'password'   => $password,
+            'database'   => $database,
+            'charset'    => $charset,
+            'presistent' => $presistent,
+        ];
+        return $this;
+    }
+
     /**
      * @return cmd
      */
     public function getCmd()
     {
-        if(!is_object($this->cmd)){
-            $this->cmd = new cmd($host='127.0.0.1', $port=3389, $username='', $password='', $this->getDb(), $charset='utf8', $presistent=false);
+        if (!is_object($this->cmd)) {
+            $this->cmd = new cmd($this->config);
         }
         return $this->cmd;
     }
@@ -54,7 +72,7 @@ class redb
      */
     final private function getOrmModel()
     {
-        if(!is_object($this->ormModel)){
+        if (!is_object($this->ormModel)) {
             $this->ormModel = new ormModel();
             $this->ormModel->setTable(self::getTable());
         }
@@ -65,7 +83,7 @@ class redb
      * 获取当前数据库
      * @return string
      */
-    public  function getDb()
+    public function getDb()
     {
         return $this->db;
     }

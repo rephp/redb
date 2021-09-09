@@ -23,22 +23,24 @@ class cmd
      * @var pdo链接
      */
     protected $pdo;
-    protected $host;
-    protected $port;
-    protected $username;
-    protected $password;
-    protected $database;
-    protected $charset;
+    protected $config = [];
+    protected $configType = 'master';
 
-    public function __construct($host = '127.0.0.1', $port = 3389, $username = 'root', $password = '', $database = '', $charset = 'utf8', $presistent = false)
+    public function __construct(array $config)
     {
-        $this->host       = $host;
-        $this->port       = $port;
-        $this->username   = $username;
-        $this->password   = $password;
-        $this->database   = $database;
-        $this->charset    = $charset;
-        $this->presistent = $presistent;
+        $this->config       = $config;
+    }
+
+    public function setConfigType($type='master')
+    {
+        $type = strtolower($type);
+        if($type!='master'){
+            //如果设置的是从库读，则判断配置项是否有此配置，如果没此配置仍然切换为master
+            $isExistSlave = isset($this->config['slave']) && !empty($this->config['slave']);
+            $isExistSlave || $type = 'master';
+        }
+        $this->configType = $type;
+        return $this;
     }
 
     public function run(ormModel $model)

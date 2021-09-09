@@ -1,5 +1,5 @@
 <?php
-namespace redb;
+namespace rephp\redb;
 
 
 class t

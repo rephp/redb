@@ -1,5 +1,5 @@
 <?php
-namespace redb;
+namespace rephp\redb;
 
 require 'vendor/autoload.php';
 

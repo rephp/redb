@@ -1,8 +1,8 @@
 <?php
-namespace redb\query\traits;
+namespace rephp\redb\query\traits;
 /**
  * Trait insertTrait
- * @package redb\query\traits
+ * @package rephp\redb\query\traits
  * @method \PDOStatement  execute($preSql, $bindParams)
  * @method \PDO getPdo()
  */

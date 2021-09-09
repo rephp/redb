@@ -1,6 +1,6 @@
 <?php
 
-namespace redb\make\component;
+namespace rephp\redb\make\component;
 
 class insertReplace extends insert
 {

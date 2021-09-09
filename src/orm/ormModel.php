@@ -1,9 +1,9 @@
 <?php
 
-namespace redb\orm;
+namespace rephp\redb\orm;
 
 
-use redb\make\maker;
+use rephp\redb\make\maker;
 
 class ormModel
 {
@@ -104,7 +104,7 @@ class ormModel
     /**
      * 左括号
      */
-    public function leftBracket()
+    public function whereLeftBracket()
     {
         $this->where[] = ['('];
         return $this;
@@ -113,7 +113,7 @@ class ormModel
     /**
      * 右边括号
      */
-    public function rightBracket()
+    public function WhereRightBracket()
     {
         $this->where[] = [')'];
         return $this;

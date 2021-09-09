@@ -1,7 +1,7 @@
 <?php
-namespace redb\make;
+namespace rephp\redb\make;
 
-use redb\orm\ormModel;
+use rephp\redb\orm\ormModel;
 
 class maker
 {
@@ -11,7 +11,7 @@ class maker
 
    public function __construct(ormModel $model)
    {
-       $action    =  'redb\\make\\component\\'.$model->getAction();
+       $action    =  'rephp\redb\\make\\component\\'.$model->getAction();
        $this->com = (new $action())->parseModelInfo($model);
    }
 

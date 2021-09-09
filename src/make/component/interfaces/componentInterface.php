@@ -1,7 +1,7 @@
 <?php
-namespace redb\make\component\interfaces;
+namespace rephp\redb\make\component\interfaces;
 
-use redb\orm\ormModel;
+use rephp\redb\orm\ormModel;
 
 interface componentInterface
 {

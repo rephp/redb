@@ -1,7 +1,7 @@
 <?php
-namespace redb\query\traits;
+namespace rephp\redb\query\traits;
 
-use redb\query\log;
+use rephp\redb\query\log;
 
 trait commonTrait
 {

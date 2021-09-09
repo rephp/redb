@@ -1,8 +1,8 @@
 <?php
-namespace redb\query\traits;
+namespace rephp\redb\query\traits;
 /**
  * Trait deleteTrait
- * @package redb\query\traits
+ * @package rephp\redb\query\traits
  * @method \PDOStatement  execute($preSql, $bindParams)
  */
 trait deleteTrait

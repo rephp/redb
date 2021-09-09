@@ -1,40 +1,46 @@
 <?php
-namespace redb\traits;
+namespace rephp\redb\traits;
 /**
  * Trait insertTrait
- * @package redb\traits
- * @method \redb\redb setAction()
+ * @package rephp\redb\traits
+ * @method \rephp\redb\redb setAction()
  */
 trait insertTrait
 {
 
-    public function insert()
+    public function insert($data=[])
     {
+        empty($data) || $this->data($data);
         return $this->setAction('insert')->run();
     }
 
-    public function insertReplace()
+    public function insertReplace($data=[])
     {
+        empty($data) || $this->data($data);
         return $this->setAction('insertReplace')->run();
     }
 
-    public function insertIgnore()
+    public function insertIgnore($data=[])
     {
+        empty($data) || $this->data($data);
         return $this->setAction('insertIgnore')->run();
     }
 
-    public function batchInsert()
+    public function batchInsert($data=[])
     {
+        empty($data) || $this->data($data);
         return $this->setAction('batchInsert')->run();
     }
 
-    public function batchInsertReplace()
+    public function batchInsertReplace($data=[])
     {
+        empty($data) || $this->data($data);
         return $this->setAction('batchInsertReplace')->run();
     }
 
-    public function batchInsertIgnore()
+    public function batchInsertIgnore($data=[])
     {
+        empty($data) || $this->data($data);
         return $this->setAction('batchInsertIgnore')->run();
     }
 

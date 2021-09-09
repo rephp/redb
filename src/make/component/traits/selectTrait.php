@@ -1,7 +1,7 @@
 <?php
-namespace redb\make\component\traits;
+namespace rephp\redb\make\component\traits;
 
-use redb\orm\ormModel;
+use rephp\redb\orm\ormModel;
 
 trait selectTrait
 {

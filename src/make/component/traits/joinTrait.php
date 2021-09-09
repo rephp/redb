@@ -1,5 +1,5 @@
 <?php
-namespace redb\make\component\traits;
+namespace rephp\redb\make\component\traits;
 
 trait joinTrait
 {

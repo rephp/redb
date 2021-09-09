@@ -1,14 +1,14 @@
 <?php
 
-namespace redb\traits;
+namespace rephp\redb\traits;
 
-use redb\query\log;
+use rephp\redb\query\log;
 
 /**
  * Trait commonTrait
- * @package redb\traits
- * @method  \redb\orm\ormModel getOrmModel()
- * @method \redb\query\cmd getCmd()
+ * @package rephp\redb\traits
+ * @method  \rephp\redb\orm\ormModel getOrmModel()
+ * @method \rephp\redb\query\cmd getCmd()
  */
 
 trait commonTrait
@@ -30,12 +30,15 @@ trait commonTrait
         return $this->getCmd()->run($this->getOrmModel());
     }
 
-    //update|select|delete
-    public function where($where, $opt='=', $value='')
+    public function where($where, $value='', $opt='=')
     {
         if(is_array($where)){
             foreach ($where as $key => $value) {
-                $this->getOrmModel()->where([$key, '=', $value]);
+                if(is_array($value)){
+                    $this->getOrmModel()->where($value);
+                }else{
+                    $this->getOrmModel()->where([$key, '=', $value]);
+                }
             }
             return $this;
         }
@@ -43,7 +46,7 @@ trait commonTrait
         return $this;
     }
 
-    public function orWhere($column, $opt='=', $value='')
+    public function orWhere($column, $value='', $opt='=')
     {
         $this->getOrmModel()->orWhere([$column, $opt, $value]);
         return $this;
@@ -110,22 +113,21 @@ trait commonTrait
         return $this;
     }
 
-
     /**
      * 左括号
      */
-    public function leftBracket()
+    public function whereLeftBracket()
     {
-        $this->getOrmModel()->leftBracket();
+        $this->getOrmModel()->whereLeftBracket();
         return $this;
     }
 
     /**
      * 右边括号
      */
-    public function rightBracket()
+    public function WhereRightBracket()
     {
-        $this->getOrmModel()->rightBracket();
+        $this->getOrmModel()->WhereRightBracket();
         return $this;
     }
 

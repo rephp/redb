@@ -1,9 +1,9 @@
 <?php
-namespace redb\make\component\traits;
+namespace rephp\redb\make\component\traits;
 
 /**
  * Trait commonTrait
- * @package redb\make\traits
+ * @package rephp\redb\make\traits
  * @property array $bindParams
  */
 

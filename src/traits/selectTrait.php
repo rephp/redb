@@ -1,14 +1,14 @@
 <?php
-namespace redb\traits;
+namespace rephp\redb\traits;
 
-use redb\redb;
+use rephp\redb\redb;
 
 /**
  * Trait selectTrait
- * @package redb\traits
- * @method  \redb\orm\ormModel getOrmModel()
- * @method \redb\query\cmd getCmd()
- * @method \redb\redb setAction()
+ * @package rephp\redb\traits
+ * @method  \rephp\redb\orm\ormModel getOrmModel()
+ * @method \rephp\redb\query\cmd getCmd()
+ * @method \rephp\redb\redb setAction()
  */
 trait selectTrait
 {

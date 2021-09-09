@@ -1,8 +1,8 @@
 <?php
-namespace redb\query\traits;
+namespace rephp\redb\query\traits;
 /**
  * Trait transTrait
- * @package redb\query\traits
+ * @package rephp\redb\query\traits
  * @method \PDO getDb()
  */
 trait transTrait

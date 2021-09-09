@@ -1,11 +1,11 @@
 <?php
 
-namespace redb\make\component;
+namespace rephp\redb\make\component;
 
-use redb\orm\ormModel;
-use redb\make\component\traits\joinTrait;
-use redb\make\component\traits\commonTrait;
-use redb\make\component\interfaces\componentInterface;
+use rephp\redb\orm\ormModel;
+use rephp\redb\make\component\traits\joinTrait;
+use rephp\redb\make\component\traits\commonTrait;
+use rephp\redb\make\component\interfaces\componentInterface;
 
 class delete implements componentInterface
 {

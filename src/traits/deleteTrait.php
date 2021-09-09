@@ -1,6 +1,6 @@
 <?php
 
-namespace redb\traits;
+namespace rephp\redb\traits;
 
 trait deleteTrait
 {

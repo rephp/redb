@@ -1,9 +1,9 @@
 <?php
-namespace redb\traits;
+namespace rephp\redb\traits;
 /**
  * Trait transTrait
- * @package redb\traits
- * @method \redb\query\cmd getCmd()
+ * @package rephp\redb\traits
+ * @method \rephp\redb\query\cmd getCmd()
  */
 trait transTrait
 {

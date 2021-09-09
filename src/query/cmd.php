@@ -1,18 +1,18 @@
 <?php
 
-namespace redb\query;
+namespace rephp\redb\query;
 
-use redb\orm\ormModel;
-use redb\query\traits\selectTrait;
-use redb\query\traits\insertTrait;
-use redb\query\traits\updateTrait;
-use redb\query\traits\deleteTrait;
-use redb\query\traits\transTrait;
-use redb\query\traits\commonTrait;
+use rephp\redb\orm\ormModel;
+use rephp\redb\query\traits\selectTrait;
+use rephp\redb\query\traits\insertTrait;
+use rephp\redb\query\traits\updateTrait;
+use rephp\redb\query\traits\deleteTrait;
+use rephp\redb\query\traits\transTrait;
+use rephp\redb\query\traits\commonTrait;
 
 /**
  * Class cmd
- * @package redb\query
+ * @package rephp\redb\query
  * @method cmd reConnect()
  */
 

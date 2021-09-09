@@ -1,6 +1,6 @@
 <?php
 
-namespace redb\query;
+namespace rephp\redb\query;
 
 class log
 {

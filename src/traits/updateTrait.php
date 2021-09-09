@@ -1,9 +1,9 @@
 <?php
-namespace redb\traits;
+namespace rephp\redb\traits;
 /**
  * Trait updateTrait
- * @package redb\traits
- * @method \redb\redb setAction()
+ * @package rephp\redb\traits
+ * @method \rephp\redb\redb setAction()
  */
 trait updateTrait
 {
@@ -20,8 +20,9 @@ trait updateTrait
         return $this;
     }
 
-    public function update()
+    public function update($data=[])
     {
+        empty($data) || $this->data($data);
         return $this->setAction('update')->run();
     }
 

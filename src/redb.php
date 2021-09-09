@@ -1,20 +1,20 @@
 <?php
-namespace redb;
+namespace rephp\redb;
 
-use redb\traits\commonTrait;
-use redb\traits\selectTrait;
-use redb\query\cmd;
-use redb\traits\insertTrait;
-use redb\traits\deleteTrait;
-use redb\traits\updateTrait;
-use redb\orm\ormModel;
+use rephp\redb\traits\commonTrait;
+use rephp\redb\traits\selectTrait;
+use rephp\redb\query\cmd;
+use rephp\redb\traits\insertTrait;
+use rephp\redb\traits\deleteTrait;
+use rephp\redb\traits\updateTrait;
+use rephp\redb\orm\ormModel;
 
 
 class redb
 {
     /**
      * model内核
-     * @var \redb\orm\ormModel $ormModel
+     * @var \rephp\redb\orm\ormModel $ormModel
      */
     protected $ormModel;
     protected  $db;

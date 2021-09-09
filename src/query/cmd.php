@@ -15,7 +15,6 @@ use rephp\redb\query\traits\commonTrait;
  * @package rephp\redb\query
  * @method cmd reConnect()
  */
-
 class cmd
 {
     use insertTrait, deleteTrait, updateTrait, selectTrait, transTrait, commonTrait;
@@ -31,14 +30,15 @@ class cmd
     protected $database;
     protected $charset;
 
-    public function __construct($host='127.0.0.1', $port=3389, $username='root', $password='', $database='', $charset='utf8')
+    public function __construct($host = '127.0.0.1', $port = 3389, $username = 'root', $password = '', $database = '', $charset = 'utf8', $presistent = false)
     {
-        $this->host     = $host;
-        $this->port     = $port;
-        $this->username = $username;
-        $this->password = $password;
-        $this->database = $database;
-        $this->charset  = $charset;
+        $this->host       = $host;
+        $this->port       = $port;
+        $this->username   = $username;
+        $this->password   = $password;
+        $this->database   = $database;
+        $this->charset    = $charset;
+        $this->presistent = $presistent;
     }
 
     public function run(ormModel $model)
@@ -83,15 +83,15 @@ class cmd
 
     public function queryRaw($sql)
     {
-        $pdo = $this->getDb()->prepare($sql);
+        $pdo  = $this->getDb()->prepare($sql);
         $stmt = $pdo->execute();
-        if(!$stmt){
+        if (!$stmt) {
             $stmt = null;
             return false;
         }
 
         $result = $stmt->fetchAll();
-        $stmt = null;
+        $stmt   = null;
 
         return $result;
     }

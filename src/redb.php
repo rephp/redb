@@ -42,7 +42,7 @@ class redb
     public function getCmd()
     {
         if(!is_object($this->cmd)){
-            $this->cmd = new cmd($host='127.0.0.1', $port=3389, $username='', $password='', $this->getDb(), $charset='utf8');
+            $this->cmd = new cmd($host='127.0.0.1', $port=3389, $username='', $password='', $this->getDb(), $charset='utf8', $presistent=false);
         }
         return $this->cmd;
     }

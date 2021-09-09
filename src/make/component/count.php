@@ -37,7 +37,6 @@ class count implements componentInterface
 
     protected function parseBody($table, $select = '*', $alias = '')
     {
-        $deleteObject = empty($alias) ? $table : $alias;
         $preSql       = 'SELECT COUNT(1) AS num FROM `' . $table . '` ';
         empty($alias) || $preSql .= 'ALIAS ' . $alias;
         $this->partPreSqlArr[] = $preSql;

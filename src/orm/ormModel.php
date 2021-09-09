@@ -133,13 +133,13 @@ class ormModel
 
     public function inc($column, $step = 1)
     {
-        $this->incList = ['type' => 'inc', 'column' => $column, 'step' => $step];
+        $this->incList[] = ['type' => 'inc', 'column' => $column, 'step' => $step];
         return $this;
     }
 
     public function dec($column, $step = 1)
     {
-        $this->incList = ['type' => 'dec', 'column' => $column, 'step' => $step];
+        $this->incList[] = ['type' => 'dec', 'column' => $column, 'step' => $step];
         return $this;
     }
 
@@ -230,14 +230,16 @@ class ormModel
         return $this->join;
     }
 
-    public function union(coreModel $model)
+    public function union(ormModel $model)
     {
+        $model->limit(0)->page(0)->setAction('all');
         $this->union[] = ['type' => 'UNION', 'model' => $model];
         return $this;
     }
 
-    public function unionAll(coreModel $model)
+    public function unionAll(ormModel $model)
     {
+        $model->limit(0)->page(0)->setAction('all');
         $this->union[] = ['type' => 'UNION ALL', 'model' => $model];
         return $this;
     }
@@ -295,7 +297,7 @@ class ormModel
     {
         $preSql     = $this->maker()->getPresql();
         $bindParams = $this->maker()->getBindParams();
-        return vsprintf($preSql, $bindParams);
+        return vsprintf(str_replace('?', '%s', $preSql), $bindParams);
     }
 
     public function getPresql()

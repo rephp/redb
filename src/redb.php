@@ -32,7 +32,8 @@ class redb
      */
     public static function db()
     {
-        return new self();
+        $class = get_called_class();
+        return new $class();
     }
 
     /**
@@ -76,6 +77,11 @@ class redb
     public function getTable()
     {
         return $this->table;
+    }
+
+    public function queryRaw($sql)
+    {
+        return $this->getCmd()->queryRaw($sql);
     }
 
 

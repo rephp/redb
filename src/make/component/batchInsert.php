@@ -49,7 +49,7 @@ class batchInsert implements componentInterface
 
     protected function parseBody($table)
     {
-        $this->partPreSqlArr[] = 'INSERT INTO `' . $table . '` ';
+        $this->partPreSqlArr[] = 'INSERT INTO `' . $table . '`';
 
         return $this;
     }

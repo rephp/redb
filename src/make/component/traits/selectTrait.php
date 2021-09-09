@@ -10,7 +10,7 @@ trait selectTrait
         if(empty($groupBy)){
             return $this;
         }
-        $this->partPreSqlArr[] = $groupBy;
+        $this->partPreSqlArr[] = 'GROUP BY '.$groupBy;
 
         return $this;
     }
@@ -32,7 +32,7 @@ trait selectTrait
         if(empty($having)){
             return $this;
         }
-        $this->partPreSqlArr[] = $having;
+        $this->partPreSqlArr[] = 'HAVING '.$having;
 
         return $this;
     }
@@ -42,7 +42,7 @@ trait selectTrait
         if(empty($orderBy)){
             return $this;
         }
-        $this->partPreSqlArr[] = $orderBy;
+        $this->partPreSqlArr[] = 'ORDER BY '.$orderBy;
 
         return $this;
     }

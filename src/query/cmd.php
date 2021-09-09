@@ -52,7 +52,6 @@ class cmd
         try {
             $sql        = $model->getPresql();
             $bindParams = $model->getBindParams();
-            print_r($sql);exit;
             return $this->$action($sql, $bindParams);
         } catch (\Exception $e) {
             if (($e instanceof \yii\db\Exception) == true) {
@@ -80,6 +79,21 @@ class cmd
         }
 
         return false;
+    }
+
+    public function queryRaw($sql)
+    {
+        $pdo = $this->getDb()->prepare($sql);
+        $stmt = $pdo->execute();
+        if(!$stmt){
+            $stmt = null;
+            return false;
+        }
+
+        $result = $stmt->fetchAll();
+        $stmt = null;
+
+        return $result;
     }
 
 }

@@ -45,7 +45,7 @@ trait selectTrait
 
     public function count()
     {
-        return $this->setAction('count')->run();
+        return $this->setAction('count')->limit(0)->page(0)->run();
     }
 
     public function union(redb $client)

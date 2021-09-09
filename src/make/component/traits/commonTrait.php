@@ -9,21 +9,6 @@ namespace redb\make\component\traits;
 
 trait commonTrait
 {
-
-    /**
-     * 过滤字段名，防止sql注入
-     * @param string $column 列名
-     * @return string
-     */
-    protected function filterColumn($column)
-    {
-        $replaceArr = [
-            ' ', '%', '*', '\t', '\\', '/', '\'', '"', '#', ';', '$', '@', '!', '(', ')', '+', '-', '=',
-        ];
-        $column     = str_replace($replaceArr, '', $column);
-        return $column;
-    }
-
     protected function parseWhere($where)
     {
         if(empty($where)){
@@ -67,7 +52,6 @@ trait commonTrait
     {
         //兼容跨库
         $item[0] = '`'.str_replace('.', '`.`', $item[0]).'` ';
-        $result = '';
         $case = str_replace(' ', '', strtolower($item[1]));
         $case = str_replace('\t', '', $case);
         switch ($case){

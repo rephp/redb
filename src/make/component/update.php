@@ -40,26 +40,27 @@ class update implements componentInterface
         $preSqlArr = [];
         foreach ($data as $key => $value) {
             $this->bindParams[] = $value;
-            $preSql[]           = $key . '=?';
+            $preSqlArr[]           = $key . '=?';
         }
         //自增
-        $incList = (array)$incList;
         foreach ($incList as $item) {
             if ($item['type'] == 'inc') {
-                $preSql[] = '`' . $item['column'] . '`=`' . $item['column'] . '` + ' . $item['step'];
+                $this->bindParams[] = $item['step'];
+                $preSqlArr[] = '`' . $item['column'] . '`=`' . $item['column'] . '` + ?';
             } else {//dec
-                $preSql[] = '`' . $item['column'] . '`=`' . $item['column'] . '` - ' . $item['step'];
+                $this->bindParams[] = $item['step'];
+                $preSqlArr[] = '`' . $item['column'] . '`=`' . $item['column'] . '` - ?';
             }
         }
 
-        $this->partPreSqlArr = 'SET '.implode(',', $preSqlArr);
+        $this->partPreSqlArr[] = 'SET '.implode(',', $preSqlArr);
 
         return $this;
     }
 
     protected function parseBody($table, $alias = '')
     {
-        $preSql = 'UPDATE `' . $table . '` ';
+        $preSql = 'UPDATE `' . $table . '`';
         empty($alias) || $preSql .= 'ALIAS ' . $alias;
         $this->partPreSqlArr[] = $preSql;
 

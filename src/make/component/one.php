@@ -38,7 +38,7 @@ class one implements componentInterface
 
     protected function parseBody($table, $select = '*', $alias = '')
     {
-        $deleteObject = empty($alias) ? $table : $alias;
+        empty($select) && $select = '*';
         $preSql       = 'SELECT ' . $select . ' FROM `' . $table . '` ';
         empty($alias) || $preSql .= 'ALIAS ' . $alias;
         $this->partPreSqlArr[] = $preSql;

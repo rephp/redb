@@ -10,7 +10,8 @@ class test extends redb
 
     public function t()
     {
-        $res = $this->data(['id'=>'1', 'title'=>'test'])->where(['id'=>55])->update();
+        $model =  test::db()->select('*')->leftJoin('test_table222 as t', 't.id=d.id')->where(['t.id'=>55, 'd.title'=>'aaa'])->groupBy('id')->orderBy('id desc');
+        $res = $this->alias('d')->select('d.*')->leftJoin('test_table as t', 't.id=d.id')->where(['t.id'=>55, 'd.title'=>'aaa'])->groupBy('id')->orderBy('id desc')->limit(1)->page(2)->union($model)->setAction('all')->getSql();
 var_dump($res);exit;
     }
 }

@@ -49,18 +49,18 @@ trait commonTrait
         $startTime = microtime(true);
         try{
             //创建pdo预处理对象
-            $stmt = $this->getDb()->prepare($preSql);
+            $pdo = $this->getDb()->prepare($preSql);
             //绑定参数到预处理对象
             $index = 1;
             foreach($params as $fileld => $value){
-                $stmt->bindValue($index, $value);
+                $pdo->bindValue($index, $value);
                 $index++;
             }
             //执行命令
-            $res = $stmt->execute();
+            $stmt = $pdo->execute();
             log::setLog(vsprintf(str_replace('?', '%s', $preSql), $params), round(microtime(true) - $startTime, 6));
-            $stmt = null;
-            return $res;
+            $pdo = null;
+            return $stmt;
 
         }catch (\Exception $e) {
             //其他情况记录mysql错误日志

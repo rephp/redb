@@ -10,7 +10,6 @@ use rephp\redb\query\log;
  * @method  \rephp\redb\orm\ormModel getOrmModel()
  * @method \rephp\redb\query\cmd getCmd()
  */
-
 trait commonTrait
 {
     protected $client = [];
@@ -30,15 +29,16 @@ trait commonTrait
         return $this->getCmd()->run($this->getOrmModel());
     }
 
-    public function where($where, $value='', $opt='=')
+    public function where($where, $value, $opt = '=')
     {
-        if(is_array($where)){
+        if (is_array($where)) {
             foreach ($where as $key => $value) {
-                if(is_array($value)){
-                    $this->getOrmModel()->where($value);
-                }else{
-                    $this->getOrmModel()->where([$key, '=', $value]);
+                if (is_array($value)) {
+                    $tempWhere = $value;
+                } else {
+                    $tempWhere = is_numeric($key) ? [$value] : [$key, '=', $value];
                 }
+                $this->getOrmModel()->where($tempWhere);
             }
             return $this;
         }
@@ -46,7 +46,7 @@ trait commonTrait
         return $this;
     }
 
-    public function orWhere($column, $value='', $opt='=')
+    public function orWhere($column, $value, $opt = '=')
     {
         $this->getOrmModel()->orWhere([$column, $opt, $value]);
         return $this;
@@ -89,7 +89,7 @@ trait commonTrait
     }
 
 
-    public function alias($alias='')
+    public function alias($alias = '')
     {
         $this->getOrmModel()->alias($alias);
         return $this;

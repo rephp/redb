@@ -18,7 +18,7 @@ class redb
      * @var \rephp\redb\orm\ormModel $ormModel
      */
     protected $ormModel;
-    protected $db;
+    protected $db='default';
     protected $table;
     protected $config = [];
 
@@ -32,13 +32,13 @@ class redb
      * 实例化自身对象
      * @return redb
      */
-    public static function db()
+    public static function getClient(array $configList)
     {
         $class = get_called_class();
-        return new $class();
+        return new $class($configList);
     }
 
-    public function setConfig(array $configList)
+    public function __construct(array $configList)
     {
         foreach ($configList as $db => $configArr) {
             //判定$configArr是一维数组还是二维数组
@@ -62,7 +62,6 @@ class redb
                 ];
             }
         }
-
         return $this;
     }
 

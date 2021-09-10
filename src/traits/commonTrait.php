@@ -19,9 +19,9 @@ trait commonTrait
         return $this->getCmd()->close();
     }
 
-    public function reConnection()
+    public function reConnect()
     {
-        return $this->getCmd()->close()->connection();
+        return $this->getCmd()->close()->connect();
     }
 
     public function run()

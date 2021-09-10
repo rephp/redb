@@ -24,12 +24,12 @@ trait commonTrait
             }
             empty($config['charset']) && $config['charset'] = 'utf8';
             $options = array(
-                \PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
                 \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES ' . $config['charset'],
                 \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
             );
             if($config['presistent']){
-                $options[PDO::ATTR_PERSISTENT] = true;
+                $options[\PDO::ATTR_PERSISTENT] = true;
                 //$this->initSystemPresistent();
             }
             $dsn = 'mysql:host='.$config['host'].';dbname='.$config['database'];
@@ -90,7 +90,7 @@ trait commonTrait
     /**
      * @return \PDO pdo链接
      */
-    public function getDb()
+    public function getPdo()
     {
         return $this->connect()->pdo;
     }
@@ -105,7 +105,7 @@ trait commonTrait
         $startTime = microtime(true);
         try{
             //创建pdo预处理对象
-            $pdo = $this->getDb()->prepare($preSql);
+            $pdo = $this->getPdo()->prepare($preSql);
             //绑定参数到预处理对象
             $index = 1;
             foreach($params as $fileld => $value){

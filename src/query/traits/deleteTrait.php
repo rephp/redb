@@ -1,12 +1,13 @@
 <?php
 namespace rephp\redb\query\traits;
-use rephp\redb\query\cmd;
+
+use rephp\redb\query\log;
 
 /**
  * Trait deleteTrait
  * @package rephp\redb\query\traits
  * @method \PDOStatement  execute($preSql, $bindParams)
- * @method cmd setConfigType($type)
+ * @method commonTrait setConfigType($type)
  */
 trait deleteTrait
 {
@@ -16,7 +17,8 @@ trait deleteTrait
         $stmt = $this->setConfigType($type='master')->execute($preSql, $bindParams);
         if(!$stmt){
             $stmt = null;
-            return false;
+            $errorInfo = log::getLastErrorLog();
+            throw new \Exception($errorInfo['error']['msg'], $errorInfo['error']['code']);
         }
 
         $result = $stmt->rowCount();

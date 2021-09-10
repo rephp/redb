@@ -1,32 +1,29 @@
 <?php
-
 namespace rephp\redb\query\traits;
-
-use rephp\redb\query\cmd;
 
 /**
  * Trait transTrait
  * @package rephp\redb\query\traits
- * @method \PDO getDb()
- * @method cmd setConfigType($type)
+ * @method \PDO getPdo()
+ * @method commonTrait setConfigType($type)
  */
 trait transTrait
 {
     public function startTrans()
     {
-        $this->setConfigType($type = 'master')->getDb()->beginTransaction();
+        $this->setConfigType($type = 'master')->getPdo()->beginTransaction();
         return $this;
     }
 
     public function rollBack()
     {
-        $this->setConfigType($type = 'master')->getDb()->rollBack();
+        $this->setConfigType($type = 'master')->getPdo()->rollBack();
         return $this;
     }
 
     public function commit()
     {
-        $this->setConfigType($type = 'master')->getDb()->commit();
+        $this->setConfigType($type = 'master')->getPdo()->commit();
         return $this;
     }
 

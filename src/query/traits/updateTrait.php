@@ -2,13 +2,13 @@
 
 namespace rephp\redb\query\traits;
 
-use rephp\redb\query\cmd;
+use rephp\redb\query\log;
 
 /**
  * Trait updateTrait
  * @package rephp\redb\query\traits
  * @method \PDOStatement  execute($preSql, $bindParams)
- * @method cmd setConfigType($type)
+ * @method commonTrait setConfigType($type)
  */
 trait updateTrait
 {
@@ -19,7 +19,8 @@ trait updateTrait
         $stmt = $this->setConfigType($type = 'master')->execute($preSql, $bindParams);
         if (!$stmt) {
             $stmt = null;
-            return false;
+            $errorInfo = log::getLastErrorLog();
+            throw new \Exception($errorInfo['error']['msg'], $errorInfo['error']['code']);
         }
 
         $result = $stmt->setConfigType($type = 'master')->rowCount();

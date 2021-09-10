@@ -78,6 +78,7 @@ class cmd
                 }
             }
 
+            throw $e;
         }
 
         return false;
@@ -85,7 +86,7 @@ class cmd
 
     public function queryRaw($sql)
     {
-        $pdo  = $this->getDb()->prepare($sql);
+        $pdo  = $this->getPdo()->prepare($sql);
         $stmt = $pdo->execute();
         if (!$stmt) {
             $stmt = null;

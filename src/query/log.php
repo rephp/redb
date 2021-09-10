@@ -10,9 +10,14 @@ class log
     /**
      * 获取历史以来执行的sql
      */
-    public static function getLog()
+    public static function getAllLog()
     {
         return self::$history;
+    }
+
+    public static function getLastLog()
+    {
+        return end(self::$history);
     }
 
     /**
@@ -30,5 +35,11 @@ class log
     {
         return self::$error[] = ['time' => $time, 'sql' => $sql, 'error' => $extErrorInfo];
     }
+
+    public static function getLastErrorLog()
+    {
+        return end(self::$error);
+    }
+
 
 }

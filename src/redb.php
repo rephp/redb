@@ -38,19 +38,31 @@ class redb
         return new $class();
     }
 
-    public function setConnect($type = 'master', $host = '127.0.0.1', $port = 3389, $username = '', $password = '', $database = '', $charset = 'utf8', $presistent = false)
+    public function setConfig(array $configList)
     {
-        $type = strtolower($type);
-        $type=='master' || $type = 'slave';
-        $this->config[$type][] = [
-            'host'       => $host,
-            'port'       => $port,
-            'username'   => $username,
-            'password'   => $password,
-            'database'   => $database,
-            'charset'    => $charset,
-            'presistent' => $presistent,
-        ];
+        foreach ($configList as $db => $configArr) {
+            //判定$configArr是一维数组还是二维数组
+            if (count($configArr) == count($configArr, 1)) {
+                $configArr['type'] = 'master';
+                $configArr         = [$configArr];
+            }
+            foreach ($configArr as $config) {
+                $config['type'] = strtolower($config['type']);
+                $config['type'] == 'master' || $config['type'] = 'slave';
+                //如果没有master之前默认一个
+                empty($this->config[$db]['master']) && $config['type'] = 'master';
+                $this->config[$db][$config['type']][] = [
+                    'host'       => $config['host'],
+                    'port'       => $config['port'],
+                    'username'   => $config['username'],
+                    'password'   => $config['password'],
+                    'database'   => $config['database'],
+                    'charset'    => $config['charset'],
+                    'presistent' => $config['presistent'],
+                ];
+            }
+        }
+
         return $this;
     }
 
@@ -60,7 +72,8 @@ class redb
     public function getCmd()
     {
         if (!is_object($this->cmd)) {
-            $this->cmd = new cmd($this->config);
+            $db = $this->getDb();
+            $this->cmd = new cmd($this->config[$db]);
         }
         return $this->cmd;
     }

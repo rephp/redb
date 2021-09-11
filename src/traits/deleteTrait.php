@@ -1,7 +1,11 @@
 <?php
 
 namespace rephp\redb\traits;
-
+/**
+ * Trait deleteTrait
+ * @package rephp\redb\traits
+ * @method \rephp\redb\redb setAction()
+ */
 trait deleteTrait
 {
 

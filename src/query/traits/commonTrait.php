@@ -105,17 +105,17 @@ trait commonTrait
         $startTime = microtime(true);
         try{
             //创建pdo预处理对象
-            $pdo = $this->getPdo()->prepare($preSql);
+            $stmt = $this->getPdo()->prepare($preSql);
             //绑定参数到预处理对象
             $index = 1;
             foreach($params as $fileld => $value){
-                $pdo->bindValue($index, $value);
+                $stmt->bindValue($index, $value);
                 $index++;
             }
             //执行命令
-            $stmt = $pdo->execute();
-            log::setLog(vsprintf(str_replace('?', '%s', $preSql), $params), round(microtime(true) - $startTime, 6));
-            $pdo = null;
+            $stmt->execute();
+            //echo vsprintf(str_replace('?', '\'%s\'', $preSql), $params);
+            log::setLog(vsprintf(str_replace('?', '\'%s\'', $preSql), $params), round(microtime(true) - $startTime, 6));
             return $stmt;
 
         }catch (\Exception $e) {
@@ -126,7 +126,7 @@ trait commonTrait
                 'line' => $e->getLine(),
                 'file' => $e->getFile(),
             ];
-            log::setErrorLog(vsprintf($preSql, $params), round(microtime(true) - $startTime, 6), $extErrorInfo);
+            log::setErrorLog(vsprintf(str_replace('?', '\'%s\'', $preSql), $params), round(microtime(true) - $startTime, 6), $extErrorInfo);
         }
 
         return false;

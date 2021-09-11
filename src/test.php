@@ -29,7 +29,7 @@ $config = [
 ]];
 $tester = new test($config);
 $data = [
-    'ttile'=>'xxxxx',
+    'ttile'=>'xxx',
 ];
-$res = $tester->insert($data);
+$res = $tester->where(['id'=>'11'])->delete();
 var_dump($res);exit;

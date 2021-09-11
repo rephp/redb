@@ -14,45 +14,57 @@ use rephp\redb\query\log;
  */
 trait insertTrait
 {
+    public function lastInsertId()
+    {
+        return $this->getPdo()->lastInsertId();
+    }
 
-    public function insert($preSql, $bindParams = [])
+    public function insertDeal($preSql, $bindParams = [])
     {
         $stmt = $this->setConfigType($type = 'master')->execute($preSql, $bindParams);
         if (!$stmt) {
-            $stmt = null;
+            $stmt      = null;
             $errorInfo = log::getLastErrorLog();
             throw new \Exception($errorInfo['error']['msg'], $errorInfo['error']['code']);
         }
 
-        $result = $this->getPdo()->lastInsertId();
+        $result = $stmt->rowCount();
         $stmt   = null;
+
+        return $result;
+    }
+
+    public function insert($preSql, $bindParams = [])
+    {
+        $res    = $this->insertDeal($preSql, $bindParams);
+        $result = $res ? $this->lastInsertId() : $res;
 
         return $result;
     }
 
     public function insertReplace($preSql, $bindParams = [])
     {
-        return $this->setConfigType($type = 'master')->insert($preSql, $bindParams);
+        return $this->insertDeal($preSql, $bindParams);
     }
 
     public function insertIgnore($preSql, $bindParams = [])
     {
-        return $this->setConfigType($type = 'master')->insert($preSql, $bindParams);
+        return $this->insertDeal($preSql, $bindParams);
     }
 
     public function batchInsert($preSql, $bindParams = [])
     {
-        return $this->setConfigType($type = 'master')->insert($preSql, $bindParams);
+        return $this->insertDeal($preSql, $bindParams);
     }
 
     public function batchInsertReplace($preSql, $bindParams = [])
     {
-        return $this->setConfigType($type = 'master')->insert($preSql, $bindParams);
+        return $this->insertDeal($preSql, $bindParams);
     }
 
     public function batchInsertIgnore($preSql, $bindParams = [])
     {
-        return $this->setConfigType($type = 'master')->insert($preSql, $bindParams);
+        return $this->insertDeal($preSql, $bindParams);
     }
 
 }

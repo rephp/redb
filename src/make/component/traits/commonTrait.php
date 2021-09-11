@@ -71,8 +71,6 @@ trait commonTrait
                 is_array($item[2]) || $item[2]  = explode(',', $item[2]);
                 $startValue = current($item[2]);
                 $endValue = end($item[2]);
-                is_numeric($startValue) || $startValue = '\''.$startValue.'\'';
-                is_numeric($endValue) || $endValue = '\''.$endValue.'\'';
                 $result = '('.$item[0].$item[1] .' ? AND ?)';
                 $this->bindParams[] = $startValue;
                 $this->bindParams[] = $endValue;
@@ -82,7 +80,6 @@ trait commonTrait
                 $result = $item[0].$item[1];
                 break;
             default://运算符
-                is_numeric($item[2]) || $item[2] = '\''.$item[2].'\'';
                 $result = $item[0].$item[1].' ?';
                 $this->bindParams[] = $item[2];
                 break;
@@ -93,12 +90,7 @@ trait commonTrait
 
     public function makePreSql()
     {
-        $preSql = '';
-        foreach($this->partPreSqlArr as $item){
-            $preSql .= ' '.$item;
-        }
-        $this->preSql = $preSql;
-
+        $this->preSql = implode(' ', $this->partPreSqlArr);
         return $this;
     }
 

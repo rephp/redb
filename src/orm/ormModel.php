@@ -295,9 +295,9 @@ class ormModel
 
     public function getSql()
     {
-        $preSql     = $this->maker()->getPresql();
-        $bindParams = $this->maker()->getBindParams();
-        return vsprintf(str_replace('?', '%s', $preSql), $bindParams);
+        $preSql     = $this->getPresql();
+        $bindParams = $this->getBindParams();
+        return vsprintf(str_replace('?', '\'%s\'', $preSql), $bindParams);
     }
 
     public function getPresql()

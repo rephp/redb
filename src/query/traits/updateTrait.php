@@ -22,8 +22,7 @@ trait updateTrait
             $errorInfo = log::getLastErrorLog();
             throw new \Exception($errorInfo['error']['msg'], $errorInfo['error']['code']);
         }
-
-        $result = $stmt->setConfigType($type = 'master')->rowCount();
+        $result = $stmt->rowCount();
         $stmt   = null;
 
         return $result;

@@ -29,7 +29,7 @@ trait commonTrait
         return $this->getCmd()->run($this->getOrmModel());
     }
 
-    public function where($where, $value, $opt = '=')
+    public function where($where, $value='', $opt = '=')
     {
         if (is_array($where)) {
             foreach ($where as $key => $value) {

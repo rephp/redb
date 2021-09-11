@@ -28,7 +28,7 @@ class delete implements componentInterface
     protected function parseBody($table, $alias = '')
     {
         $deleteObject = empty($alias) ? $table : $alias;
-        $preSql       = 'DELETE ' . $deleteObject . ' FROM `' . $table . '` ';
+        $preSql       = 'DELETE ' . $deleteObject . ' FROM `' . $table . '`';
         empty($alias) || $preSql .= 'ALIAS ' . $alias;
         $this->partPreSqlArr[] = $preSql;
 

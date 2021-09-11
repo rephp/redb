@@ -28,9 +28,9 @@ class all implements componentInterface
                     ->parseJoin($joinArr)
                     ->parseWhere($where)
                     ->parseGroupBy($model->getGroupBy())
-                    ->parseLimit($model->getPage(), $model->getLimit())
                     ->parseHaving($model->getHaving())
                     ->parseOrderBy($model->getOrderBy())
+                    ->parseLimit($model->getPage(), $model->getLimit())
                     ->parseUnion($model->getUnion())
                     ->makePreSql();
     }

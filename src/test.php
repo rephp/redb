@@ -29,7 +29,7 @@ $config = [
 ]];
 $tester = new test($config);
 $data = [
-    'ttile'=>'xxx',
+    'ttile'=>'xxx222222',
 ];
-$res = $tester->where(['id'=>'11'])->delete();
+$res = $tester->data($data)->where('id', '16', '<=')->page(2)->limit(2)->orderBy('id desc')->fetch();
 var_dump($res);exit;

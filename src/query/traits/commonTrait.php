@@ -113,8 +113,8 @@ trait commonTrait
                 $index++;
             }
             //执行命令
+            //echo vsprintf(str_replace('?', '\'%s\'', $preSql), $params);exit;
             $stmt->execute();
-            //echo vsprintf(str_replace('?', '\'%s\'', $preSql), $params);
             log::setLog(vsprintf(str_replace('?', '\'%s\'', $preSql), $params), round(microtime(true) - $startTime, 6));
             return $stmt;
 

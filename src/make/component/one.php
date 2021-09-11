@@ -28,9 +28,9 @@ class one implements componentInterface
                     ->parseJoin($joinArr)
                     ->parseWhere($where)
                     ->parseGroupBy($model->getGroupBy())
-                    ->parseLimit(1, 1)
                     ->parseHaving($model->getHaving())
                     ->parseOrderBy($model->getOrderBy())
+                    ->parseLimit(1, 1)
                     ->parseLock($model->getLock())
                     ->parseUnion($model->getUnion())
                     ->makePreSql();

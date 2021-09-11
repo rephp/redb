@@ -28,9 +28,7 @@ class count implements componentInterface
                     ->parseJoin($joinArr)
                     ->parseWhere($where)
                     ->parseGroupBy($model->getGroupBy())
-                    ->parseLimit($model->getPage(), $model->getLimit())
                     ->parseHaving($model->getHaving())
-                    ->parseOrderBy($model->getOrderBy())
                     ->parseUnion($model->getUnion())
                     ->makePreSql();
     }

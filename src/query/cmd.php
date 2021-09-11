@@ -50,6 +50,7 @@ class cmd
         if (!method_exists($this, $action)) {
             return false;
         }
+
         //2.执行并返回结果
         try {
             $sql        = $model->getPresql();

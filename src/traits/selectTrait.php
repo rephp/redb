@@ -1,4 +1,5 @@
 <?php
+
 namespace rephp\redb\traits;
 
 use rephp\redb\redb;
@@ -12,13 +13,13 @@ use rephp\redb\redb;
  */
 trait selectTrait
 {
-    public function page($page=0)
+    public function page($page = 0)
     {
         $this->getOrmModel()->page($page);
         return $this;
     }
 
-    public function limit($pageSize=0)
+    public function limit($pageSize = 0)
     {
         $this->getOrmModel()->limit($pageSize);
         return $this;
@@ -36,9 +37,11 @@ trait selectTrait
 
     public function fetch()
     {
+        $list  = $this->all();
+        $count = $this->count();
         return [
-            'count' => $this->count(),
-            'list'  => $this->all(),
+            'list'  => $list,
+            'count' => $count,
         ];
     }
 
@@ -66,19 +69,19 @@ trait selectTrait
         return $this;
     }
 
-    public function orderBy($orderBy='')
+    public function orderBy($orderBy = '')
     {
         $this->getOrmModel()->orderBy($orderBy);
         return $this;
     }
 
-    public function groupBy($groupBy='')
+    public function groupBy($groupBy = '')
     {
         $this->getOrmModel()->groupBy($groupBy);
         return $this;
     }
 
-    public function having($having='')
+    public function having($having = '')
     {
         $this->getOrmModel()->having($having);
         return $this;

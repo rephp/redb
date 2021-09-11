@@ -7,7 +7,6 @@ use rephp\redb\make\maker;
 
 class ormModel
 {
-    protected $maker;
     protected $page    = 0;
     protected $limit   = 0;
     protected $data    = [];
@@ -25,10 +24,7 @@ class ormModel
 
     protected function maker()
     {
-        if (!is_object($this->maker)) {
-            $this->maker = new maker($this);
-        }
-        return $this->maker;
+        return new maker($this);
     }
 
     public function getWhere()

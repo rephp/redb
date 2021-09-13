@@ -46,6 +46,12 @@ trait commonTrait
         return $this;
     }
 
+    public function orQuery()
+    {
+        $this->getOrmModel()->orQuery();
+        return $this;
+    }
+
     public function orWhere($column, $value, $opt = '=')
     {
         $this->getOrmModel()->orWhere([$column, $opt, $value]);
@@ -64,30 +70,41 @@ trait commonTrait
         return $this;
     }
 
-    public function like($column, $value)
+    public function whereLike($column, $value)
     {
-        $this->getOrmModel()->like($column, $value);
+        $this->getOrmModel()->whereLike($column, $value);
         return $this;
     }
 
-    public function notLike($column, $value)
+    public function whereNotLike($column, $value)
     {
-        $this->getOrmModel()->notLike($column, $value);
+        $this->getOrmModel()->whereNotLike($column, $value);
         return $this;
     }
 
-    public function between($column, $min, $max)
+    public function whereBetween($column, $min, $max)
     {
-        $this->getOrmModel()->between($column, $min, $max);
+        $this->getOrmModel()->whereBetween($column, $min, $max);
         return $this;
     }
 
-    public function notBetween($column, $min, $max)
+    public function whereNotBetween($column, $min, $max)
     {
-        $this->getOrmModel()->notBetween($column, $min, $max);
+        $this->getOrmModel()->whereNotBetween($column, $min, $max);
         return $this;
     }
 
+    public function whereIsNull($column)
+    {
+        $this->getOrmModel()->whereIsNull($column);
+        return $this;
+    }
+
+    public function whereIsNotNull($column)
+    {
+        $this->getOrmModel()->whereIsNotNull($column);
+        return $this;
+    }
 
     public function alias($alias = '')
     {

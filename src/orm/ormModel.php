@@ -62,27 +62,39 @@ class ormModel
         return $this;
     }
 
-    public function like($column, $value)
+    public function whereLike($column, $value)
     {
         $this->where[] = [$column, 'LIKE', $value];
         return $this;
     }
 
-    public function notLike($column, $value)
+    public function whereNotLike($column, $value)
     {
         $this->where[] = [$column, 'NOT LIKE', $value];
         return $this;
     }
 
-    public function between($column, $min, $max)
+    public function whereBetween($column, $min, $max)
     {
         $this->where[] = [$column, 'BETWEEN', [$min, $max]];
         return $this;
     }
 
-    public function notBetween($column, $min, $max)
+    public function whereNotBetween($column, $min, $max)
     {
         $this->where[] = [$column, 'NOT BETWEEN', [$min, $max]];
+        return $this;
+    }
+
+    public function whereIsNull($column)
+    {
+        $this->where[] = [$column, 'IS NULL'];
+        return $this;
+    }
+
+    public function whereIsNotNull($column)
+    {
+        $this->where[] = [$column, 'IS NOT NULL'];
         return $this;
     }
 

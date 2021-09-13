@@ -71,3 +71,65 @@ $res = $tester->alias('T')->innerJoin(linkCpModel::db()->getTable() . ' AS L', '
 //union查询
 $list = $tester->where($where)->union(linkCpModel::db()->where($where))->all();
 $list = $tester->where($where)->unionAll(linkCpModel::db()->where($where))->all();
+
+/**********五、事务**********/
+$cmd = $tester->getCmd();
+$cmd->startTrans();//开启tester对象所在数据库的事务
+$cmd->commit();    //提交事务
+$cmd->rollBack();  //回滚
+
+/**********六、调试**********/
+$tester->where($where)->update;
+//查看执行后的sql
+$sql = $tester->getSql();
+//查看当前sql执行理事
+$sqlHistory = $tester->getLog();
+
+/**********七、其他**********/
+//多库配置+主从
+$config = [
+    'default' => [
+        [
+            'host'       => '127.0.0.1',
+            'port'       => 3306,
+            'username'   => 'root',
+            'password'   => '123456',
+            'database'   => 'test',
+            'charset'    => 'utf8',
+            'presistent' => false,
+            'type'       => 'master',
+        ],
+        [
+            'host'       => '127.0.0.1',
+            'port'       => 3306,
+            'username'   => 'root',
+            'password'   => '123456',
+            'database'   => 'test',
+            'charset'    => 'utf8',
+            'presistent' => false,
+            'type'       => 'slave',
+        ],
+    ],
+    'log'     => [
+        [
+            'host'       => '127.0.0.1',
+            'port'       => 3306,
+            'username'   => 'root',
+            'password'   => '123456',
+            'database'   => 'log_db',
+            'charset'    => 'utf8',
+            'presistent' => false,
+            'type'       => 'master',
+        ],
+        [
+            'host'       => '127.0.0.1',
+            'port'       => 3306,
+            'username'   => 'root',
+            'password'   => '123456',
+            'database'   => 'log_db',
+            'charset'    => 'utf8',
+            'presistent' => false,
+            'type'       => 'slave',
+        ],
+    ],
+];

@@ -18,13 +18,13 @@ DROP TABLE IF EXISTS `link_cp`;
 
 CREATE TABLE `link_cp` (
   `id` int(12) unsigned NOT NULL AUTO_INCREMENT,
-  `ttile` varchar(255) DEFAULT '',
+  `title` varchar(255) DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `link_cp` */
 
-insert  into `link_cp`(`id`,`ttile`) values 
+insert  into `link_cp`(`id`,`title`) values 
 (1,'test');
 
 /*Table structure for table `test` */
@@ -33,13 +33,13 @@ DROP TABLE IF EXISTS `test`;
 
 CREATE TABLE `test` (
   `id` int(12) unsigned NOT NULL AUTO_INCREMENT,
-  `ttile` varchar(255) DEFAULT '',
+  `title` varchar(255) DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 /*Data for the table `test` */
 
-insert  into `test`(`id`,`ttile`) values 
+insert  into `test`(`id`,`title`) values 
 (5,'xxx'),
 (16,'xxx222222'),
 (15,'xxx2'),

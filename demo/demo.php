@@ -18,7 +18,7 @@ $config = [
     ]];
 
 $data = [
-    'ttile' => 'xxx222222',
+    'title' => 'xxx222222',
 ];
 /**********一、插入数据**********/
 //1.实例化对象并装在数据
@@ -52,22 +52,22 @@ $updatetCount = $tester->where($where)->data($data)->update();
 //或者
 $updatetCount = $tester->where($where)->update($data);
 //联合更新
-$updatetCount = $tester->alias('T')->leftJoin(linkCpModel::db()->getTable() . ' AS L', 'T.id=L.id')->where(['L.id' => 14])->update(['T.ttile' => 'xxx222222']);
+$updatetCount = $tester->alias('T')->leftJoin(linkCpModel::db()->getTable() . ' AS L', 'T.id=L.id')->where(['L.id' => 14])->update(['T.title' => 'xxx222222']);
 /**********四、查取数据**********/
 //获取一条
 $one = $tester->where($where)->one();
 //获取所有列表
 $list = $tester->where($where)->all();
 //分页显示第2页数据,支持order by，group by和having
-$list = $tester->select('ttile,count(*) AS num')->where($where)->orderBy('id DESC')->groupBy('ttile')->having('num>1')->limit(20)->page(2)->all();
+$list = $tester->select('title,count(*) AS num')->where($where)->orderBy('id DESC')->groupBy('title')->having('num>1')->limit(20)->page(2)->all();
 //统计个数
 $count = $tester->where($where)->count();
 //统计+分页数据
 $res = $tester->where($where)->page(20)->page(2)->fetch();
 //联合查询
-$res = $tester->alias('T')->leftJoin(linkCpModel::db()->getTable() . ' AS L', 'T.id=L.id')->where(['L.ttile' => 14])->page(20)->page(2)->all();
-$res = $tester->alias('T')->rightJoin(linkCpModel::db()->getTable() . ' AS L', 'T.id=L.id')->where(['L.ttile' => 14])->page(20)->page(2)->all();
-$res = $tester->alias('T')->innerJoin(linkCpModel::db()->getTable() . ' AS L', 'T.id=L.id')->where(['L.ttile' => 14])->page(20)->page(2)->all();
+$res = $tester->alias('T')->leftJoin(linkCpModel::db()->getTable() . ' AS L', 'T.id=L.id')->where(['L.title' => 14])->page(20)->page(2)->all();
+$res = $tester->alias('T')->rightJoin(linkCpModel::db()->getTable() . ' AS L', 'T.id=L.id')->where(['L.title' => 14])->page(20)->page(2)->all();
+$res = $tester->alias('T')->innerJoin(linkCpModel::db()->getTable() . ' AS L', 'T.id=L.id')->where(['L.title' => 14])->page(20)->page(2)->all();
 //union查询
 $list = $tester->where($where)->union(linkCpModel::db()->where($where))->all();
 $list = $tester->where($where)->unionAll(linkCpModel::db()->where($where))->all();

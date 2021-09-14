@@ -58,13 +58,16 @@ trait commonTrait
             case 'in':
             case 'notin':
                 is_array($item[2]) || $item[2]  = explode(',', $item[2]);
-                $result = $item[0].$item[1] . ' ('.implode(',', $item[2]).')';
-                $this->bindParams = array_merge($this->bindParams, $item[2]);
+                foreach($item[2] as $val){
+                    $this->bindParams[] = $val;
+                    $tempArr[] = '?';
+                }
+                $result = $item[0].$item[1] . ' ('.implode(',', $tempArr).')';
                 break;
             case 'like':
             case 'notlike':
-                $result = $item[0].$item[1] .' \'%?%\'';
-                $this->bindParams[] = $item[2];
+                $result = $item[0].$item[1] .' ?';
+                $this->bindParams[] = '%'.$item[2].'%';
                 break;
             case 'between':
             case 'notbetween':

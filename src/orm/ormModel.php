@@ -38,15 +38,15 @@ class ormModel
         return $this;
     }
 
-    public function orQuery()
+    public function whereOr()
     {
         $this->where[] = ['OR'];
         return $this;
     }
 
-    public function orWhere($where)
+    public function whereAnd()
     {
-        $this->orQuery()->where($where);
+        $this->where[] = ['AND'];
         return $this;
     }
 
@@ -121,7 +121,7 @@ class ormModel
     /**
      * 右边括号
      */
-    public function WhereRightBracket()
+    public function whereRightBracket()
     {
         $this->where[] = [')'];
         return $this;

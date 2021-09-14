@@ -46,15 +46,15 @@ trait commonTrait
         return $this;
     }
 
-    public function orQuery()
+    public function whereOr()
     {
-        $this->getOrmModel()->orQuery();
+        $this->getOrmModel()->whereOr();
         return $this;
     }
 
-    public function orWhere($column, $value, $opt = '=')
+    public function whereAnd()
     {
-        $this->getOrmModel()->orWhere([$column, $opt, $value]);
+        $this->getOrmModel()->whereAnd();
         return $this;
     }
 
@@ -142,9 +142,9 @@ trait commonTrait
     /**
      * 右边括号
      */
-    public function WhereRightBracket()
+    public function whereRightBracket()
     {
-        $this->getOrmModel()->WhereRightBracket();
+        $this->getOrmModel()->whereRightBracket();
         return $this;
     }
 

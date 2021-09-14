@@ -75,7 +75,7 @@ class cmd
                     1205,//加锁超时
                 ];
                 if ($offset_1 || $offset_2 || $offset_3 || in_array($e->errorInfo[1], $mysql_error_list)) {
-                    return $this->reConnect()->$action($sql);
+                    return $this->reConnect()->$action($sql, $bindParams);
                 }
             }
 
@@ -87,6 +87,9 @@ class cmd
 
     public function queryRaw($sql)
     {
+        //分析sql
+        $sql  = substr(trim($sql), 0, 15);
+
         $pdo  = $this->getPdo()->prepare($sql);
         $stmt = $pdo->execute();
         if (!$stmt) {

@@ -14,36 +14,35 @@ trait commonTrait
         if(empty($where)){
             return $this;
         }
+
         $currentOperate = '';
-        $preSql = '';
-        $firstItemFlag = true;
         foreach ($where as $item) {
             if(empty($item)){
                 continue;
             }
+            in_array('WHERE', $this->partPreSqlArr) || $this->partPreSqlArr[] = 'WHERE';
             switch (strtolower($item[0])){
                 case 'and':
-                    $currentOperate = ' and ';
+                    $currentOperate = ' AND ';
                     break;
                 case 'or':
-                    $currentOperate = ' or ';
+                    $currentOperate = ' OR ';
                     break;
                 case '(':
-                    $preSql .= $currentOperate.'(';
-                    $firstItemFlag = true;
+                    $this->partPreSqlArr[] = $currentOperate.'(';
+                    $currentOperate = '';
                     break;
                 case ')':
-                    $preSql .= ')';
+                    $this->partPreSqlArr[] = ')';
                     break;
                 default:
-                    $firstItemFlag && $currentOperate = '';
-                    $preSql .= $currentOperate.$this->parseWhereItem($item);
-                    $firstItemFlag = false;
-                    $currentOperate = ' and ';
+                    $preSql = $currentOperate.$this->parseWhereItem($item);
+                    $currentOperate = ' AND ';
+                    empty($preSql) || $this->partPreSqlArr[] = $preSql;
                     break;
             }
+
         }
-       empty($preSql) || $this->partPreSqlArr[] = 'WHERE '.$preSql;
 
         return $this;
     }

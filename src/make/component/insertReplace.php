@@ -7,7 +7,7 @@ class insertReplace extends insert
 
     protected function parseBody($table)
     {
-        $this->partPreSqlArr[] = 'INSERT REPLACE INTO `' . $table . '` ';
+        $this->partPreSqlArr[] = 'REPLACE INTO `' . $table . '` ';
 
         return $this;
     }

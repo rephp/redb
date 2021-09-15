@@ -33,7 +33,7 @@ $id     = $tester->data($data)->insert();
 $id = testModel::db($config)->insert($data);
 $id = testModel::db($config)->data($data)->insert();
 //当model实现自动加载配置项后可以直接省略参数指定,如:
-$id = testModel::db()->insert($data);
+//$id = testModel::db()->insert($data);
 //-----------
 //以下只以实例化对象方式演示
 //2.忽略插入

@@ -13,7 +13,11 @@
     },
     "autoload": {
         "psr-4": {
-            "rephp\\redb\\": ".\\src\\",
+            "rephp\\redb\\": ".\\src\\"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
             "demo\\": ".\\demo\\"
         }
     }

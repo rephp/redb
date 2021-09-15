@@ -32,35 +32,28 @@ class redb
      * 实例化自身对象
      * @return redb
      */
-    public static function getClient(array $configList)
+    public static function getClient()
     {
         $class = get_called_class();
-        return new $class($configList);
+        return new $class();
     }
 
     public function __construct(array $configList)
     {
-        foreach ($configList as $db => $configArr) {
-            //判定$configArr是一维数组还是二维数组
-            if (count($configArr) == count($configArr, 1)) {
-                $configArr['type'] = 'master';
-                $configArr         = [$configArr];
-            }
-            foreach ($configArr as $config) {
-                $config['type'] = strtolower($config['type']);
-                $config['type'] == 'master' || $config['type'] = 'slave';
-                //如果没有master之前默认一个
-                empty($this->config[$db]['master']) && $config['type'] = 'master';
-                $this->config[$db][$config['type']][] = [
-                    'host'       => $config['host'],
-                    'port'       => $config['port'],
-                    'username'   => $config['username'],
-                    'password'   => $config['password'],
-                    'database'   => $config['database'],
-                    'charset'    => $config['charset'],
-                    'presistent' => $config['presistent'],
-                ];
-            }
+        foreach ($configList as $config) {
+            $config['type'] = strtolower($config['type']);
+            $config['type'] == 'master' || $config['type'] = 'slave';
+            //如果没有master之前默认一个
+            empty($this->config['master']) && $config['type'] = 'master';
+            $this->config[$config['type']][] = [
+                'host'       => $config['host'],
+                'port'       => $config['port'],
+                'username'   => $config['username'],
+                'password'   => $config['password'],
+                'database'   => $config['database'],
+                'charset'    => $config['charset'],
+                'presistent' => $config['presistent'],
+            ];
         }
         return $this;
     }
@@ -72,7 +65,7 @@ class redb
     {
         if (!is_object($this->cmd)) {
             $db = $this->getDb();
-            $this->cmd = new cmd($this->config[$db]);
+            $this->cmd = new cmd($this->config);
         }
         return $this->cmd;
     }

@@ -163,7 +163,8 @@ trait commonTrait
 
     public function getSql()
     {
-        return $this->getOrmModel()->getSql();
+        $lastSqlRes =  log::getLastLog();
+        return $lastSqlRes['sql'].' - 执行时间: '.$lastSqlRes['time'].' 秒';
     }
 
     /**
@@ -171,8 +172,9 @@ trait commonTrait
      */
     public function getLog()
     {
-        return log::getLog();
+        return log::getAllLog();
     }
+
 
 
 }

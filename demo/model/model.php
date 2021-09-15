@@ -9,10 +9,10 @@ class model extends redb
     /**
      * 初始化模型，参数按照model设定的db传参给redb
      */
-    public function __construct(array $configList = [])
+    public function __construct($configList = [])
     {
         //todo:在用户自己的框架中实现对配置项的读写，故而这里暂时注释
-        //empty($configList) || $configList = config('database');
+        //empty($configList) && $configList = config('database');
         //获取数据库配置
         $db = $this->getDb();
         if (!isset($configList[$db])) {
@@ -29,7 +29,7 @@ class model extends redb
      * @param array $configList
      * @return redb
      */
-    public static function db(array $configList = [])
+    public static function db($configList = [])
     {
         return self::getClient($configList);
     }

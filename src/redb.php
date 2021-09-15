@@ -32,14 +32,18 @@ class redb
      * 实例化自身对象
      * @return redb
      */
-    public static function getClient()
+    public static function getClient($configList=[])
     {
         $class = get_called_class();
-        return new $class();
+        return new $class($configList);
     }
 
     public function __construct(array $configList)
     {
+        //兼容一维数组配置
+        if(count($configList) == count($configList,1)){
+            $configList = [$configList];
+        }
         foreach ($configList as $config) {
             $config['type'] = strtolower($config['type']);
             $config['type'] == 'master' || $config['type'] = 'slave';

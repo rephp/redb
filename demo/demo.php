@@ -2,8 +2,9 @@
 
 namespace demo;
 
-use demo\model\testModel;
+
 use demo\model\linkCpModel;
+use demo\model\testModel;
 
 require 'vendor/autoload.php';
 $config = [
@@ -21,19 +22,25 @@ $data = [
     'title' => 'xxx222222',
 ];
 /**********一、插入数据**********/
-//1.实例化对象并装在数据
+//0.实例化对象并装在数据
 $tester = new testModel($config);
 //或者静态对象操作
 $tester = testModel::db($config);
+//-----------
+//1.普通插入
 $id     = $tester->data($data)->insert();
 //或
-$id = $tester->insert($data);
+$id = testModel::db($config)->insert($data);
+$id = testModel::db($config)->data($data)->insert();
+//当model实现自动加载配置项后可以直接省略参数指定,如:
+$id = testModel::db()->insert($data);
 //-----------
 //以下只以实例化对象方式演示
 //2.忽略插入
 $insertCount = $tester->insertIgnore($data);
 //3.忽略插入
 $insertCount = $tester->insertReplace($data);
+//-----------
 //4.批量插入
 $insertCount = $tester->batchInsert([$data, $data, $data]);
 //5.批量忽略插入
@@ -109,6 +116,17 @@ $config = [
             'presistent' => false,
             'type'       => 'slave',
         ],
+        [
+            'host'       => '127.0.0.1',
+            'port'       => 3307,
+            'username'   => 'root',
+            'password'   => '123456',
+            'database'   => 'test',
+            'charset'    => 'utf8',
+            'presistent' => false,
+            'type'       => 'slave',
+        ],
+        //...
     ],
     'log'     => [
         [
@@ -131,5 +149,16 @@ $config = [
             'presistent' => false,
             'type'       => 'slave',
         ],
+        [
+            'host'       => '127.0.0.1',
+            'port'       => 3307,
+            'username'   => 'root',
+            'password'   => '123456',
+            'database'   => 'test',
+            'charset'    => 'utf8',
+            'presistent' => false,
+            'type'       => 'slave',
+        ],
+        //...
     ],
 ];

@@ -1,38 +1,54 @@
 <?php
+
 namespace rephp\redb\query\traits;
 
 use rephp\redb\query\log;
+use rephp\redb\orm\ormModel;
 
 trait commonTrait
 {
 
+    public function setConfigType($type='master')
+    {
+        $type = strtolower($type);
+        if($type!='master'){
+            //如果设置的是从库读，则判断配置项是否有此配置，如果没此配置仍然切换为master
+            $isExistSlave = isset($this->config['slave']) && !empty($this->config['slave']);
+            $isExistSlave || $type = 'master';
+        }
+        $this->configType = $type;
+        return $this;
+    }
+
     public function close()
     {
-        $this->pdo  = null;
+        $this->pdo = null;
         return $this;
     }
 
     public function connect()
     {
-        if(!$this->pdo){
+        if (!$this->pdo) {
+            ($this->config['debug']=='false') && $this->config['debug'] = false;
+            $this->debug = (boolean)$this->config['debug'];
             //获取配置项
-            if($this->configType=='master'){
+            if ($this->configType == 'master') {
                 $config = current($this->config['master']);
-            }else{
+            } else {
                 shuffle($this->config['slave']);
                 $config = current($this->config['slave']);
             }
             empty($config['charset']) && $config['charset'] = 'utf8';
-            $options = array(
-                \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
+            $options = [
+                \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
                 \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES ' . $config['charset'],
                 \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
-            );
-            if($config['presistent']){
+            ];
+            if ($config['presistent']) {
                 $options[\PDO::ATTR_PERSISTENT] = true;
                 //$this->initSystemPresistent();
             }
-            $dsn = 'mysql:host='.$config['host'].';dbname='.$config['database'];
+            $dsn       = 'mysql:host=' . $config['host'] . ';dbname=' . $config['database'];
             $this->pdo = new \PDO($dsn, $config['username'], $config['password'], $options);
         }
         return $this;
@@ -95,41 +111,58 @@ trait commonTrait
         return $this->connect()->pdo;
     }
 
-    /**
-     * @param   string    $preSql
-     * @param array $params
-     * @return \PDOStatement
-     */
-    public function execute($preSql, $params=[])
+    public function run(ormModel $model)
     {
-        $startTime = microtime(true);
-        try{
-            //创建pdo预处理对象
-            $stmt = $this->getPdo()->prepare($preSql);
-            //绑定参数到预处理对象
-            $index = 1;
-            foreach($params as $fileld => $value){
-                $stmt->bindValue($index, $value);
-                $index++;
-            }
-            //执行命令
-            //echo vsprintf(str_replace('?', '\'%s\'', $preSql), $params);exit;
-            $stmt->execute();
-            log::setLog(vsprintf(str_replace('?', '\'%s\'', $preSql), $params), round(microtime(true) - $startTime, 6));
-            return $stmt;
+        //1.获取要生成要执行的query类名字
+        $action = $model->getAction();
+        if (!method_exists($this, $action)) {
+            return false;
+        }
 
-        }catch (\Exception $e) {
-            //其他情况记录mysql错误日志
-            $extErrorInfo = [
-                'code' => $e->getCode(),
-                'msg'  => $e->getMessage(),
-                'line' => $e->getLine(),
-                'file' => $e->getFile(),
-            ];
-            log::setErrorLog(vsprintf(str_replace('?', '\'%s\'', $preSql), $params), round(microtime(true) - $startTime, 6), $extErrorInfo);
+        //2.执行并返回结果
+        try {
+            $sql        = $model->getPresql();
+            $bindParams = $model->getBindParams();
+            return $this->$action($sql, $bindParams);
+        } catch (\Exception $e) {
+            if (($e instanceof \yii\db\Exception) == true) {
+                $offset_1         = stripos($e->getMessage(), 'MySQL server has gone away');
+                $offset_2         = stripos($e->getMessage(), 'Lost connection to MySQL server');
+                $offset_3         = stripos($e->getMessage(), 'Error while sending QUERY packet');
+                $mysql_error_list = [
+                    2006,//MySQL server has gone away
+                    2013,//Lost connection to MySQL server
+                    1040,//已到达数据库的最大连接数，请加大数据库可用连接数
+                    1043,//无效连接
+                    1081,//不能建立Socket连接
+                    1158,//网络错误，出现读错误，请检查网络连接状况
+                    1159,//网络错误，读超时，请检查网络连接状况
+                    1160,//网络错误，出现写错误，请检查网络连接状况
+                    1161,//网络错误，写超时，请检查网络连接状况
+                    1203,//当前用户和数据库建立的连接已到达数据库的最大连接数，请增大可用的数据库连接数或重启数据库
+                    1205,//加锁超时
+                ];
+                if ($offset_1 || $offset_2 || $offset_3 || in_array($e->errorInfo[1], $mysql_error_list)) {
+                    return $this->reConnect()->$action($sql, $bindParams);
+                }
+            }
+
+            throw $e;
         }
 
         return false;
+    }
+
+    protected function getRawAction($sql)
+    {
+        $sql        = str_replace('\t', ' ', $sql);
+        $sql        = trim($sql, ' \t\n\r\0\x0B');
+        $testArr    = explode(' ', $sql);
+        $action     = strtolower($testArr[0]);
+        $actionList = ['insert', 'delete', 'update', 'select'];
+        in_array($action, $actionList) || $action = 'update';
+
+        return $action;
     }
 
 }

@@ -2,7 +2,6 @@
 
 namespace rephp\redb\query;
 
-use rephp\redb\orm\ormModel;
 use rephp\redb\query\traits\selectTrait;
 use rephp\redb\query\traits\insertTrait;
 use rephp\redb\query\traits\updateTrait;
@@ -25,37 +24,62 @@ class cmd
     protected $pdo;
     protected $config = [];
     protected $configType = 'master';
+    protected $debug = false;
 
     public function __construct(array $config)
     {
         $this->config       = $config;
     }
 
-    public function setConfigType($type='master')
+    /**
+     * @param string $preSql
+     * @param array  $params
+     * @return \PDOStatement
+     */
+    public function execute($preSql, $params = [])
     {
-        $type = strtolower($type);
-        if($type!='master'){
-            //如果设置的是从库读，则判断配置项是否有此配置，如果没此配置仍然切换为master
-            $isExistSlave = isset($this->config['slave']) && !empty($this->config['slave']);
-            $isExistSlave || $type = 'master';
+        $startTime = microtime(true);
+        try {
+            //创建pdo预处理对象
+            $stmt = $this->getPdo()->prepare($preSql);
+            //绑定参数到预处理对象
+            $index = 1;
+            foreach ($params as $fileld => $value) {
+                $stmt->bindValue($index, $value);
+                $index++;
+            }
+            //执行命令
+            if($this->debug){
+                echo vsprintf(str_replace('?', '\'%s\'', $preSql), $params);
+            }
+            $stmt->execute();
+            log::setLog(vsprintf(str_replace('?', '\'%s\'', $preSql), $params), round(microtime(true) - $startTime, 6));
+            return $stmt;
+
+        } catch (\Exception $e) {
+            //其他情况记录mysql错误日志
+            $extErrorInfo = [
+                'code' => $e->getCode(),
+                'msg'  => $e->getMessage(),
+                'line' => $e->getLine(),
+                'file' => $e->getFile(),
+            ];
+            log::setErrorLog(vsprintf(str_replace('?', '\'%s\'', $preSql), $params), round(microtime(true) - $startTime, 6), $extErrorInfo);
         }
-        $this->configType = $type;
-        return $this;
+
+        return false;
     }
 
-    public function run(ormModel $model)
+    public function queryRaw($sql)
     {
-        //1.获取要生成要执行的query类名字
-        $action = $model->getAction();
+        //分析sql
+        $action = $this->getRawAction($sql);
         if (!method_exists($this, $action)) {
             return false;
         }
-
         //2.执行并返回结果
         try {
-            $sql        = $model->getPresql();
-            $bindParams = $model->getBindParams();
-            return $this->$action($sql, $bindParams);
+            return $this->$action($sql, []);
         } catch (\Exception $e) {
             if (($e instanceof \yii\db\Exception) == true) {
                 $offset_1         = stripos($e->getMessage(), 'MySQL server has gone away');
@@ -75,7 +99,7 @@ class cmd
                     1205,//加锁超时
                 ];
                 if ($offset_1 || $offset_2 || $offset_3 || in_array($e->errorInfo[1], $mysql_error_list)) {
-                    return $this->reConnect()->$action($sql, $bindParams);
+                    return $this->reConnect()->$action($sql, []);
                 }
             }
 
@@ -83,24 +107,6 @@ class cmd
         }
 
         return false;
-    }
-
-    public function queryRaw($sql)
-    {
-        //分析sql
-        $sql  = substr(trim($sql), 0, 15);
-
-        $pdo  = $this->getPdo()->prepare($sql);
-        $stmt = $pdo->execute();
-        if (!$stmt) {
-            $stmt = null;
-            return false;
-        }
-
-        $result = $stmt->fetchAll();
-        $stmt   = null;
-
-        return $result;
     }
 
 }

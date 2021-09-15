@@ -16,6 +16,7 @@ $config = [
         'database'   => 'test',
         'charset'    => 'utf8',
         'presistent' => false,
+        'debug'      => true,
     ]];
 
 $data = [
@@ -28,7 +29,7 @@ $tester = new testModel($config);
 $tester = testModel::db($config);
 //-----------
 //1.普通插入
-$id     = $tester->data($data)->insert();
+$id     = testModel::db($config)->data($data)->insert();
 //或
 $id = testModel::db($config)->insert($data);
 $id = testModel::db($config)->data($data)->insert();
@@ -37,60 +38,63 @@ $id = testModel::db($config)->data($data)->insert();
 //-----------
 //以下只以实例化对象方式演示
 //2.忽略插入
-$insertCount = $tester->insertIgnore($data);
+$insertCount = testModel::db($config)->insertIgnore($data);
 //3.忽略插入
-$insertCount = $tester->insertReplace($data);
+$insertCount = testModel::db($config)->insertReplace($data);
 //-----------
 //4.批量插入
-$insertCount = $tester->batchInsert([$data, $data, $data]);
+$insertCount = testModel::db($config)->batchInsert([$data, $data, $data]);
 //5.批量忽略插入
-$insertCount = $tester->batchInsertIgnore([$data, $data, $data]);
+$insertCount = testModel::db($config)->batchInsertIgnore([$data, $data, $data]);
 //6.批量替换插入
-$insertCount = $tester->batchInsertReplace([$data, $data, $data]);
+$insertCount = testModel::db($config)->batchInsertReplace([$data, $data, $data]);
 
 /**********二、删除数据**********/
 $where       = ['id' => 7];
-$deleteCount = $tester->where($where)->delete();
+$deleteCount = testModel::db($config)->where($where)->delete();
 //联合删除
-$deleteCount = $tester->alias('T')->leftJoin(linkCpModel::db()->getTable() . ' AS L', 'T.id=L.id')->where(['L.id' => 14])->delete();
+$where       = ['T.id' => 7];
+$deleteCount = testModel::db($config)->alias('T')->leftJoin(linkCpModel::db($config)->getTable() . ' AS L', 'T.id=L.id')->where(['L.id' => 14])->delete();
 /**********三、修改数据**********/
+
 $where        = ['id' => 7];
-$updatetCount = $tester->where($where)->data($data)->update();
+$updatetCount = testModel::db($config)->where($where)->data($data)->update();
 //或者
-$updatetCount = $tester->where($where)->update($data);
+$updatetCount = testModel::db($config)->where($where)->update($data);
 //联合更新
-$updatetCount = $tester->alias('T')->leftJoin(linkCpModel::db()->getTable() . ' AS L', 'T.id=L.id')->where(['L.id' => 14])->update(['T.title' => 'xxx222222']);
+$updatetCount = testModel::db($config)->alias('T')->leftJoin(linkCpModel::db($config)->getTable() . ' AS L', 'T.id=L.id')->where(['L.id' => 14])->update(['T.title' => 'xxx222222']);
+
 /**********四、查取数据**********/
 //获取一条
-$one = $tester->where($where)->one();
+$one = testModel::db($config)->where($where)->one();
 //获取所有列表
-$list = $tester->where($where)->all();
+$list = testModel::db($config)->where($where)->all();
 //分页显示第2页数据,支持order by，group by和having
-$list = $tester->select('title,count(*) AS num')->where($where)->orderBy('id DESC')->groupBy('title')->having('num>1')->limit(20)->page(2)->all();
+$list = testModel::db($config)->select('title,count(*) AS num')->where($where)->orderBy('id DESC')->groupBy('title')->having('num>1')->limit(20)->page(2)->all();
 //统计个数
-$count = $tester->where($where)->count();
+$count = testModel::db($config)->where($where)->count();
 //统计+分页数据
-$res = $tester->where($where)->page(20)->page(2)->fetch();
+$res = testModel::db($config)->where($where)->page(20)->page(2)->fetch();
 //联合查询
-$res = $tester->alias('T')->leftJoin(linkCpModel::db()->getTable() . ' AS L', 'T.id=L.id')->where(['L.title' => 14])->page(20)->page(2)->all();
-$res = $tester->alias('T')->rightJoin(linkCpModel::db()->getTable() . ' AS L', 'T.id=L.id')->where(['L.title' => 14])->page(20)->page(2)->all();
-$res = $tester->alias('T')->innerJoin(linkCpModel::db()->getTable() . ' AS L', 'T.id=L.id')->where(['L.title' => 14])->page(20)->page(2)->all();
+$res = testModel::db($config)->alias('T')->leftJoin(linkCpModel::db($config)->getTable() . ' AS L', 'T.id=L.id')->where(['L.title' => 14])->page(20)->page(2)->all();
+$res = testModel::db($config)->alias('T')->rightJoin(linkCpModel::db($config)->getTable() . ' AS L', 'T.id=L.id')->where(['L.title' => 14])->page(20)->page(2)->all();
+$res = testModel::db($config)->alias('T')->innerJoin(linkCpModel::db($config)->getTable() . ' AS L', 'T.id=L.id')->where(['L.title' => 14])->page(20)->page(2)->all();
 //union查询
-$list = $tester->where($where)->union(linkCpModel::db()->where($where))->all();
-$list = $tester->where($where)->unionAll(linkCpModel::db()->where($where))->all();
+$list = testModel::db($config)->where($where)->union(linkCpModel::db($config)->where($where))->all();
+$list = testModel::db($config)->where($where)->unionAll(linkCpModel::db($config)->where($where))->all();
 
 /**********五、事务**********/
-$cmd = $tester->getCmd();
-$cmd->startTrans();//开启tester对象所在数据库的事务
-$cmd->commit();    //提交事务
-$cmd->rollBack();  //回滚
+//$cmd = testModel::db($config)->getCmd();
+//$cmd->startTrans();//开启tester对象所在数据库的事务
+//$cmd->commit();    //提交事务
+//$cmd->rollBack();  //回滚
 
 /**********六、调试**********/
-$tester->where($where)->update;
+testModel::db($config)->where($where)->all();
 //查看执行后的sql
-$sql = $tester->getSql();
+$sql = testModel::db($config)->getSql();
 //查看当前sql执行理事
-$sqlHistory = $tester->getLog();
+$sqlHistory = testModel::db($config)->getLog();
 
 /**********七、其他**********/
 //多库配置+主从

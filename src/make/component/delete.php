@@ -29,7 +29,7 @@ class delete implements componentInterface
     {
         $deleteObject = empty($alias) ? $table : $alias;
         $preSql       = 'DELETE ' . $deleteObject . ' FROM `' . $table . '`';
-        empty($alias) || $preSql .= 'ALIAS ' . $alias;
+        empty($alias) || $preSql .= ' AS ' . $alias;
         $this->partPreSqlArr[] = $preSql;
 
         return $this;

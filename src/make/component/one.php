@@ -40,7 +40,7 @@ class one implements componentInterface
     {
         empty($select) && $select = '*';
         $preSql       = 'SELECT ' . $select . ' FROM `' . $table . '` ';
-        empty($alias) || $preSql .= 'ALIAS ' . $alias;
+        empty($alias) || $preSql .= ' AS ' . $alias;
         $this->partPreSqlArr[] = $preSql;
 
         return $this;

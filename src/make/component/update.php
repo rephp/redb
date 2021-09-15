@@ -25,8 +25,8 @@ class update implements componentInterface
         $incList = $model->getIncList();
 
         return $this->parseBody($table, $alias)
-                    ->parseData($data, $incList)
                     ->parseJoin($joinArr)
+                    ->parseData($data, $incList)
                     ->parseWhere($where)
                     ->makePreSql();
     }
@@ -61,7 +61,7 @@ class update implements componentInterface
     protected function parseBody($table, $alias = '')
     {
         $preSql = 'UPDATE `' . $table . '`';
-        empty($alias) || $preSql .= 'ALIAS ' . $alias;
+        empty($alias) || $preSql .= ' AS ' . $alias;
         $this->partPreSqlArr[] = $preSql;
 
         return $this;

@@ -52,7 +52,6 @@ class cmd
             if($this->debug){
                 echo vsprintf(str_replace('?', '\'%s\'', $preSql), $params);
             }
-            echo vsprintf(str_replace('?', '\'%s\'', $preSql), $params);
             $stmt->execute();
             log::setLog(vsprintf(str_replace('?', '\'%s\'', $preSql), $params), round(microtime(true) - $startTime, 6));
             return $stmt;

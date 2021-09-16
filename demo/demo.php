@@ -16,7 +16,7 @@ $config = [
         'database'   => 'test',
         'charset'    => 'utf8',
         'presistent' => false,
-        'debug'      => true,
+        'debug'      => false,
     ]];
 
 $data = [
@@ -57,7 +57,7 @@ $where       = ['T.id' => 7];
 $deleteCount = testModel::db($config)->alias('T')->leftJoin(linkCpModel::db($config)->getTable() . ' AS L', 'T.id=L.id')->where(['L.id' => 14])->delete();
 /**********三、修改数据**********/
 
-$where        = ['id' => 7];
+$where        = ['id' => 18];
 $updatetCount = testModel::db($config)->where($where)->data($data)->update();
 //或者
 $updatetCount = testModel::db($config)->where($where)->update($data);
@@ -74,7 +74,8 @@ $list = testModel::db($config)->select('title,count(*) AS num')->where($where)->
 //统计个数
 $count = testModel::db($config)->where($where)->count();
 //统计+分页数据
-$res = testModel::db($config)->where($where)->page(20)->page(2)->fetch();
+$res = testModel::db($config)->where($where)->page(20)->page(1)->fetch();
+
 //联合查询
 $res = testModel::db($config)->alias('T')->leftJoin(linkCpModel::db($config)->getTable() . ' AS L', 'T.id=L.id')->where(['L.title' => 14])->page(20)->page(2)->all();
 $res = testModel::db($config)->alias('T')->rightJoin(linkCpModel::db($config)->getTable() . ' AS L', 'T.id=L.id')->where(['L.title' => 14])->page(20)->page(2)->all();
@@ -84,10 +85,18 @@ $list = testModel::db($config)->where($where)->union(linkCpModel::db($config)->w
 $list = testModel::db($config)->where($where)->unionAll(linkCpModel::db($config)->where($where))->all();
 
 /**********五、事务**********/
-//$cmd = testModel::db($config)->getCmd();
-//$cmd->startTrans();//开启tester对象所在数据库的事务
-//$cmd->commit();    //提交事务
-//$cmd->rollBack();  //回滚
+$cmd = testModel::db($config)->getCmd();
+$cmd->startTrans();//开启tester对象所在数据库的事务
+try{
+    $deleteCount  = testModel::db($config)->where($where)->delete();
+    $insertCount  = testModel::db($config)->data(['title'=>'xxx', 'id'=>$where['id']])->insertReplace();
+    $updatetCount = testModel::db($config)->where($where)->update($data);
+    $cmd->commit();    //提交事务
+}catch (\Exception $e){
+    $cmd->rollBack();  //回滚
+}
+
+
 
 /**********六、调试**********/
 testModel::db($config)->where($where)->all();
@@ -95,7 +104,6 @@ testModel::db($config)->where($where)->all();
 $sql = testModel::db($config)->getSql();
 //查看当前sql执行理事
 $sqlHistory = testModel::db($config)->getLog();
-
 /**********七、其他**********/
 //多库配置+主从
 $config = [

@@ -24,9 +24,17 @@ trait commonTrait
         return $this->getCmd()->close()->connect();
     }
 
+    public function deleteOrmModel()
+    {
+        $this->ormModel = null;
+        return $this;
+    }
+
     public function run()
     {
-        return $this->getCmd()->run($this->getOrmModel());
+        $result =  $this->getCmd()->run($this->getOrmModel());
+        $this->deleteOrmModel();
+        return $result;
     }
 
     public function where($where, $value='', $opt = '=')

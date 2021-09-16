@@ -8,10 +8,10 @@ use rephp\redb\orm\ormModel;
 trait commonTrait
 {
 
-    public function setConfigType($type='master')
+    public function setConfigType($type = 'master')
     {
         $type = strtolower($type);
-        if($type!='master'){
+        if ($type != 'master') {
             //如果设置的是从库读，则判断配置项是否有此配置，如果没此配置仍然切换为master
             $isExistSlave = isset($this->config['slave']) && !empty($this->config['slave']);
             $isExistSlave || $type = 'master';
@@ -29,8 +29,6 @@ trait commonTrait
     public function connect()
     {
         if (!$this->pdo) {
-            ($this->config['debug']=='false') && $this->config['debug'] = false;
-            $this->debug = (boolean)$this->config['debug'];
             //获取配置项
             if ($this->configType == 'master') {
                 $config = current($this->config['master']);
@@ -38,6 +36,9 @@ trait commonTrait
                 shuffle($this->config['slave']);
                 $config = current($this->config['slave']);
             }
+
+            $config['debug'] = filter_var($config['debug'], FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+            $this->debug     = (boolean)$config['debug'];
             empty($config['charset']) && $config['charset'] = 'utf8';
             $options = [
                 \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,

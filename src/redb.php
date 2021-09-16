@@ -49,15 +49,7 @@ class redb
             $config['type'] == 'master' || $config['type'] = 'slave';
             //如果没有master之前默认一个
             empty($this->config['master']) && $config['type'] = 'master';
-            $this->config[$config['type']][] = [
-                'host'       => $config['host'],
-                'port'       => $config['port'],
-                'username'   => $config['username'],
-                'password'   => $config['password'],
-                'database'   => $config['database'],
-                'charset'    => $config['charset'],
-                'presistent' => $config['presistent'],
-            ];
+            $this->config[$config['type']][] = $config;
         }
         return $this;
     }

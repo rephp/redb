@@ -75,7 +75,7 @@ class redb
      */
     final private function getOrmModel()
     {
-        is_object($this->ormModel) || (new ormModel())->setTable(self::getTable());
+        is_object($this->ormModel) || $this->ormModel = (new ormModel())->setTable(self::getTable());
         return $this->ormModel;
     }
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace rephp\redb\traits;
 /**
  * Trait insertTrait
@@ -8,37 +9,67 @@ namespace rephp\redb\traits;
 trait insertTrait
 {
 
-    public function insert($data=[])
+    /**
+     * 普通插入
+     * @param array $data 数据源，如果已经使用data方法配置数据，则无须传递任何参数
+     * @return bool
+     */
+    public function insert($data = [])
     {
         empty($data) || $this->data($data);
         return $this->setAction('insert')->run();
     }
 
-    public function insertReplace($data=[])
+    /**
+     * 替换式插入
+     * @param array $data 数据源，如果已经使用data方法配置数据，则无须传递任何参数
+     * @return bool
+     */
+    public function insertReplace($data = [])
     {
         empty($data) || $this->data($data);
         return $this->setAction('insertReplace')->run();
     }
 
-    public function insertIgnore($data=[])
+    /**
+     * 忽略式插入
+     * @param array $data 数据源，如果已经使用data方法配置数据，则无须传递任何参数
+     * @return bool
+     */
+    public function insertIgnore($data = [])
     {
         empty($data) || $this->data($data);
         return $this->setAction('insertIgnore')->run();
     }
 
-    public function batchInsert($data=[])
+    /**
+     * 批量普通插入
+     * @param array $data 数据源，如果已经使用data方法配置数据，则无须传递任何参数
+     * @return bool
+     */
+    public function batchInsert($data = [])
     {
         empty($data) || $this->data($data);
         return $this->setAction('batchInsert')->run();
     }
 
-    public function batchInsertReplace($data=[])
+    /**
+     * 批量替换式插入
+     * @param array $data 数据源，如果已经使用data方法配置数据，则无须传递任何参数
+     * @return bool
+     */
+    public function batchInsertReplace($data = [])
     {
         empty($data) || $this->data($data);
         return $this->setAction('batchInsertReplace')->run();
     }
 
-    public function batchInsertIgnore($data=[])
+    /**
+     * 批量忽略式插入
+     * @param array $data 数据源，如果已经使用data方法配置数据，则无须传递任何参数
+     * @return bool
+     */
+    public function batchInsertIgnore($data = [])
     {
         empty($data) || $this->data($data);
         return $this->setAction('batchInsertIgnore')->run();

@@ -80,6 +80,14 @@ trait commonTrait
     public function where($cloumn, $value = '', $opt = '=')
     {
         if (is_array($cloumn)) {
+            //判断是一维数组还是二维数组
+            $isOneWhere = ( count($cloumn) == count($cloumn,1) );
+            //如果是一维数组,即意味着需要执行一个查询条件
+            if($isOneWhere){
+                $this->getOrmModel()->where($cloumn);
+                return $this;
+            }
+            //如果是二维数组，意味着需要执行多个查询条件
             foreach ($cloumn as $key => $value) {
                 if (is_array($value)) {
                     $tempWhere = $value;
@@ -90,6 +98,7 @@ trait commonTrait
             }
             return $this;
         }
+        //否则就是老实巴交的规范查询
         $this->getOrmModel()->where([$cloumn, $opt, $value]);
         return $this;
     }

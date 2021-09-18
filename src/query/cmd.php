@@ -65,6 +65,10 @@ class cmd
                 'file' => $e->getFile(),
             ];
             log::setErrorLog(vsprintf(str_replace('?', '\'%s\'', $preSql), $params), round(microtime(true) - $startTime, 6), $extErrorInfo);
+            if($this->debug){
+                print_r($extErrorInfo);
+            }
+            throw $e;
         }
 
         return false;
@@ -100,7 +104,6 @@ class cmd
             if ($offset_1 || $offset_2 || $offset_3 || in_array($e->errorInfo[1], $mysql_error_list)) {
                 return $this->reConnect()->$action($sql, []);
             }
-
             throw $e;
         }
 

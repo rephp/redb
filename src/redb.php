@@ -32,12 +32,17 @@ class redb
      * 实例化自身对象
      * @return redb
      */
-    public static function getClient($configList=[])
+    public static function db($configList=[])
     {
         $class = get_called_class();
         return new $class($configList);
     }
 
+    /**
+     * redb 初始化配置项
+     * @param array $configList
+     * @return object
+     */
     public function __construct(array $configList)
     {
         //兼容一维数组配置
@@ -51,37 +56,31 @@ class redb
             empty($this->config['master']) && $config['type'] = 'master';
             $this->config[$config['type']][] = $config;
         }
-        return $this;
     }
 
     /**
+     * 获取sql执行者
      * @return cmd
      */
     public function getCmd()
     {
-        if (!is_object($this->cmd)) {
-            $db = $this->getDb();
-            $this->cmd = new cmd($this->config);
-        }
+        is_object($this->cmd) || $this->cmd = new cmd($this->config);
         return $this->cmd;
     }
 
 
     /**
-     * 获取内核model实例对象
+     * 获取orm model实例对象
      * @return ormModel
      */
     final private function getOrmModel()
     {
-        if (!is_object($this->ormModel)) {
-            $this->ormModel = new ormModel();
-            $this->ormModel->setTable(self::getTable());
-        }
+        is_object($this->ormModel) || (new ormModel())->setTable(self::getTable());
         return $this->ormModel;
     }
 
     /**
-     * 获取当前数据库
+     * 获取当前model中设置的数据库配置key
      * @return string
      */
     public function getDb()
@@ -98,6 +97,11 @@ class redb
         return $this->table;
     }
 
+    /**
+     * 执行用户自定义sql
+     * @param string  $sql  真正sql语句
+     * @return bool
+     */
     public function queryRaw($sql)
     {
         return $this->getCmd()->queryRaw($sql);

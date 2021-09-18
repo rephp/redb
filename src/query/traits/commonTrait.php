@@ -8,6 +8,11 @@ use rephp\redb\orm\ormModel;
 trait commonTrait
 {
 
+    /**
+     * 设置数据库主从
+     * @param string $type  数据库主从标识符
+     * @return $this
+     */
     public function setConfigType($type = 'master')
     {
         $type = strtolower($type);
@@ -20,12 +25,20 @@ trait commonTrait
         return $this;
     }
 
+    /**
+     * 断开mysql数据库连接
+     * @return $this
+     */
     public function close()
     {
         $this->pdo = null;
         return $this;
     }
 
+    /**
+     * 连接mysql数据库
+     * @return $this
+     */
     public function connect()
     {
         if (!$this->pdo) {
@@ -99,6 +112,10 @@ trait commonTrait
                  */
     }
 
+    /**
+     * 重新连接mysql数据库
+     * @return commonTrait
+     */
     public function reConnect()
     {
         return $this->close()->connect();
@@ -112,6 +129,12 @@ trait commonTrait
         return $this->connect()->pdo;
     }
 
+    /**
+     * 触发执行运行入口
+     * @param ormModel $model orm模型对象
+     * @return bool
+     * @throws \Exception
+     */
     public function run(ormModel $model)
     {
         //1.获取要生成要执行的query类名字
@@ -151,14 +174,20 @@ trait commonTrait
         return false;
     }
 
+    /**
+     * 判断原生态sql的执行类型
+     * @param string $sql 原生sql
+     * @return string
+     */
     protected function getRawAction($sql)
     {
         $sql        = str_replace('\t', ' ', $sql);
         $sql        = trim($sql, ' \t\n\r\0\x0B');
         $testArr    = explode(' ', $sql);
         $action     = strtolower($testArr[0]);
-        $actionList = ['insert', 'delete', 'update', 'select'];
+        $actionList = ['insert', 'replace', 'delete', 'update', 'select'];
         in_array($action, $actionList) || $action = 'update';
+        $action=='replace' && $action='insertReplace';
 
         return $action;
     }

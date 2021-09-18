@@ -10,7 +10,7 @@ use rephp\redb\query\traits\transTrait;
 use rephp\redb\query\traits\commonTrait;
 
 /**
- * Class cmd
+ * sql执行者
  * @package rephp\redb\query
  * @method cmd reConnect()
  */
@@ -26,14 +26,19 @@ class cmd
     protected $configType = 'master';
     protected $debug = false;
 
+    /**
+     * 初始化环境
+     * @param array $config
+     */
     public function __construct(array $config)
     {
         $this->config       = $config;
     }
 
     /**
-     * @param string $preSql
-     * @param array  $params
+     * 执行sql
+     * @param string $preSql  presql语句
+     * @param array  $params  绑定的参数
      * @return \PDOStatement
      */
     public function execute($preSql, $params = [])
@@ -74,6 +79,12 @@ class cmd
         return false;
     }
 
+    /**
+     * 执行原生态sql
+     * @param string  $sql  原生sql语句
+     * @return bool
+     * @throws \Exception
+     */
     public function queryRaw($sql)
     {
         //分析sql

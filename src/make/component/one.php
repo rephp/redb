@@ -8,6 +8,10 @@ use rephp\redb\make\component\traits\commonTrait;
 use rephp\redb\make\component\traits\selectTrait;
 use rephp\redb\make\component\interfaces\componentInterface;
 
+/**
+ * 获取单条sql
+ * @package rephp\redb\make\component
+ */
 class one implements componentInterface
 {
     protected $preSql;
@@ -16,6 +20,11 @@ class one implements componentInterface
 
     use joinTrait, commonTrait, selectTrait;
 
+    /**
+     * 解析model对象，生成sql
+     * @param ormModel $model orm模型对象
+     * @return string
+     */
     public function parseModelInfo(ormModel $model)
     {
         $where   = $model->getWhere();
@@ -36,6 +45,13 @@ class one implements componentInterface
                     ->makePreSql();
     }
 
+    /**
+     * 解析sql主体
+     * @param string $table  数据表名字
+     * @param string $select select字段列表
+     * @param string $alias  主表的重命名
+     * @return $this
+     */
     protected function parseBody($table, $select = '*', $alias = '')
     {
         empty($select) && $select = '*';
@@ -46,6 +62,11 @@ class one implements componentInterface
         return $this;
     }
 
+    /**
+     * 解析行锁语句
+     * @param bool $lockStatus  是否开启行锁
+     * @return $this
+     */
     protected function parseLock($lockStatus=false)
     {
         if(!$lockStatus){
@@ -56,8 +77,5 @@ class one implements componentInterface
 
         return $this;
     }
-
-
-
 
 }

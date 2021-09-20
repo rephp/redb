@@ -5,6 +5,10 @@ use rephp\redb\make\component\traits\commonTrait;
 use rephp\redb\orm\ormModel;
 use rephp\redb\make\component\interfaces\componentInterface;
 
+/**
+ * 生成单条普通插入sql
+ * @package rephp\redb\make\component
+ */
 class insert implements componentInterface
 {
     protected $preSql;
@@ -13,6 +17,11 @@ class insert implements componentInterface
 
     use commonTrait;
 
+    /**
+     * 解析model对象，生成sql
+     * @param ormModel $model orm模型对象
+     * @return string
+     */
     public function parseModelInfo(ormModel $model)
     {
         $table   = $model->getTable();
@@ -21,6 +30,11 @@ class insert implements componentInterface
         return $this->parseBody($table)->parseData($data)->makePreSql();
     }
 
+    /**
+     * 解析对象数据
+     * @param array $batchData  对象数据
+     * @return $this
+     */
     protected function parseData($data=[])
     {
         if(empty($data)){
@@ -39,6 +53,11 @@ class insert implements componentInterface
         return $this;
     }
 
+    /**
+     * 解析sql主体
+     * @param string $table  数据表名字
+     * @return $this
+     */
     protected function parseBody($table)
     {
         $this->partPreSqlArr[] = 'INSERT INTO `' . $table . '`';

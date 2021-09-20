@@ -8,14 +8,23 @@ use rephp\redb\make\component\traits\commonTrait;
 use rephp\redb\make\component\traits\selectTrait;
 use rephp\redb\make\component\interfaces\componentInterface;
 
+/**
+ * 生成批量查询sql
+ * @package rephp\redb\make\component
+ */
 class all implements componentInterface
 {
     protected $preSql;
     protected $partPreSqlArr = [];
-    protected $bindParams = [];
+    protected $bindParams    = [];
 
     use joinTrait, commonTrait, selectTrait;
 
+    /**
+     * 解析model对象，生成sql
+     * @param ormModel $model orm模型对象
+     * @return string
+     */
     public function parseModelInfo(ormModel $model)
     {
         $where   = $model->getWhere();
@@ -35,10 +44,17 @@ class all implements componentInterface
                     ->makePreSql();
     }
 
+    /**
+     * 解析sql主体
+     * @param string $table  数据表名字
+     * @param string $select select字段列表
+     * @param string $alias  主表的重命名
+     * @return $this
+     */
     protected function parseBody($table, $select = '*', $alias = '')
     {
         empty($select) && $select = '*';
-        $preSql       = 'SELECT ' . $select . ' FROM `' . $table . '` ';
+        $preSql = 'SELECT ' . $select . ' FROM `' . $table . '` ';
         empty($alias) || $preSql .= ' AS ' . $alias;
         $this->partPreSqlArr[] = $preSql;
 

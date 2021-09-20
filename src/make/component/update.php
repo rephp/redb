@@ -7,6 +7,10 @@ use rephp\redb\make\component\traits\commonTrait;
 use rephp\redb\orm\ormModel;
 use rephp\redb\make\component\interfaces\componentInterface;
 
+/**
+ * 生成修改sql
+ * @package rephp\redb\make\component
+ */
 class update implements componentInterface
 {
     protected $preSql;
@@ -15,6 +19,11 @@ class update implements componentInterface
 
     use joinTrait, commonTrait;
 
+    /**
+     * 解析model对象，生成sql
+     * @param ormModel $model orm模型对象
+     * @return string
+     */
     public function parseModelInfo(ormModel $model)
     {
         $where   = $model->getWhere();
@@ -31,6 +40,11 @@ class update implements componentInterface
                     ->makePreSql();
     }
 
+    /**
+     * 解析对象数据
+     * @param array $batchData  对象数据
+     * @return $this
+     */
     protected function parseData($data = [], $incList=[])
     {
         if (empty($data)) {
@@ -58,6 +72,12 @@ class update implements componentInterface
         return $this;
     }
 
+    /**
+     * 解析sql主体
+     * @param string $table  数据表名字
+     * @param string $alias  主表的重命名
+     * @return $this
+     */
     protected function parseBody($table, $alias = '')
     {
         $preSql = 'UPDATE `' . $table . '`';

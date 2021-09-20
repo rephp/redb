@@ -73,9 +73,9 @@ trait selectTrait
      * 查询条件下数据有多少条
      * @return int
      */
-    public function count()
+    public function count($select='COUNT(*) AS num')
     {
-        return $this->setAction('count')->limit(0)->page(0)->run();
+        return $this->setAction('count')->select($select)->limit(0)->page(0)->run();
     }
 
     /**

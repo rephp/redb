@@ -8,6 +8,10 @@ use rephp\redb\make\component\traits\commonTrait;
 use rephp\redb\make\component\traits\selectTrait;
 use rephp\redb\make\component\interfaces\componentInterface;
 
+/**
+ * 生成统计个数sql
+ * @package rephp\redb\make\component
+ */
 class count implements componentInterface
 {
     protected $preSql;
@@ -16,6 +20,11 @@ class count implements componentInterface
 
     use joinTrait, commonTrait, selectTrait;
 
+    /**
+     * 解析model对象，生成sql
+     * @param ormModel $model orm模型对象
+     * @return string
+     */
     public function parseModelInfo(ormModel $model)
     {
         $where   = $model->getWhere();
@@ -33,9 +42,16 @@ class count implements componentInterface
                     ->makePreSql();
     }
 
-    protected function parseBody($table, $select = '*', $alias = '')
+    /**
+     * 解析sql主体
+     * @param string $table  数据表名字
+     * @param string $select select字段列表
+     * @param string $alias  主表的重命名
+     * @return $this
+     */
+    protected function parseBody($table, $select = 'COUNT(1) AS num', $alias = '')
     {
-        $preSql       = 'SELECT COUNT(1) AS num FROM `' . $table . '` ';
+        $preSql       = 'SELECT '.$select.' FROM `' . $table . '` ';
         empty($alias) || $preSql .= ' AS ' . $alias;
         $this->partPreSqlArr[] = $preSql;
 

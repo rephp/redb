@@ -5,6 +5,10 @@ use rephp\redb\make\component\traits\commonTrait;
 use rephp\redb\orm\ormModel;
 use rephp\redb\make\component\interfaces\componentInterface;
 
+/**
+ * 生成普通批量插入sql
+ * @package rephp\redb\make\component
+ */
 class batchInsert implements componentInterface
 {
     protected $preSql;
@@ -13,6 +17,11 @@ class batchInsert implements componentInterface
 
     use commonTrait;
 
+    /**
+     * 解析model对象，生成sql
+     * @param ormModel $model orm模型对象
+     * @return string
+     */
     public function parseModelInfo(ormModel $model)
     {
         $table   = $model->getTable();
@@ -21,6 +30,11 @@ class batchInsert implements componentInterface
         return $this->parseBody($table)->parseData($data)->makePreSql();
     }
 
+    /**
+     * 解析对象数据
+     * @param array $batchData  对象数据
+     * @return $this
+     */
     protected function parseData($batchData=[])
     {
         if(empty($batchData)){
@@ -47,6 +61,11 @@ class batchInsert implements componentInterface
         return $this;
     }
 
+    /**
+     * 解析sql主体
+     * @param string $table  数据表名字
+     * @return $this
+     */
     protected function parseBody($table)
     {
         $this->partPreSqlArr[] = 'INSERT INTO `' . $table . '`';

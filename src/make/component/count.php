@@ -51,6 +51,7 @@ class count implements componentInterface
      */
     protected function parseBody($table, $select = 'COUNT(1) AS num', $alias = '')
     {
+        (empty($select) || $select=='*') && $select = 'COUNT(1) AS num';
         $preSql       = 'SELECT '.$select.' FROM `' . $table . '` ';
         empty($alias) || $preSql .= ' AS ' . $alias;
         $this->partPreSqlArr[] = $preSql;

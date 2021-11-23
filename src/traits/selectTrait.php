@@ -60,9 +60,8 @@ trait selectTrait
      */
     public function fetch()
     {
-        $counter = clone $this;
         $list  = $this->all();
-        $count = $counter->count();
+        $count = $this->count();
         return [
             'list'  => $list,
             'count' => $count,

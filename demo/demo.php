@@ -50,7 +50,8 @@ $insertCount = testModel::db($config)->batchInsertIgnore([$data, $data, $data]);
 $insertCount = testModel::db($config)->batchInsertReplace([$data, $data, $data]);
 
 /**********二、删除数据**********/
-$where       = ['id' => 7];
+$where        = ['id' => 18];
+//$where        = ['id', '=', '10'];
 $deleteCount = testModel::db($config)->where($where)->delete();
 //联合删除
 $where       = ['T.id' => 7];

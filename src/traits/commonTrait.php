@@ -329,5 +329,14 @@ trait commonTrait
         return log::getAllLog();
     }
 
+    /**
+     * 获取历史以来执行的所有错误sql信息
+     * @return array
+     */
+    public function getErrorLog()
+    {
+        return log::getAllErrorLog();
+    }
+
 
 }

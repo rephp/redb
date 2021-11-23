@@ -60,5 +60,13 @@ class log
         return end(self::$error);
     }
 
+    /**
+     * 获取历史以来执行的错误sql
+     */
+    public static function getAllErrorLog()
+    {
+        return self::$error;
+    }
+
 
 }

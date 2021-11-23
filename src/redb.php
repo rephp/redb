@@ -80,6 +80,16 @@ class redb
     }
 
     /**
+     * 设置orm实例对象
+     * @return $this
+     */
+    final private function setOrmModel(ormModel $ormModel)
+    {
+        $this->ormModel = $ormModel;
+        return $this;
+    }
+
+    /**
      * 获取当前model中设置的数据库配置key
      * @return string
      */

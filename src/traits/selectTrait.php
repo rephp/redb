@@ -60,8 +60,9 @@ trait selectTrait
      */
     public function fetch()
     {
+        $orm   = $this->getOrmModel();
         $list  = $this->all();
-        $count = $this->count();
+        $count = $this->setOrmModel($orm)->count();
         return [
             'list'  => $list,
             'count' => $count,

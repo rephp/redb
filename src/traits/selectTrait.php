@@ -55,21 +55,6 @@ trait selectTrait
     }
 
     /**
-     * 获取多条数据+条件筛选下的总记录数
-     * @return array
-     */
-    public function fetch()
-    {
-        $orm   = $this->getOrmModel();
-        $list  = $this->all();
-        $count = $this->setOrmModel($orm)->count();
-        return [
-            'list'  => $list,
-            'count' => $count,
-        ];
-    }
-
-    /**
      * 查询条件下数据有多少条
      * @return int
      */

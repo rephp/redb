@@ -337,6 +337,23 @@ trait commonTrait
     {
         return log::getAllErrorLog();
     }
-
+	
+	/**
+     * 获取最近一条执行的sql记录信息
+     * @return array
+     */
+    public function getLastLog()
+    {
+        return log::getLastLog();
+    }
+	
+    /**
+     * 获取历史以来执行的所有错误sql信息
+     * @return array
+     */
+    public function getLastErrorLog()
+    {
+        return log::getLastErrorLog();
+    }
 
 }

@@ -29,16 +29,6 @@ class redb
     use selectTrait;
 
     /**
-     * 实例化自身对象
-     * @return redb
-     */
-    public static function db($configList=[])
-    {
-        $class = get_called_class();
-        return new $class($configList);
-    }
-
-    /**
      * redb 初始化配置项
      * @param array $configList
      * @return object
@@ -73,7 +63,7 @@ class redb
      * 获取orm model实例对象
      * @return ormModel
      */
-    final private function getOrmModel()
+    final protected function getOrmModel()
     {
         is_object($this->ormModel) || $this->ormModel = (new ormModel())->setTable(self::getTable());
         return $this->ormModel;
@@ -83,7 +73,7 @@ class redb
      * 设置orm实例对象
      * @return $this
      */
-    final private function setOrmModel(ormModel $ormModel)
+    final protected function setOrmModel(ormModel $ormModel)
     {
         $this->ormModel = $ormModel;
         return $this;

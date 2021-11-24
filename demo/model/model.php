@@ -71,7 +71,7 @@ class model extends redb
 	    //错误日志处理
         $errorLogInfo = $this->getLastErrorLog();
         if(!empty($errorLogInfo)){
-            empty($errorLogFileName) || file_put_contents($errorLogFileName, '当前时间:'.date('Y-m-d H:i:s', time()).' | 运行时间:'.$errorLogInfo['time'].' | SQL:'.$errorLogInfo['sql'].' | 错误:'.$errorLogInfo['error']."\n-\n");
+            empty($errorLogFileName) || file_put_contents($errorLogFileName, '当前时间:'.date('Y-m-d H:i:s', time()).' | 运行时间:'.$errorLogInfo['time'].' | SQL:'.$errorLogInfo['sql'].' | 错误:'.print_r($errorLogInfo['error'], true)."\n-\n", 8);
 			//一次执行，只能产生一条sql，故如果这里报错则不用运行下面正确sql
             return false;
 		}
@@ -79,7 +79,7 @@ class model extends redb
         $sqlInfo = $this->getLastLog();
         //执行日志处理
         if(!empty($sqlInfo)){
-            empty($logFileName) || file_put_contents($logFileName, '当前时间:'.date('Y-m-d H:i:s', time()).' | 运行时间:'.$sqlInfo['time'].' | SQL:'.$sqlInfo['sql']."\n-\n");
+            empty($logFileName) || file_put_contents($logFileName, '当前时间:'.date('Y-m-d H:i:s', time()).' | 运行时间:'.$sqlInfo['time'].' | SQL:'.$sqlInfo['sql']."\n-\n", 8);
         }
     }
 

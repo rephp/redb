@@ -1,6 +1,7 @@
 <?php
 
 namespace rephp\redb\make\component;
+
 /**
  * 生成替换式批量插入sql
  * @package rephp\redb\make\component
@@ -19,5 +20,4 @@ class batchInsertReplace extends batchInsert
 
         return $this;
     }
-
 }

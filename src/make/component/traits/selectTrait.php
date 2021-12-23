@@ -5,9 +5,9 @@ use rephp\redb\orm\ormModel;
 
 trait selectTrait
 {
-    protected function parseGroupBy($groupBy='')
+    protected function parseGroupBy($groupBy = '')
     {
-        if(empty($groupBy)){
+        if (empty($groupBy)) {
             return $this;
         }
         $this->partPreSqlArr[] = 'GROUP BY '.$groupBy;
@@ -15,9 +15,9 @@ trait selectTrait
         return $this;
     }
 
-    protected function parseLimit($page=0, $pageSize=0)
+    protected function parseLimit($page = 0, $pageSize = 0)
     {
-        if(empty($page) && empty($pageSize)){
+        if (empty($page) && empty($pageSize)) {
             return $this;
         }
         $page<1 &&  $page=1;
@@ -27,9 +27,9 @@ trait selectTrait
         return $this;
     }
 
-    protected function parseHaving($having='')
+    protected function parseHaving($having = '')
     {
-        if(empty($having)){
+        if (empty($having)) {
             return $this;
         }
         $this->partPreSqlArr[] = 'HAVING '.$having;
@@ -37,9 +37,9 @@ trait selectTrait
         return $this;
     }
 
-    protected function parseOrderBy($orderBy='')
+    protected function parseOrderBy($orderBy = '')
     {
-        if(empty($orderBy)){
+        if (empty($orderBy)) {
             return $this;
         }
         $this->partPreSqlArr[] = 'ORDER BY '.$orderBy;
@@ -50,13 +50,13 @@ trait selectTrait
 
     protected function parseUnion($modelList)
     {
-        if(empty($modelList)){
+        if (empty($modelList)) {
             return $this;
         }
         /**
          * @var ormModel $model
          */
-        foreach($modelList as $item){
+        foreach ($modelList as $item) {
             $model  = $item['model'];
             $action = $item['type'];
             $sql = $model->getSql();
@@ -65,6 +65,4 @@ trait selectTrait
 
         return $this;
     }
-
-
 }

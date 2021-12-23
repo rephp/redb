@@ -1,5 +1,6 @@
 <?php
 namespace rephp\redb\traits;
+
 /**
  * Trait transTrait
  * @package rephp\redb\traits
@@ -30,5 +31,4 @@ trait transTrait
     {
         $this->getCmd()->commit();
     }
-
 }

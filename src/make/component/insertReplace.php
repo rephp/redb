@@ -1,6 +1,7 @@
 <?php
 
 namespace rephp\redb\make\component;
+
 /**
  * 生成单条替换式插入sql
  * @package rephp\redb\make\component
@@ -18,5 +19,4 @@ class insertReplace extends insert
 
         return $this;
     }
-
 }

@@ -45,7 +45,7 @@ class update implements componentInterface
      * @param array $batchData  对象数据
      * @return $this
      */
-    protected function parseData($data = [], $incList=[])
+    protected function parseData($data = [], $incList = [])
     {
         if (empty($data)) {
             return $this;
@@ -86,5 +86,4 @@ class update implements componentInterface
 
         return $this;
     }
-
 }

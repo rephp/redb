@@ -12,10 +12,10 @@ use rephp\redb\query\log;
 trait deleteTrait
 {
 
-    public function delete($preSql, $bindParams=[])
+    public function delete($preSql, $bindParams = [])
     {
         $stmt = $this->setConfigType($type='master')->execute($preSql, $bindParams);
-        if(!$stmt){
+        if (!$stmt) {
             $stmt = null;
             $errorInfo = log::getLastErrorLog();
             throw new \Exception($errorInfo['error']['msg'], $errorInfo['error']['code']);
@@ -26,5 +26,4 @@ trait deleteTrait
 
         return $result;
     }
-
 }

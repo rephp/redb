@@ -27,5 +27,4 @@ trait updateTrait
 
         return $result;
     }
-
 }

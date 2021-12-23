@@ -67,6 +67,4 @@ class log
     {
         return self::$error;
     }
-
-
 }

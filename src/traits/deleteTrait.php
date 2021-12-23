@@ -1,6 +1,7 @@
 <?php
 
 namespace rephp\redb\traits;
+
 /**
  * Trait deleteTrait
  * @package rephp\redb\traits

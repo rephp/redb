@@ -10,7 +10,6 @@ use rephp\redb\traits\deleteTrait;
 use rephp\redb\traits\updateTrait;
 use rephp\redb\orm\ormModel;
 
-
 class redb
 {
     /**
@@ -36,7 +35,7 @@ class redb
     public function __construct(array $configList)
     {
         //兼容一维数组配置
-        if(count($configList) == count($configList,1)){
+        if (count($configList) == count($configList, 1)) {
             $configList = [$configList];
         }
         foreach ($configList as $config) {
@@ -106,6 +105,4 @@ class redb
     {
         return $this->getCmd()->queryRaw($sql);
     }
-
-
 }

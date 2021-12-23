@@ -1,6 +1,7 @@
 <?php
 
 namespace rephp\redb\traits;
+
 /**
  * Trait updateTrait
  * @package rephp\redb\traits
@@ -42,5 +43,4 @@ trait updateTrait
         empty($data) || $this->data($data);
         return $this->setAction('update')->run();
     }
-
 }

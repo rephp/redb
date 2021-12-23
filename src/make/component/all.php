@@ -60,5 +60,4 @@ class all implements componentInterface
 
         return $this;
     }
-
 }

@@ -2,7 +2,6 @@
 
 namespace rephp\redb\query\traits;
 
-
 use rephp\redb\query\log;
 
 /**
@@ -66,5 +65,4 @@ trait insertTrait
     {
         return $this->insertDeal($preSql, $bindParams);
     }
-
 }

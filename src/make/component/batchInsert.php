@@ -35,9 +35,9 @@ class batchInsert implements componentInterface
      * @param array $batchData  对象数据
      * @return $this
      */
-    protected function parseData($batchData=[])
+    protected function parseData($batchData = [])
     {
-        if(empty($batchData)){
+        if (empty($batchData)) {
             return $this;
         }
         $batchData = (array)$batchData;
@@ -45,13 +45,13 @@ class batchInsert implements componentInterface
         $data = (array)$data;
         $tempArr = [];
         $tempKeyArr = [];
-        foreach($data as $index=>$value){
+        foreach ($data as $index => $value) {
             $tempArr[] = '?';
             $tempKeyArr[] = $index;
         }
         $preSql = '('.implode(',', $tempKeyArr).') VALUES ';
         $splitStr = '';
-        foreach($batchData as $item){
+        foreach ($batchData as $item) {
             array_push($this->bindParams, ...array_values($item));
             $preSql .= $splitStr.'('.implode(',', $tempArr).')';
             $splitStr = ',';
@@ -72,7 +72,4 @@ class batchInsert implements componentInterface
 
         return $this;
     }
-
-
-
 }

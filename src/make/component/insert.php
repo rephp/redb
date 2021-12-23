@@ -35,15 +35,15 @@ class insert implements componentInterface
      * @param array $batchData  对象数据
      * @return $this
      */
-    protected function parseData($data=[])
+    protected function parseData($data = [])
     {
-        if(empty($data)){
+        if (empty($data)) {
             return false;
         }
         $data = (array)$data;
         $tempArr = [];
         $tempKeyArr = [];
-        foreach($data as $index=>$value){
+        foreach ($data as $index => $value) {
             $this->bindParams[] = $value;
             $tempArr[] = '?';
             $tempKeyArr[] = $index;
@@ -64,5 +64,4 @@ class insert implements componentInterface
 
         return $this;
     }
-
 }

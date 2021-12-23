@@ -39,7 +39,7 @@ trait selectTrait
      * 获取单条数据
      * @return array
      */
-    public function one($isLock=false)
+    public function one($isLock = false)
     {
         $this->getOrmModel()->lock($isLock);
         return $this->setAction('one')->run();
@@ -58,7 +58,7 @@ trait selectTrait
      * 查询条件下数据有多少条
      * @return int
      */
-    public function count($select='COUNT(*) AS num')
+    public function count($select = 'COUNT(*) AS num')
     {
         return $this->setAction('count')->select($select)->limit(0)->page(0)->run();
     }
@@ -128,6 +128,4 @@ trait selectTrait
         $this->getOrmModel()->select($selectRawString);
         return $this;
     }
-
-
 }

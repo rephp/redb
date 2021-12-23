@@ -58,5 +58,4 @@ class count implements componentInterface
 
         return $this;
     }
-
 }

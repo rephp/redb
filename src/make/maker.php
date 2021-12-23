@@ -50,5 +50,4 @@ class maker
     {
         return $this->getComponent()->getBindParams();
     }
-
 }

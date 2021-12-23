@@ -1,5 +1,6 @@
 <?php
 namespace rephp\redb\make\component;
+
 /**
  * 生成单条忽略式插入sql
  * @package rephp\redb\make\component
@@ -17,5 +18,4 @@ class insertIgnore extends insert
 
         return $this;
     }
-
 }

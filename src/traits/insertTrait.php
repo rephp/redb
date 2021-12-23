@@ -1,6 +1,7 @@
 <?php
 
 namespace rephp\redb\traits;
+
 /**
  * Trait insertTrait
  * @package rephp\redb\traits
@@ -74,6 +75,4 @@ trait insertTrait
         empty($data) || $this->data($data);
         return $this->setAction('batchInsertIgnore')->run();
     }
-
-
 }

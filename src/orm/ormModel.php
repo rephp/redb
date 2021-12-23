@@ -174,7 +174,7 @@ class ormModel
      * @param bool $isLock
      * @return $this
      */
-    public function lock($isLock=false)
+    public function lock($isLock = false)
     {
         $this->lock = $isLock;
         return $this;
@@ -549,5 +549,4 @@ class ormModel
     {
         return $this->maker()->getBindParams();
     }
-
 }

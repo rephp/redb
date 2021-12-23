@@ -67,9 +67,9 @@ class one implements componentInterface
      * @param bool $lockStatus  是否开启行锁
      * @return $this
      */
-    protected function parseLock($lockStatus=false)
+    protected function parseLock($lockStatus = false)
     {
-        if(!$lockStatus){
+        if (!$lockStatus) {
             return $this;
         }
         $lockStatus && $preSql = 'FOR UPDATE';
@@ -77,5 +77,4 @@ class one implements componentInterface
 
         return $this;
     }
-
 }

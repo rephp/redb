@@ -81,12 +81,12 @@ trait commonTrait
     {
         if (is_array($cloumn)) {
             //判断是一维数组还是二维数组
-            $isOneWhere = ( count($cloumn) == count($cloumn,1) );
+            $isOneWhere = ( count($cloumn) == count($cloumn, 1) );
             //如果是一维数组,即意味着需要执行一个查询条件
-            if($isOneWhere){
+            if ($isOneWhere) {
                 //区分是传统模式还是新式定义格式
                 $arrayKeyArr = array_keys($cloumn);
-                if(is_numeric(current($arrayKeyArr))){
+                if (is_numeric(current($arrayKeyArr))) {
                     $this->getOrmModel()->where($cloumn);
                     return $this;
                 }
@@ -337,8 +337,8 @@ trait commonTrait
     {
         return log::getAllErrorLog();
     }
-	
-	/**
+    
+    /**
      * 获取最近一条执行的sql记录信息
      * @return array
      */
@@ -346,7 +346,7 @@ trait commonTrait
     {
         return log::getLastLog();
     }
-	
+    
     /**
      * 获取历史以来执行的所有错误sql信息
      * @return array
@@ -355,5 +355,4 @@ trait commonTrait
     {
         return log::getLastErrorLog();
     }
-
 }

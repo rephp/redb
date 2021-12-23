@@ -26,6 +26,4 @@ trait transTrait
         $this->setConfigType($type = 'master')->getPdo()->commit();
         return $this;
     }
-
-
 }

@@ -11,17 +11,17 @@ trait commonTrait
 {
     protected function parseWhere($where)
     {
-        if(empty($where)){
+        if (empty($where)) {
             return $this;
         }
 
         $currentOperate = '';
         foreach ($where as $item) {
-            if(empty($item)){
+            if (empty($item)) {
                 continue;
             }
             in_array('WHERE', $this->partPreSqlArr) || $this->partPreSqlArr[] = 'WHERE';
-            switch (strtolower($item[0])){
+            switch (strtolower($item[0])) {
                 case 'and':
                     $currentOperate = ' AND ';
                     break;
@@ -41,7 +41,6 @@ trait commonTrait
                     empty($preSql) || $this->partPreSqlArr[] = $preSql;
                     break;
             }
-
         }
 
         return $this;
@@ -53,11 +52,11 @@ trait commonTrait
         $item[0] = '`'.str_replace('.', '`.`', $item[0]).'` ';
         $case = str_replace(' ', '', strtolower($item[1]));
         $case = str_replace('\t', '', $case);
-        switch ($case){
+        switch ($case) {
             case 'in':
             case 'notin':
                 is_array($item[2]) || $item[2]  = explode(',', $item[2]);
-                foreach($item[2] as $val){
+                foreach ($item[2] as $val) {
                     $this->bindParams[] = $val;
                     $tempArr[] = '?';
                 }
@@ -105,5 +104,4 @@ trait commonTrait
     {
         return $this->bindParams;
     }
-
 }

@@ -54,13 +54,12 @@ class cmd
                 $index++;
             }
             //执行命令
-            if($this->debug){
+            if ($this->debug) {
                 echo vsprintf(str_replace('?', '\'%s\'', $preSql), $params);
             }
             $stmt->execute();
             log::setLog(vsprintf(str_replace('?', '\'%s\'', $preSql), $params), round(microtime(true) - $startTime, 6));
             return $stmt;
-
         } catch (\Exception $e) {
             //其他情况记录mysql错误日志
             $extErrorInfo = [
@@ -70,7 +69,7 @@ class cmd
                 'file' => $e->getFile(),
             ];
             log::setErrorLog(vsprintf(str_replace('?', '\'%s\'', $preSql), $params), round(microtime(true) - $startTime, 6), $extErrorInfo);
-            if($this->debug){
+            if ($this->debug) {
                 print_r($extErrorInfo);
             }
             throw $e;
@@ -120,5 +119,4 @@ class cmd
 
         return false;
     }
-
 }

@@ -1,5 +1,6 @@
 <?php
 namespace rephp\redb\make\component;
+
 /**
  * 生成忽略式批量插入sql
  * @package rephp\redb\make\component
@@ -18,5 +19,4 @@ class batchInsertIgnore extends batchInsert
 
         return $this;
     }
-
 }

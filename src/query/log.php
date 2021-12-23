@@ -46,7 +46,7 @@ class log
      * @param mixed  $extErrorInfo 错误信息
      * @return array
      */
-    public static function setErrorLog($sql, $time=0, $extErrorInfo='')
+    public static function setErrorLog($sql, $time = 0, $extErrorInfo = '')
     {
         return self::$error[] = ['time' => $time, 'sql' => $sql, 'error' => $extErrorInfo];
     }

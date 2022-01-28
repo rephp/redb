@@ -1,0 +1,80 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="zh-cn">
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>whereLeftBracket</title>
+<style>
+html,body { 
+	/* Default Font */
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11pt;
+}
+
+.markdown-section pre {
+    padding: 0 1.4rem;
+    line-height: 1.5rem;
+    height: auto;
+    display:block;
+    word-wrap: normal;
+}
+
+.markdown-section output, .markdown-section pre {
+    margin: 1.2em 0;
+}
+.markdown-section code, .markdown-section pre {
+    background-color: #f8f8f8;
+}
+.markdown-section>:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) code {
+    font-size: .8rem;
+}
+.markdown-section pre code {
+    color: #525252;
+    font-size: .8rem;
+    padding: 2.2em  5px;
+    line-height: inherit;
+    margin: 0 2px;
+    max-width: inherit;
+    overflow: inherit;
+    white-space: inherit;
+}
+.markdown-section output:after, .markdown-section pre code {
+    -moz-osx-font-smoothing: initial;
+    -webkit-font-smoothing: initial;
+}
+.markdown-section output, .markdown-section pre code {
+    border-radius: 2px;
+    display: block;
+}
+.markdown-section code {
+    border-radius: 2px;
+    color: #e96900;
+    margin: 0 2px;
+    padding: 3px 5px;
+    white-space: pre-wrap;
+}
+.markdown-section code, .markdown-section pre {
+    background-color: #f8f8f8;
+}
+.markdown-section code, .markdown-section output:after, .markdown-section pre {
+    font-family: Roboto Mono,Monaco,courier,monospace;
+}
+</style>
+</head>
+
+<body class="markdown-section">
+
+
+<p><b><font size="4">whereLeftBracket</font></b><br></p>
+
+<br>
+whereLeftBracket方法没有参数，作用：向where条件追加一个左括号
+<pre data-lang="php"><code class="lang-php">
+$tester  = new testModel();
+$list    = $tester->where(['type_id'=>1])-><font color="#FF0000">whereLeftBracket()</font>->where(['cate_id'=>2])->whereOr()->where(['cate_id'=>2])->whereRightBracket()->all();
+</code></pre>
+
+
+</body>
+
+</html>

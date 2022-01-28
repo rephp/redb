@@ -1,0 +1,110 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="zh-cn">
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>union操作</title>
+<style>
+html,body { 
+	/* Default Font */
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11pt;
+}
+
+.markdown-section pre {
+    padding: 0 1.4rem;
+    line-height: 1.5rem;
+    height: auto;
+    display:block;
+    word-wrap: normal;
+}
+
+.markdown-section output, .markdown-section pre {
+    margin: 1.2em 0;
+}
+.markdown-section code, .markdown-section pre {
+    background-color: #f8f8f8;
+}
+.markdown-section>:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) code {
+    font-size: .8rem;
+}
+.markdown-section pre code {
+    color: #525252;
+    font-size: .8rem;
+    padding: 2.2em  5px;
+    line-height: inherit;
+    margin: 0 2px;
+    max-width: inherit;
+    overflow: inherit;
+    white-space: inherit;
+}
+.markdown-section output:after, .markdown-section pre code {
+    -moz-osx-font-smoothing: initial;
+    -webkit-font-smoothing: initial;
+}
+.markdown-section output, .markdown-section pre code {
+    border-radius: 2px;
+    display: block;
+}
+.markdown-section code {
+    border-radius: 2px;
+    color: #e96900;
+    margin: 0 2px;
+    padding: 3px 5px;
+    white-space: pre-wrap;
+}
+.markdown-section code, .markdown-section pre {
+    background-color: #f8f8f8;
+}
+.markdown-section code, .markdown-section output:after, .markdown-section pre {
+    font-family: Roboto Mono,Monaco,courier,monospace;
+}
+</style>
+</head>
+
+<body class="markdown-section">
+
+
+<p><b><font size="4">union操作</font></b><br></p>
+union常用操作有：union和unionAll
+<br>
+<b>1.union介绍：</b><br>
+
+union方法不支持分页，仅简单的将多组查询结果合并在一起显示，要求这些结果结构必须一致。<br>
+此方法适用于场景如用户名或者手机或者email等混合都可以登录等特殊场景，可以避免使用or语句，提升查询效率。
+<pre data-lang="php"><code class="lang-php">
+/**
+ * union联合查询
+ * @param ormModel $model  ormModel对象
+ */
+public function union(ormModel $model)
+</code></pre>
+
+union用法：
+<pre data-lang="php"><code class="lang-php">
+$tester  = new testModel();
+$list    = $tester->where($where)->union(linkCpModel::db()->where($where2))->all();
+
+</code></pre>
+<br>
+<b>2.unionAll介绍：</b><br>
+unionAll方法支持分页，适合分表的数据汇总分页展示，如日志表按月分表后可以使用unionAll汇总分页展示给前端。此方法一样可避开or语句查询，在大量数据检索时可有效命中索引从而提升效率
+<pre data-lang="php"><code class="lang-php">
+/**
+ * union all联合查询
+ * @param ormModel $model  ormModel对象
+ * @return $this
+ */
+public function unionAll(ormModel $model)
+</code></pre>
+
+unionAll用法：
+<pre data-lang="php"><code class="lang-php">
+$tester  = new testModel();
+$list    = $tester->where($where)->unionAll(linkCpModel::db()->where($where2))->limit(10)->page(1)->all();
+
+</code></pre>
+
+</body>
+
+</html>

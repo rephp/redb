@@ -1,0 +1,233 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="zh-cn">
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>where</title>
+<style>
+html,body { 
+	/* Default Font */
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11pt;
+}
+
+.markdown-section pre {
+    padding: 0 1.4rem;
+    line-height: 1.5rem;
+    height: auto;
+    display:block;
+    word-wrap: normal;
+}
+
+.markdown-section output, .markdown-section pre {
+    margin: 1.2em 0;
+}
+.markdown-section code, .markdown-section pre {
+    background-color: #f8f8f8;
+}
+.markdown-section>:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) code {
+    font-size: .8rem;
+}
+.markdown-section pre code {
+    color: #525252;
+    font-size: .8rem;
+    padding: 2.2em  5px;
+    line-height: inherit;
+    margin: 0 2px;
+    max-width: inherit;
+    overflow: inherit;
+    white-space: inherit;
+}
+.markdown-section output:after, .markdown-section pre code {
+    -moz-osx-font-smoothing: initial;
+    -webkit-font-smoothing: initial;
+}
+.markdown-section output, .markdown-section pre code {
+    border-radius: 2px;
+    display: block;
+}
+.markdown-section code {
+    border-radius: 2px;
+    color: #e96900;
+    margin: 0 2px;
+    padding: 3px 5px;
+    white-space: pre-wrap;
+}
+.markdown-section code, .markdown-section pre {
+    background-color: #f8f8f8;
+}
+.markdown-section code, .markdown-section output:after, .markdown-section pre {
+    font-family: Roboto Mono,Monaco,courier,monospace;
+}
+</style>
+</head>
+
+<body class="markdown-section">
+
+
+<p><b><font size="4">where</font></b><br></p>
+where方法参数为数组，它既可以与其他where条件混合使用，也可一个where语句查出所有条件（这是可能就需要一个复杂的查询数组）
+<br>
+<b>where介绍：</b>
+<pre data-lang="php"><code class="lang-php">
+/**
+ * 查询条件，支持多次where，默认连接方式是and
+ * 如：
+ * $this->where('id', 2, '=');
+ * $this->where('id', 2, 'like');
+ * $this->where('id', [2], 'in');
+ * $this->where('id', [2,3], 'between');
+ * $this->where('id', 'is null');
+ * 其他更复杂写法有
+ * $where = [
+ *     'and',
+ *      ['id', [2], 'in'],
+ *      'or',
+ *      '(',
+ *      ['id', [2,3], 'between'],
+ *      ')'
+ * ];
+ * $this->where($where);
+ * @param mixed  $cloumn 查询字段或表达式
+ * @param mixed  $value  查询值
+ * @param string $opt    操作符
+ */
+public function where($cloumn, $value = '', $opt = '=')
+</code></pre>
+
+<b>where用法：</b><br>
+<b>一、通常地，redb中where可以用自己组合的数组来完整表达查询条件.</b><br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;<b>1.单个查询条件</b>
+<pre data-lang="php"><code class="lang-php">
+$where = [字段名, 运算符, 值];
+</code></pre>
+&nbsp;&nbsp;&nbsp;&nbsp;<b>2.多个查询条件 </b>
+<pre data-lang="php"><code class="lang-php">
+$where = [
+  [字段名, 运算符, 值],
+  [字段名, 运算符, 值],
+  [字段名, 运算符, 值],
+];
+
+//更复杂用法：
+$where = [
+  'and',
+  [字段名, 运算符, 值],
+  '(',
+  [字段名, 运算符, 值],
+  'or',
+  [字段名, 运算符, 值],
+  ')',
+];
+</code></pre>
+备注：redb的where条件中的操作符主要由各种运算符及mysql关键字组成如(>,<,>=,<=,like,in,not like,not in,between,not between,is null,is not null等等)<br>
+
+<br>
+<b>二、可操作redb内置where系列方法特别是<font color="#FF0000">where</font>方法来自由组合查询条件</b><br>
+常用方法有where,whereAnd,whereOr,whereLeftBracket,whereRightBracket,whereIn,whereNotIn,whereLike,whereNotLike,whereBetween,whereNotBetween,whereIsNull,whereIsNotNull等<br>
+
+下面我们一次性罗列多种查询方式：
+
+<pre data-lang="php"><code class="lang-php">
+$tester  = new testModel();
+$where = ['cate_id'=>7];
+$list    = $tester->where($where)->all();
+$list    = $tester->where('cate_id', 7, '=')->all();
+------------------------
+$where = ['id', '>', 3];
+$list    = $tester->where($where)->all();
+$list    = $tester->where('id', 3, '>')->all();
+------------------------
+$where   = ['title', 'like', 'hello world'];
+$list    = $tester->where($where)->all();
+$list    = $tester->where('title', 'hello world', 'like')->all();
+$list    = $tester->whereLike('title', 'hello world')->all();
+------------------------
+$where   = ['title', 'not like', 'hello world'];
+$list    = $tester->where($where)->all();
+$list    = $tester->where('title', 'hello world', 'not like')->all();
+$list    = $tester->whereNotLike('title', 'hello world')->all();
+------------------------
+$where   = ['id', 'in', [2,3,4,5]];
+$list    = $tester->where($where)->all();
+$list    = $tester->where('id', [2,3,4,5], 'in')->all();
+$list    = $tester->whereIn('id', [2,3,4,5])->all();
+------------------------
+$where   = ['title', 'not in', ['test', 'test2', 'testn']];
+$list    = $tester->where($where)->all();
+$list    = $tester->where('title', ['test', 'test2', 'testn'], 'not in')->all();
+$list    = $tester->whereNotIn('title', ['test', 'test2', 'testn'])->all();
+------------------------
+$where   = ['title', 'is null'];
+$list    = $tester->where($where)->all();
+$list    = $tester->where('title', '', 'is null')->all();
+$list    = $tester->whereIsNull('title')->all();
+------------------------
+$where   = ['title', 'is not null'];
+$list    = $tester->where($where)->all();
+$list    = $tester->where('title', '', 'is not null')->all();
+$list    = $tester->whereIsNotNull('title')->all();
+------------------------
+$where   = ['id', 'between', [20, 100]];
+$list    = $tester->where($where)->all();
+$list    = $tester->where('id', [20, 100], 'between')->all();
+$list    = $tester->whereBetween('id', 20, 100)->all();
+------------------------
+$where   = ['id', 'not between', [20, 100]];
+$list    = $tester->where($where)->all();
+$list    = $tester->where('id', [20, 100], 'not between')->all();
+$list    = $tester->whereNotBetween('id', 20, 100)->all();
+</code></pre>
+
+
+混合查询方式：
+<pre data-lang="php"><code class="lang-php">
+$where = [
+    ['id', '>', 3],
+    ['title', 'like', 'hello wolrd'],
+];
+$list    = $tester->where($where)->all();
+$list2   = $tester->where(['id'], 3, '>')->where('title', 'hello world', 'like')->all();
+------------------------
+$where = [
+    ['id', '>', 3],
+    'or',
+    ['title', 'like', 'hello wolrd'],
+     'or',
+    ['cate_id', 'in', [2,3,4,5]],
+];
+$list    = $tester->where($where)->all();
+$list2   = $tester->where(['id'], 3, '>')->whereOr()->where('title', 'hello world', 'like')->whereOr()->whereIn('cate_id', [2,3,4,5])->all();
+------------------------
+$where = [
+    '(',
+    ['id', '>', 3],
+    'and',
+    ['title', 'like', 'hello wolrd'],
+    ')',
+    'or',
+    '(',
+     ['id', 'between', [2,100]],
+      'or',
+    ['cate_id', 'in', [2,3,4,5]],
+    ')',
+];
+$list    = $tester->where($where)->all();
+$list2   = $tester->whereLeftBracket()
+                      ->where(['id'], 3, '>')
+                      ->whereAnd()
+                      ->whereLike('title', 'hello world')
+                  ->whereRightBracket()
+                  ->whereOr()
+                  ->whereLeftBracket()
+                      ->whereBetween('id', [2,100])
+                      ->whereOr()
+                      ->whereIn('cate_id', [2,3,4,5])
+                  ->whereRightBracket()
+                  ->all();
+</code></pre>
+
+</body>
+
+</html>

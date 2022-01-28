@@ -1,0 +1,126 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="zh-cn">
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>join操作</title>
+<style>
+html,body { 
+	/* Default Font */
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11pt;
+}
+
+.markdown-section pre {
+    padding: 0 1.4rem;
+    line-height: 1.5rem;
+    height: auto;
+    display:block;
+    word-wrap: normal;
+}
+
+.markdown-section output, .markdown-section pre {
+    margin: 1.2em 0;
+}
+.markdown-section code, .markdown-section pre {
+    background-color: #f8f8f8;
+}
+.markdown-section>:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) code {
+    font-size: .8rem;
+}
+.markdown-section pre code {
+    color: #525252;
+    font-size: .8rem;
+    padding: 2.2em  5px;
+    line-height: inherit;
+    margin: 0 2px;
+    max-width: inherit;
+    overflow: inherit;
+    white-space: inherit;
+}
+.markdown-section output:after, .markdown-section pre code {
+    -moz-osx-font-smoothing: initial;
+    -webkit-font-smoothing: initial;
+}
+.markdown-section output, .markdown-section pre code {
+    border-radius: 2px;
+    display: block;
+}
+.markdown-section code {
+    border-radius: 2px;
+    color: #e96900;
+    margin: 0 2px;
+    padding: 3px 5px;
+    white-space: pre-wrap;
+}
+.markdown-section code, .markdown-section pre {
+    background-color: #f8f8f8;
+}
+.markdown-section code, .markdown-section output:after, .markdown-section pre {
+    font-family: Roboto Mono,Monaco,courier,monospace;
+}
+</style>
+</head>
+
+<body class="markdown-section">
+
+
+<p><b><font size="4">join操作</font></b><br></p>
+join常用操作有：leftJoin、rightJoin和innerJoin
+<br>
+<b>1.leftJoin介绍：
+</b>
+<pre data-lang="php"><code class="lang-php">
+/**
+ * 左连接
+ * @param string $tableName  关联的子表表名，含对子表的重命名如: 'product AS P'
+ * @param string  $on on关联信息，如: 'A.id=B.pid'
+ */
+public function leftJoin($tableName, $on)</code></pre>
+
+leftJoin用法：
+<pre data-lang="php"><code class="lang-php">
+$tester  = new testModel();
+$list    = $tester->alias('T')-><font color="#FF0000">leftJoin(linkCpModel::db()->getTable() . ' AS L', 'T.id=L.id')</font>->where(['L.title' => 14])->page(20)->page(2)->all();
+
+</code></pre>
+<br>
+<b>2.rightJoin介绍：
+</b>
+<pre data-lang="php"><code class="lang-php">
+/**
+ * 右连接
+ * @param string $tableName  关联的子表表名，含对子表的重命名如: 'product AS P'
+ * @param string  $on on关联信息，如: 'A.id=B.pid'
+ * @return $this
+ */
+public function rightJoin($tableName, $on)
+</code></pre>
+
+rightJoin用法：
+<pre data-lang="php"><code class="lang-php">
+$tester  = new testModel();
+$list    = $tester->alias('T')-><font color="#FF0000">rightJoin(linkCpModel::db()->getTable() . ' AS L', 'T.id=L.id')</font>->where(['L.title' => 14])->page(20)->page(2)->all();
+
+</code></pre>
+<br>
+<b>3.innerJoin介绍：</b>
+<pre data-lang="php"><code class="lang-php">
+/**
+ * 内连接
+ * @param string $tableName  关联的子表表名，含对子表的重命名如: 'product AS P'
+ * @param string  $on on关联信息，如: 'A.id=B.pid'
+ */
+public function innerJoin($tableName, $on)
+</code></pre>
+
+innerJoin用法：
+<pre data-lang="php"><code class="lang-php">
+$tester  = new testModel();
+$list    = $tester->alias('T')-><font color="#FF0000">innerJoin(linkCpModel::db()->getTable() . ' AS L', 'T.id=L.id')</font>->where(['L.title' => 14])->page(20)->page(2)->all();
+
+</code></pre>
+
+</body>
+
+</html>

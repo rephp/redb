@@ -1,0 +1,128 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="zh-cn">
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>查询通用方法</title>
+<style>
+html,body { 
+	/* Default Font */
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11pt;
+}
+
+.markdown-section pre {
+    padding: 0 1.4rem;
+    line-height: 1.5rem;
+    height: auto;
+    display:block;
+    word-wrap: normal;
+}
+
+.markdown-section output, .markdown-section pre {
+    margin: 1.2em 0;
+}
+.markdown-section code, .markdown-section pre {
+    background-color: #f8f8f8;
+}
+.markdown-section>:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) code {
+    font-size: .8rem;
+}
+.markdown-section pre code {
+    color: #525252;
+    font-size: .8rem;
+    padding: 2.2em  5px;
+    line-height: inherit;
+    margin: 0 2px;
+    max-width: inherit;
+    overflow: inherit;
+    white-space: inherit;
+}
+.markdown-section output:after, .markdown-section pre code {
+    -moz-osx-font-smoothing: initial;
+    -webkit-font-smoothing: initial;
+}
+.markdown-section output, .markdown-section pre code {
+    border-radius: 2px;
+    display: block;
+}
+.markdown-section code {
+    border-radius: 2px;
+    color: #e96900;
+    margin: 0 2px;
+    padding: 3px 5px;
+    white-space: pre-wrap;
+}
+.markdown-section code, .markdown-section pre {
+    background-color: #f8f8f8;
+}
+.markdown-section code, .markdown-section output:after, .markdown-section pre {
+    font-family: Roboto Mono,Monaco,courier,monospace;
+}
+</style>
+</head>
+
+<body class="markdown-section">
+
+
+<p><b><font size="4">查询数据</font></b><br></p>
+
+<p>Redb查询数据拥有多种扩展方法：
+1.按照获取数据功能划分有：all、one、fetch、 count; <br>
+2.按照通用扩展划分有：select、where、limit+page、 orderBy、groupBy、having; <br>
+3.按照联合方式不同划分有：leftJoin、rightJoin、innerJoin、union、unionAll; (alias方法配合)<br>
+</p>
+<br>
+值得注意的是，多种方法之间虽然无先后顺序强制要求，但是all、one、count、fetch这4个方法必须放在最后调用。<br>
+
+
+<p>这里我们介绍查询数据通用方法：</p>
+<br>
+<br>
+<b>1.groupBy</b><br>
+groupBy方法参数为string类型，可支持一个或者多个字段进行归类;
+<pre data-lang="php"><code class="lang-php">
+$tester = new testModel();
+$list   = $tester->where($where)->groupBy('cate_id,data_type')->all();
+</code></pre>
+
+<b>2.select</b><br>
+select方法参数为string类型，多个参数用逗号分隔。
+<pre data-lang="php"><code class="lang-php">
+$tester = new testModel();
+$one    = $tester->select('id,title,desc')->one();
+</code></pre>
+
+<b>3.limit+page</b><br>
+limit方法参数为int类型，表示一页多少条数据<br>
+page方法参数为int类型，表示要请求第几页的数据，如果调用了limit方法，则默认调用page(1)方法，取第一页数据。
+<pre data-lang="php"><code class="lang-php">
+$tester = new testModel();
+$list   = $tester->where($where)->limit(20)->page(2)->all();</code></pre>
+
+<b>4.orderBy</b><br>
+orderBy方法参数为string类型，表示排序方式，多个字段排序信息用逗号分隔
+<pre data-lang="php"><code class="lang-php">
+$tester = new testModel();
+$list   = $tester->where($where)->orderBy('id DESC,score ASC')->all();</code></pre>
+
+<b>5.having</b><br>
+having方法参数为string类型
+<pre data-lang="php"><code class="lang-php">
+$tester = new testModel();
+$list   = $tester->select('title,count(*) AS num')->where($where)->groupBy('title')->having('num>1')->all();</code></pre>
+
+<b>6.where</b><br>
+where方法参数为array类型,有独特语法，可独立组合所有查询条件，也可与whereAnd,whereOr,whereLeftBracket,whereRightBracket,whereLike,whereNotLike,whereIn,whereNotIn,whereIsNull,whereIsNotNull,whereBetween,
+whereNotBetween等方法配合完成复杂where语句。
+其他where方法在此不再一一列举，有兴趣的同学可自行在方法详解中查看。
+
+<pre data-lang="php"><code class="lang-php">
+$tester = new testModel();
+$list   = $tester->where($where)->all();
+$list2  = $tester->where($where)->whereAnd($where2)->whereOr($where3)->all();
+$list2  = $tester->where($where)->whereLeftBracket()->whereAnd($where2)->whereOr($where3)->whereRightBracket()->all();
+</code></pre>
+</body>
+
+</html>

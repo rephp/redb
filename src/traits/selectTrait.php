@@ -10,6 +10,7 @@ use rephp\redb\redb;
  * @method  \rephp\redb\orm\ormModel getOrmModel()
  * @method \rephp\redb\query\cmd getCmd()
  * @method \rephp\redb\redb setAction()
+ * @method \rephp\redb\redb fetch()
  */
 trait selectTrait
 {
@@ -26,7 +27,7 @@ trait selectTrait
 
     /**
      * 设置每页数据量
-     * @param int $pageSize  每页多少条数据
+     * @param int $pageSize 每页多少条数据
      * @return $this
      */
     public function limit($pageSize = 0)
@@ -65,7 +66,7 @@ trait selectTrait
 
     /**
      * union联合查询
-     * @param redb $client  redb对象
+     * @param redb $client redb对象
      * @return $this
      */
     public function union(redb $client)
@@ -76,7 +77,7 @@ trait selectTrait
 
     /**
      * union all联合查询
-     * @param redb $client  redb对象
+     * @param redb $client redb对象
      * @return $this
      */
     public function unionAll(redb $client)
@@ -120,7 +121,7 @@ trait selectTrait
 
     /**
      * 设置查询语句中的select部分
-     * @param  string  $selectRawString  select内容，如'id,title,create_time'或者'*'
+     * @param string $selectRawString select内容，如'id,title,create_time'或者'*'
      * @return $this
      */
     public function select($selectRawString)

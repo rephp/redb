@@ -81,7 +81,7 @@ public function leftJoin($tableName, $on)</code></pre>
 leftJoin用法：
 <pre data-lang="php"><code class="lang-php">
 $tester  = new testModel();
-$list    = $tester->alias('T')-><font color="#FF0000">leftJoin(linkCpModel::db()->getTable() . ' AS L', 'T.id=L.id')</font>->where(['L.title' => 14])->page(20)->page(2)->all();
+$list    = $tester->alias('T')-><font color="#FF0000">leftJoin(linkCpModel::getTableName() . ' AS L', 'T.id=L.id')</font>->where(['L.title' => 14])->page(20)->page(2)->all();
 
 </code></pre>
 <br>
@@ -100,7 +100,7 @@ public function rightJoin($tableName, $on)
 rightJoin用法：
 <pre data-lang="php"><code class="lang-php">
 $tester  = new testModel();
-$list    = $tester->alias('T')-><font color="#FF0000">rightJoin(linkCpModel::db()->getTable() . ' AS L', 'T.id=L.id')</font>->where(['L.title' => 14])->page(20)->page(2)->all();
+$list    = $tester->alias('T')-><font color="#FF0000">rightJoin(linkCpModel::getTableName() . ' AS L', 'T.id=L.id')</font>->where(['L.title' => 14])->page(20)->page(2)->all();
 
 </code></pre>
 <br>
@@ -117,7 +117,7 @@ public function innerJoin($tableName, $on)
 innerJoin用法：
 <pre data-lang="php"><code class="lang-php">
 $tester  = new testModel();
-$list    = $tester->alias('T')-><font color="#FF0000">innerJoin(linkCpModel::db()->getTable() . ' AS L', 'T.id=L.id')</font>->where(['L.title' => 14])->page(20)->page(2)->all();
+$list    = $tester->alias('T')-><font color="#FF0000">innerJoin(linkCpModel::getTableName() . ' AS L', 'T.id=L.id')</font>->where(['L.title' => 14])->page(20)->page(2)->all();
 
 </code></pre>
 

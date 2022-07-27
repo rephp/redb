@@ -71,7 +71,7 @@ html,body {
 
 <pre data-lang="php"><code class="lang-php">
 $tester = new testModel();
-$updatetCount = $tester->alias('T')->leftJoin(linkCpModel::db()->getTable().' AS L', 'T.id=L.id')->where(['L.id' => 14])->update(['T.title' => 'xxx222222']);
+$updatetCount = $tester->alias('T')->leftJoin(linkCpModel::getTableName().' AS L', 'T.id=L.id')->where(['L.id' => 14])->update(['T.title' => 'xxx222222']);
 </code></pre>
 
 

@@ -47,14 +47,14 @@ $insertCount = $tester->batchInsertReplace([$data, $data, $data]);
 $where       = ['id' => 7];
 $deleteCount = $tester->where($where)->delete();
 //联合删除
-$deleteCount = $tester->alias('T')->leftJoin(linkCpModel::db()->getTable() . ' AS L', 'T.id=L.id')->where(['L.id' => 14])->delete();
+$deleteCount = $tester->alias('T')->leftJoin(linkCpModel::getTableName() . ' AS L', 'T.id=L.id')->where(['L.id' => 14])->delete();
 /**********三、修改数据**********/
 $where        = ['id' => 7];
 $updatetCount = $tester->where($where)->data($data)->update();
 //或者
 $updatetCount = $tester->where($where)->update($data);
 //联合更新
-$updatetCount = $tester->alias('T')->leftJoin(linkCpModel::db()->getTable() . ' AS L', 'T.id=L.id')->where(['L.id' => 14])->update(['T.title' => 'xxx222222']);
+$updatetCount = $tester->alias('T')->leftJoin(linkCpModel::getTableName() . ' AS L', 'T.id=L.id')->where(['L.id' => 14])->update(['T.title' => 'xxx222222']);
 /**********四、查取数据**********/
 //获取一条
 $one = $tester->where($where)->one();
@@ -67,9 +67,9 @@ $count = $tester->where($where)->count();
 //统计+分页数据
 $res = $tester->where($where)->page(20)->page(2)->fetch();
 //联合查询
-$res = $tester->alias('T')->leftJoin(linkCpModel::db()->getTable() . ' AS L', 'T.id=L.id')->where(['L.title' => 14])->page(20)->page(2)->all();
-$res = $tester->alias('T')->rightJoin(linkCpModel::db()->getTable() . ' AS L', 'T.id=L.id')->where(['L.title' => 14])->page(20)->page(2)->all();
-$res = $tester->alias('T')->innerJoin(linkCpModel::db()->getTable() . ' AS L', 'T.id=L.id')->where(['L.title' => 14])->page(20)->page(2)->all();
+$res = $tester->alias('T')->leftJoin(linkCpModel::getTableName() . ' AS L', 'T.id=L.id')->where(['L.title' => 14])->page(20)->page(2)->all();
+$res = $tester->alias('T')->rightJoin(linkCpModel::getTableName() . ' AS L', 'T.id=L.id')->where(['L.title' => 14])->page(20)->page(2)->all();
+$res = $tester->alias('T')->innerJoin(linkCpModel::getTableName() . ' AS L', 'T.id=L.id')->where(['L.title' => 14])->page(20)->page(2)->all();
 //union查询
 $list = $tester->where($where)->union(linkCpModel::db()->where($where))->all();
 $list = $tester->where($where)->unionAll(linkCpModel::db()->where($where))->all();

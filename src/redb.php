@@ -85,7 +85,7 @@ class redb
     public static function getDb()
     {
         $class = get_called_class();
-        return $class::db;
+        return $class::$db;
     }
 
     /**

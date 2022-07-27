@@ -14,7 +14,7 @@ class model extends redb
         //todo:在用户自己的框架中实现对配置项的读写，故而这里暂时注释
         //empty($configList) && $configList = config('database');
         //获取数据库配置
-        $db = $this->getDb();
+        $db = self::getDb();
         if (!isset($configList[$db])) {
             throw new \Exception('2当前模型db配置错误，请检查数据库配置项的key', 1404);
         }

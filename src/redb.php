@@ -17,8 +17,8 @@ class redb
      * @var \rephp\redb\orm\ormModel $ormModel
      */
     protected $ormModel;
-    protected $db='default';
-    protected $table;
+    protected static $db = 'default';
+    protected static $table;
     protected $config = [];
 
     use commonTrait;
@@ -64,7 +64,7 @@ class redb
      */
     final protected function getOrmModel()
     {
-        is_object($this->ormModel) || $this->ormModel = (new ormModel())->setTable(self::getTable());
+        is_object($this->ormModel) || $this->ormModel = (new ormModel())->setTable(self::getTableName());
         return $this->ormModel;
     }
 
@@ -82,18 +82,20 @@ class redb
      * 获取当前model中设置的数据库配置key
      * @return string
      */
-    public function getDb()
+    public static function getDb()
     {
-        return $this->db;
+        $class = get_called_class();
+        return $class::db;
     }
 
     /**
-     * 获取当前table
+     * 获取当前table名字
      * @return string
      */
-    public function getTable()
+    public static function getTableName()
     {
-        return $this->table;
+        $class = get_called_class();
+        return $class::$table;
     }
 
     /**

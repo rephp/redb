@@ -55,7 +55,7 @@ $where        = ['id' => 18];
 $deleteCount = testModel::db($config)->where($where)->delete();
 //联合删除
 $where       = ['T.id' => 7];
-$deleteCount = testModel::db($config)->alias('T')->leftJoin(linkCpModel::db($config)->getTable() . ' AS L', 'T.id=L.id')->where(['L.id' => 14])->delete();
+$deleteCount = testModel::db($config)->alias('T')->leftJoin(linkCpModel::getTableName() . ' AS L', 'T.id=L.id')->where(['L.id' => 14])->delete();
 /**********三、修改数据**********/
 
 $where        = ['id' => 18];
@@ -63,7 +63,7 @@ $updatetCount = testModel::db($config)->where($where)->data($data)->update();
 //或者
 $updatetCount = testModel::db($config)->where($where)->update($data);
 //联合更新
-$updatetCount = testModel::db($config)->alias('T')->leftJoin(linkCpModel::db($config)->getTable() . ' AS L', 'T.id=L.id')->where(['L.id' => 14])->update(['T.title' => 'xxx222222']);
+$updatetCount = testModel::db($config)->alias('T')->leftJoin(linkCpModel::getTableName() . ' AS L', 'T.id=L.id')->where(['L.id' => 14])->update(['T.title' => 'xxx222222']);
 
 /**********四、查取数据**********/
 //获取一条
@@ -78,9 +78,9 @@ $count = testModel::db($config)->where($where)->count();
 $res = testModel::db($config)->where($where)->page(20)->page(1)->fetch();
 
 //联合查询
-$res = testModel::db($config)->alias('T')->leftJoin(linkCpModel::db($config)->getTable() . ' AS L', 'T.id=L.id')->where(['L.title' => 14])->page(20)->page(2)->all();
-$res = testModel::db($config)->alias('T')->rightJoin(linkCpModel::db($config)->getTable() . ' AS L', 'T.id=L.id')->where(['L.title' => 14])->page(20)->page(2)->all();
-$res = testModel::db($config)->alias('T')->innerJoin(linkCpModel::db($config)->getTable() . ' AS L', 'T.id=L.id')->where(['L.title' => 14])->page(20)->page(2)->all();
+$res = testModel::db($config)->alias('T')->leftJoin(linkCpModel::getTableName() . ' AS L', 'T.id=L.id')->where(['L.title' => 14])->page(20)->page(2)->all();
+$res = testModel::db($config)->alias('T')->rightJoin(linkCpModel::getTableName() . ' AS L', 'T.id=L.id')->where(['L.title' => 14])->page(20)->page(2)->all();
+$res = testModel::db($config)->alias('T')->innerJoin(linkCpModel::getTableName(). ' AS L', 'T.id=L.id')->where(['L.title' => 14])->page(20)->page(2)->all();
 //union查询
 $list = testModel::db($config)->where($where)->union(linkCpModel::db($config)->where($where))->all();
 $list = testModel::db($config)->where($where)->unionAll(linkCpModel::db($config)->where($where))->all();

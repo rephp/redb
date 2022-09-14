@@ -12,6 +12,11 @@ use rephp\redb\orm\ormModel;
 
 class redb
 {
+    use commonTrait;
+    use insertTrait;
+    use deleteTrait;
+    use updateTrait;
+    use selectTrait;
     /**
      * model内核
      * @var \rephp\redb\orm\ormModel $ormModel
@@ -20,12 +25,6 @@ class redb
     protected static $db = 'default';
     protected static $table;
     protected $config = [];
-
-    use commonTrait;
-    use insertTrait;
-    use deleteTrait;
-    use updateTrait;
-    use selectTrait;
 
     /**
      * redb 初始化配置项

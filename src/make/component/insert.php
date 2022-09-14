@@ -1,4 +1,5 @@
 <?php
+
 namespace rephp\redb\make\component;
 
 use rephp\redb\make\component\traits\commonTrait;
@@ -11,11 +12,10 @@ use rephp\redb\make\component\interfaces\componentInterface;
  */
 class insert implements componentInterface
 {
+    use commonTrait;
     protected $preSql;
     protected $partPreSqlArr = [];
     protected $bindParams = [];
-
-    use commonTrait;
 
     /**
      * 解析model对象，生成sql

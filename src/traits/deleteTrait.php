@@ -9,7 +9,6 @@ namespace rephp\redb\traits;
  */
 trait deleteTrait
 {
-
     /**
      * 删除
      * @return mixed

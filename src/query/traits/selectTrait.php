@@ -12,7 +12,6 @@ use rephp\redb\query\log;
  */
 trait selectTrait
 {
-
     public function one($preSql, $bindParams = [])
     {
         $stmt = $this->setConfigType($type = 'slave')->execute($preSql, $bindParams);

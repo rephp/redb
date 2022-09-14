@@ -1,4 +1,5 @@
 <?php
+
 namespace rephp\redb\orm;
 
 use rephp\redb\make\maker;

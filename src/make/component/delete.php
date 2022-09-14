@@ -13,11 +13,11 @@ use rephp\redb\make\component\interfaces\componentInterface;
  */
 class delete implements componentInterface
 {
+    use joinTrait;
+    use commonTrait;
     protected $preSql;
     protected $partPreSqlArr = [];
     protected $bindParams    = [];
-
-    use joinTrait, commonTrait;
 
     /**
      * 解析model对象，生成sql

@@ -1,4 +1,5 @@
 <?php
+
 namespace rephp\redb\query\traits;
 
 use rephp\redb\query\log;
@@ -11,7 +12,6 @@ use rephp\redb\query\log;
  */
 trait deleteTrait
 {
-
     public function delete($preSql, $bindParams = [])
     {
         $stmt = $this->setConfigType($type='master')->execute($preSql, $bindParams);

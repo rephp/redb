@@ -8,7 +8,6 @@ namespace rephp\redb\make\component;
  */
 class batchInsertReplace extends batchInsert
 {
-
     /**
      * 解析sql主体
      * @param string $table  数据表名字

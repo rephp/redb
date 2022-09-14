@@ -2,7 +2,6 @@
 
 namespace demo;
 
-
 use demo\model\linkCpModel;
 use demo\model\testModel;
 
@@ -88,12 +87,12 @@ $list = testModel::db($config)->where($where)->unionAll(linkCpModel::db($config)
 /**********五、事务**********/
 $cmd = testModel::db($config)->getCmd();
 $cmd->startTrans();//开启tester对象所在数据库的事务
-try{
+try {
     $deleteCount  = testModel::db($config)->where($where)->delete();
     $insertCount  = testModel::db($config)->data(['title'=>'xxx', 'id'=>$where['id']])->insertReplace();
     $updatetCount = testModel::db($config)->where($where)->update($data);
     $cmd->commit();    //提交事务
-}catch (\Exception $e){
+} catch (\Exception $e) {
     $cmd->rollBack();  //回滚
 }
 

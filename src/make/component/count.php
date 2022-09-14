@@ -14,11 +14,12 @@ use rephp\redb\make\component\interfaces\componentInterface;
  */
 class count implements componentInterface
 {
+    use joinTrait;
+    use commonTrait;
+    use selectTrait;
     protected $preSql;
     protected $partPreSqlArr = [];
     protected $bindParams = [];
-
-    use joinTrait, commonTrait, selectTrait;
 
     /**
      * 解析model对象，生成sql

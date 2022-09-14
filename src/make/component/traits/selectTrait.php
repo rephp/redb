@@ -1,4 +1,5 @@
 <?php
+
 namespace rephp\redb\make\component\traits;
 
 use rephp\redb\orm\ormModel;

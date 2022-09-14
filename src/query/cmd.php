@@ -16,7 +16,12 @@ use rephp\redb\query\traits\commonTrait;
  */
 class cmd
 {
-    use insertTrait, deleteTrait, updateTrait, selectTrait, transTrait, commonTrait;
+    use insertTrait;
+    use deleteTrait;
+    use updateTrait;
+    use selectTrait;
+    use transTrait;
+    use commonTrait;
 
     /**
      * @var pdo链接

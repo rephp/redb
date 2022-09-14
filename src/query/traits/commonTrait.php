@@ -7,7 +7,6 @@ use rephp\redb\orm\ormModel;
 
 trait commonTrait
 {
-
     /**
      * 设置数据库主从
      * @param string $type  数据库主从标识符
@@ -51,7 +50,7 @@ trait commonTrait
             }
 
             $config['debug'] = filter_var($config['debug'], FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
-            $this->debug     = (boolean)$config['debug'];
+            $this->debug     = (bool)$config['debug'];
             empty($config['charset']) && $config['charset'] = 'utf8';
             $options = [
                 \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,

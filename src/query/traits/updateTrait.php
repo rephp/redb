@@ -12,10 +12,8 @@ use rephp\redb\query\log;
  */
 trait updateTrait
 {
-
     public function update($preSql, $bindParams = [])
     {
-
         $stmt = $this->setConfigType($type = 'master')->execute($preSql, $bindParams);
         if (!$stmt) {
             $stmt = null;

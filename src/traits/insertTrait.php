@@ -9,7 +9,6 @@ namespace rephp\redb\traits;
  */
 trait insertTrait
 {
-
     /**
      * 普通插入
      * @param array $data 数据源，如果已经使用data方法配置数据，则无须传递任何参数

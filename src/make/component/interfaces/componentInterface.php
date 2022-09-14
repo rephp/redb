@@ -1,4 +1,5 @@
 <?php
+
 namespace rephp\redb\make\component\interfaces;
 
 use rephp\redb\orm\ormModel;

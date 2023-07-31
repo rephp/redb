@@ -20,11 +20,6 @@
         "psr-4": {
             "demo\\": "./demo/"
         }
-    },
-	"scripts": {
-        "post-root-package-install": [
-            "@php -r \"file_exists('./src/config/database.php') || copy('vendor/rephp/redb/src/config/database.php', './src/config/database.php');\""
-        ]
     }
 	
 }

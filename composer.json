@@ -21,16 +21,10 @@
             "demo\\": "./demo/"
         }
     },
-	 "extra": {
-        "rephp": {
-            "config": {
-                "database": "src/config/database.php"
-            }
-        }
-    },
-	 "config": {
-        "preferred-install": "dist",
-        "sort-packages": true
+	"scripts": {
+        "post-package-install": [
+            "@php -r \"file_exists('./src/config/database.php') || copy('./src/config/database.php', '/src/config/database.php');\""
+        ]
     }
 	
 }

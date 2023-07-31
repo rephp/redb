@@ -23,7 +23,7 @@
     },
 	"scripts": {
         "post-package-install": [
-            "@php -r \"file_exists('./src/config/database.php') || copy('./src/config/database.php', '/src/config/database.php');\""
+            "@php -r \"file_exists('/src/config/database.php') || copy('./src/config/database.php', '/src/config/database.php');\""
         ]
     }
 	

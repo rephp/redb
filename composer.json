@@ -20,5 +20,13 @@
         "psr-4": {
             "demo\\": "./demo/"
         }
-    }
+    },
+	 "extra": {
+        "rephp": {
+            "config": {
+                "database": "src/config/database.php"
+            }
+        }
+    },
+	
 }

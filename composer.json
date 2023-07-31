@@ -27,6 +27,6 @@
                 "database": "src/config/database.php"
             }
         }
-    },
+    }
 	
 }

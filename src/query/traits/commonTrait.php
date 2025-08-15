@@ -57,7 +57,7 @@ trait commonTrait
                 \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES ' . $config['charset'],
                 \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
             ];
-            if ($config['presistent']) {
+            if ($config['persistent']) {
                 $options[\PDO::ATTR_PERSISTENT] = true;
                 //$this->initSystemPresistent();
             }

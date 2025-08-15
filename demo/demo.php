@@ -14,7 +14,7 @@ $config = [
         'password'   => '123456',
         'database'   => 'test',
         'charset'    => 'utf8',
-        'presistent' => false,
+        'persistent' => false,
         'debug'      => false,
     ]];
 
@@ -115,7 +115,7 @@ $config = [
             'password'   => '123456',
             'database'   => 'test',
             'charset'    => 'utf8',
-            'presistent' => false,
+            'persistent' => false,
             'type'       => 'master',
         ],
         [
@@ -125,7 +125,7 @@ $config = [
             'password'   => '123456',
             'database'   => 'test',
             'charset'    => 'utf8',
-            'presistent' => false,
+            'persistent' => false,
             'type'       => 'slave',
         ],
         [
@@ -135,7 +135,7 @@ $config = [
             'password'   => '123456',
             'database'   => 'test',
             'charset'    => 'utf8',
-            'presistent' => false,
+            'persistent' => false,
             'type'       => 'slave',
         ],
         //...
@@ -148,7 +148,7 @@ $config = [
             'password'   => '123456',
             'database'   => 'log_db',
             'charset'    => 'utf8',
-            'presistent' => false,
+            'persistent' => false,
             'type'       => 'master',
         ],
         [
@@ -158,7 +158,7 @@ $config = [
             'password'   => '123456',
             'database'   => 'log_db',
             'charset'    => 'utf8',
-            'presistent' => false,
+            'persistent' => false,
             'type'       => 'slave',
         ],
         [
@@ -168,7 +168,7 @@ $config = [
             'password'   => '123456',
             'database'   => 'test',
             'charset'    => 'utf8',
-            'presistent' => false,
+            'persistent' => false,
             'type'       => 'slave',
         ],
         //...

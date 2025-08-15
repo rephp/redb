@@ -1,35 +1,78 @@
 <?php
 
-namespace rephp\redb\traits;
+namespace rephp\redb\query\traits;
+
+use rephp\redb\query\log;
 
 /**
  * Trait transTrait
- * @package rephp\redb\traits
- * @method \rephp\redb\query\cmd getCmd()
+ * @package rephp\redb\query\traits
+ * @method \PDO getPdo()
+ * @method commonTrait setConfigType($type)
  */
 trait transTrait
 {
-    /**
-     * 开启事务
-     */
     public function startTrans()
     {
-        $this->getCmd()->startTrans();
+        $startTime = microtime(true);
+        try{
+            $this->setConfigType($type = 'master')->getPdo()->beginTransaction();
+        }catch (\Exception $e){
+            $extErrorInfo = [
+                'code' => $e->getCode(),
+                'msg'  => $e->getMessage(),
+                'line' => $e->getLine(),
+                'file' => $e->getFile(),
+            ];
+            if ($this->debug) {
+                print_r($extErrorInfo);
+            }
+            log::setErrorLog('beginTransaction', round(microtime(true) - $startTime, 6), $extErrorInfo);
+        }
+
+        return $this;
     }
 
-    /**
-     * 回滚事务
-     */
     public function rollBack()
     {
-        $this->getCmd()->rollBack();
+        $startTime = microtime(true);
+        try{
+            $this->setConfigType($type = 'master')->getPdo()->rollBack();
+        }catch (\Exception $e){
+            $extErrorInfo = [
+                'code' => $e->getCode(),
+                'msg'  => $e->getMessage(),
+                'line' => $e->getLine(),
+                'file' => $e->getFile(),
+            ];
+            if ($this->debug) {
+                print_r($extErrorInfo);
+            }
+            log::setErrorLog('beginTransaction', round(microtime(true) - $startTime, 6), $extErrorInfo);
+        }
+
+        return $this;
     }
 
-    /**
-     * 提交事务
-     */
     public function commit()
     {
-        $this->getCmd()->commit();
+        $startTime = microtime(true);
+        try{
+            $this->setConfigType($type = 'master')->getPdo()->commit();
+        }catch (\Exception $e){
+            $extErrorInfo = [
+                'code' => $e->getCode(),
+                'msg'  => $e->getMessage(),
+                'line' => $e->getLine(),
+                'file' => $e->getFile(),
+            ];
+            if ($this->debug) {
+                print_r($extErrorInfo);
+            }
+            log::setErrorLog('beginTransaction', round(microtime(true) - $startTime, 6), $extErrorInfo);
+        }
+
+        return $this;
     }
+
 }
